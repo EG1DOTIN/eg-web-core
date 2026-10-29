@@ -1,0 +1,2 @@
+# Core Library Automation Dependencies
+# Standard library is prioritized for maximum portability and zero-install execution.

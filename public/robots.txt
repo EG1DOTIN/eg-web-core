@@ -1,0 +1,6 @@
+# robots.txt for https://web-core.eg1.in/
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://web-core.eg1.in/sitemap.xml

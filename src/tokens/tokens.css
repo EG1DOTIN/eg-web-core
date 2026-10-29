@@ -1,0 +1,380 @@
+/* ==========================================================================
+   EG Web Core - Design Tokens & Theme Variables
+   High-performance, zero-overhead CSS custom properties for modular web applications.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Font Families */
+  --eg-font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --eg-font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  --eg-font-brand: var(--eg-font-sans);
+
+  /* Typography Scale */
+  --eg-text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem);
+  --eg-text-sm: clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem);
+  --eg-text-base: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  --eg-text-lg: clamp(1.0625rem, 1rem + 0.35vw, 1.125rem);
+  --eg-text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.375rem);
+  --eg-text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.75rem);
+  --eg-text-3xl: clamp(1.875rem, 1.6rem + 1.2vw, 2.25rem);
+  --eg-text-4xl: clamp(2.25rem, 1.85rem + 1.8vw, 2.875rem);
+
+  /* Spacing Scale */
+  --eg-space-1: 0.25rem;
+  --eg-space-2: 0.5rem;
+  --eg-space-3: 0.75rem;
+  --eg-space-4: 1rem;
+  --eg-space-5: 1.25rem;
+  --eg-space-6: 1.5rem;
+  --eg-space-8: 2rem;
+  --eg-space-10: 2.5rem;
+  --eg-space-12: 3rem;
+  --eg-space-16: 4rem;
+
+  /* Border Radii */
+  --eg-radius-xs: 4px;
+  --eg-radius-sm: 6px;
+  --eg-radius-md: 10px;
+  --eg-radius-lg: 14px;
+  --eg-radius-xl: 20px;
+  --eg-radius-pill: 9999px;
+
+  /* Transitions */
+  --eg-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --eg-transition-normal: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --eg-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Status & Brand Accents (Global) */
+  --eg-color-primary: #10b981;
+  --eg-color-primary-hover: #059669;
+  --eg-color-emerald: #00dc82;
+  --eg-color-emerald-glow: rgba(0, 220, 130, 0.16);
+  --eg-color-amber: #f59e0b;
+  --eg-color-amber-glow: rgba(245, 158, 11, 0.16);
+  --eg-color-crimson: #ef4444;
+  --eg-color-crimson-glow: rgba(239, 68, 68, 0.16);
+  --eg-color-sky: #38bdf8;
+  --eg-color-sky-glow: rgba(56, 189, 248, 0.16);
+  --eg-color-indigo: #6366f1;
+
+  /* Layout Widths */
+  --eg-container-max: min(1536px, 94%);
+  --eg-container-wide: min(1680px, 96%);
+  --eg-container-narrow: 880px;
+
+  /* Light Theme (Default) */
+  --eg-bg-canvas: #f8fafc;
+  --eg-bg-subtle: #f1f5f9;
+  --eg-bg-surface: #ffffff;
+  --eg-bg-surface-elevated: #ffffff;
+  --eg-bg-surface-hover: #f8fafc;
+  --eg-bg-input: #ffffff;
+
+  --eg-border-subtle: rgba(0, 0, 0, 0.06);
+  --eg-border-default: rgba(0, 0, 0, 0.12);
+  --eg-border-hover: rgba(0, 0, 0, 0.24);
+  --eg-border-focus: #10b981;
+
+  --eg-text-primary: #0f172a;
+  --eg-text-secondary: #475569;
+  --eg-text-muted: #64748b;
+  --eg-text-inverse: #ffffff;
+
+  /* Accessible Status Colors for Light Mode */
+  --eg-color-sky: #0284c7;
+  --eg-color-emerald: #059669;
+  --eg-color-amber: #d97706;
+  --eg-color-crimson: #dc2626;
+
+  /* Universal Footer Tokens (Anchoring Dark Surface in Light Theme) */
+  --eg-bg-footer: #1e2229;
+  --eg-text-footer: #cbd5e1;
+  --eg-text-footer-title: #ffffff;
+  --eg-text-footer-muted: #94a3b8;
+  --eg-border-footer: rgba(255, 255, 255, 0.08);
+
+  /* Elevation Shadows */
+  --eg-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --eg-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --eg-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Light Theme (Default & data-theme="light" / data-theme="light-gray") */
+[data-theme="light"],
+[data-theme="light-gray"] {
+  --eg-bg-canvas: #f8fafc;
+  --eg-bg-subtle: #f1f5f9;
+  --eg-bg-surface: #ffffff;
+  --eg-bg-surface-elevated: #ffffff;
+  --eg-bg-surface-hover: #f8fafc;
+  --eg-bg-input: #ffffff;
+
+  --eg-border-subtle: rgba(0, 0, 0, 0.06);
+  --eg-border-default: rgba(0, 0, 0, 0.12);
+  --eg-border-hover: rgba(0, 0, 0, 0.24);
+  --eg-border-focus: #10b981;
+
+  --eg-text-primary: #0f172a;
+  --eg-text-secondary: #475569;
+  --eg-text-muted: #64748b;
+  --eg-text-inverse: #ffffff;
+
+  --eg-color-sky: #0284c7;
+  --eg-color-emerald: #059669;
+  --eg-color-amber: #d97706;
+  --eg-color-crimson: #dc2626;
+
+  --eg-bg-footer: #1e2229;
+  --eg-text-footer: #cbd5e1;
+  --eg-text-footer-title: #ffffff;
+  --eg-text-footer-muted: #94a3b8;
+  --eg-border-footer: rgba(255, 255, 255, 0.08);
+
+  --eg-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --eg-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --eg-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --eg-bg-canvas: #090d16;
+  --eg-bg-subtle: #0f172a;
+  --eg-bg-surface: #131d31;
+  --eg-bg-surface-elevated: #1a2742;
+  --eg-bg-surface-hover: #223254;
+  --eg-bg-input: #152238;
+
+  --eg-border-subtle: rgba(255, 255, 255, 0.07);
+  --eg-border-default: rgba(255, 255, 255, 0.12);
+  --eg-border-hover: rgba(255, 255, 255, 0.25);
+  --eg-border-focus: #10b981;
+
+  --eg-text-primary: #f8fafc;
+  --eg-text-secondary: #cbd5e1;
+  --eg-text-muted: #64748b;
+  --eg-text-inverse: #090d16;
+
+  --eg-color-sky: #38bdf8;
+  --eg-color-emerald: #00dc82;
+  --eg-color-amber: #f59e0b;
+  --eg-color-crimson: #ef4444;
+
+  --eg-bg-footer: #0a0e17;
+  --eg-text-footer: #cbd5e1;
+  --eg-text-footer-title: #ffffff;
+  --eg-text-footer-muted: #64748b;
+  --eg-border-footer: rgba(255, 255, 255, 0.08);
+
+  --eg-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --eg-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --eg-shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.6);
+}
+
+/* Deep Slate / Terminal Dark Aesthetic */
+[data-theme="slate-dark"],
+[data-theme="clamui-dark"] {
+  --eg-bg-canvas: #0b0b0e;
+  --eg-bg-subtle: #101015;
+  --eg-bg-surface: #15151c;
+  --eg-bg-surface-elevated: #1b1b24;
+  --eg-bg-surface-hover: #22222d;
+  --eg-bg-input: #1e1e27;
+
+  --eg-border-subtle: rgba(255, 255, 255, 0.07);
+  --eg-border-default: rgba(255, 255, 255, 0.12);
+  --eg-border-hover: rgba(255, 255, 255, 0.22);
+  --eg-border-focus: #00dc82;
+
+  --eg-text-primary: #f4f4f6;
+  --eg-text-secondary: #a0a0ab;
+  --eg-text-muted: #6e6e7c;
+  --eg-text-inverse: #0b0b0e;
+
+  --eg-color-sky: #38bdf8;
+  --eg-color-emerald: #00dc82;
+  --eg-color-amber: #f59e0b;
+  --eg-color-crimson: #ef4444;
+
+  --eg-bg-footer: #0b0b0e;
+  --eg-text-footer: #a0a0ab;
+  --eg-text-footer-title: #f4f4f6;
+  --eg-text-footer-muted: #6e6e7c;
+  --eg-border-footer: rgba(255, 255, 255, 0.08);
+
+  --eg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --eg-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.55);
+  --eg-shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.7);
+}
+
+/* Crystal Gradient Themes */
+[data-theme="crystal"],
+.crystal-theme-1 {
+  --eg-bg-canvas: #0d1117;
+  --eg-bg-subtle: #161b22;
+  --eg-bg-surface: #161b22;
+  --eg-bg-surface-elevated: #21262d;
+  --eg-bg-surface-hover: #30363d;
+  --eg-bg-input: #161b22;
+
+  --eg-border-subtle: rgba(255, 255, 255, 0.08);
+  --eg-border-default: rgba(255, 255, 255, 0.14);
+  --eg-border-hover: rgba(255, 255, 255, 0.28);
+  --eg-border-focus: #818cf8;
+
+  --eg-text-primary: #f8fafc;
+  --eg-text-secondary: #cbd5e1;
+  --eg-text-muted: #94a3b8;
+  --eg-text-inverse: #0d1117;
+
+  --eg-color-sky: #38bdf8;
+  --eg-color-emerald: #00dc82;
+  --eg-color-amber: #f59e0b;
+  --eg-color-crimson: #ef4444;
+
+  --eg-bg-footer: #0a0d13;
+  --eg-text-footer: #cbd5e1;
+  --eg-text-footer-title: #ffffff;
+  --eg-text-footer-muted: #94a3b8;
+  --eg-border-footer: rgba(255, 255, 255, 0.08);
+
+  --eg-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --eg-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.55);
+  --eg-shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.7);
+
+  --eg-crystal-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+}
+
+.crystal-theme-2 {
+  --eg-crystal-gradient: linear-gradient(135deg, #090d16 0%, #064e3b 50%, #047857 100%);
+}
+
+.crystal-theme-3 {
+  --eg-crystal-gradient: linear-gradient(135deg, #0b0f19 0%, #4c1d95 50%, #6d28d9 100%);
+}
+
+.crystal-theme-4 {
+  --eg-crystal-gradient: linear-gradient(135deg, #111827 0%, #1e3a8a 50%, #2563eb 100%);
+}
+
+.crystal-theme-5 {
+  --eg-crystal-gradient: linear-gradient(135deg, #0f172a 0%, #701a75 50%, #a21caf 100%);
+}
+
+.crystal-theme-6 {
+  --eg-crystal-gradient: linear-gradient(135deg, #18181b 0%, #7c2d12 50%, #c2410c 100%);
+}
+
+/* Global Root & Body Styles */
+html,
+body {
+  background-color: var(--eg-bg-canvas);
+  color: var(--eg-text-primary);
+  font-family: var(--eg-font-sans);
+  transition: background-color var(--eg-transition-normal), color var(--eg-transition-normal);
+}
+
+/* Markdown Content Styling */
+.eg-markdown-content {
+  color: var(--eg-text-secondary);
+}
+
+.eg-markdown-content h1,
+.eg-markdown-content h2,
+.eg-markdown-content h3,
+.eg-markdown-content h4 {
+  color: var(--eg-text-primary);
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.eg-markdown-content p {
+  margin: 0.9em 0;
+  line-height: 1.7;
+}
+
+.eg-markdown-content a {
+  color: var(--eg-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.eg-markdown-content code {
+  background: var(--eg-bg-subtle);
+  color: var(--eg-color-sky, #0284c7);
+  padding: 2px 6px;
+  border-radius: var(--eg-radius-xs, 4px);
+  font-family: var(--eg-font-mono);
+  font-size: 0.9em;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.eg-markdown-content pre {
+  background: var(--eg-bg-subtle);
+  border: 1px solid var(--eg-border-subtle);
+  padding: 16px;
+  border-radius: var(--eg-radius-md, 8px);
+  overflow-x: auto;
+  margin: 1.2em 0;
+}
+
+.eg-markdown-content pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.eg-markdown-content blockquote {
+  border-left: 3px solid var(--eg-color-primary);
+  margin: 1.2em 0;
+  padding: 8px 16px;
+  color: var(--eg-text-muted);
+  background: var(--eg-bg-subtle);
+  border-radius: 0 var(--eg-radius-sm, 6px) var(--eg-radius-sm, 6px) 0;
+}
+
+.eg-markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.eg-markdown-content th,
+.eg-markdown-content td {
+  border: 1px solid var(--eg-border-subtle);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.eg-markdown-content td code {
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.eg-markdown-content td:first-child,
+.eg-markdown-content th:first-child {
+  white-space: nowrap;
+}
+
+.eg-markdown-content th {
+  background: var(--eg-bg-subtle);
+  color: var(--eg-text-primary);
+}
+
+/* Responsive Notification Bell Dropdown */
+@media (max-width: 768px) {
+  .eg-notify-dropdown {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: calc(100vw - 24px) !important;
+    margin: 0 auto !important;
+    z-index: 9999 !important;
+  }
+}
+

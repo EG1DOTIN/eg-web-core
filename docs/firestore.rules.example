@@ -1,0 +1,103 @@
+// ============================================================================
+// EG-Web-Core Generic Cloud Firestore Security Rules
+// ============================================================================
+// Production security rules designed for any website or web application
+// utilizing `eg-web-core` features (Visitor Telemetry, Contact Form, Admin Suite).
+//
+// Copy this template into your Firebase Console:
+// Firebase Console -> Firestore Database -> Rules
+// ============================================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --------------------------------------------------------------------------
+    // Helper Functions
+    // --------------------------------------------------------------------------
+    // Verifies whether the requesting user is an authorized administrator
+    function isAdmin() {
+      return request.auth != null && exists(/databases/$(database)/documents/admin_security/$(request.auth.uid));
+    }
+
+    // --------------------------------------------------------------------------
+    // 1. VISITOR ANALYTICS & TELEMETRY (Batched Bucket Pattern - 50 logs/doc)
+    // --------------------------------------------------------------------------
+    // Used by `useVisitorTracker()` and `writeVisitorLogToFirestore()`
+    match /visitor_analytics/meta {
+      // Allow reading and updating the bucket counters and page pointer during transactions
+      allow read, create, update: if true;
+      // Only authenticated administrators can reset or delete analytics metadata
+      allow delete: if isAdmin();
+    }
+
+    match /visitor_analytics/{document} {
+      // Allow anonymous visitors to append their session record to the bucket page
+      // without being able to read or inspect other visitors' telemetry records
+      allow create, update: if document.matches('^page_[0-9]+$');
+      // Only authenticated administrators can inspect telemetry logs or delete buckets
+      allow read, delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // 2. CONTACT FORM INQUIRIES
+    // --------------------------------------------------------------------------
+    // Used by `submitContactInquiry()` and `<ContactForm />`
+    match /messages/{messageId} {
+      // Server-side field validation and spam defense:
+      // - Must contain exactly the required fields
+      // - Field types and length bounds enforced
+      // - Timestamp must equal server timestamp
+      allow create: if
+        request.resource.data.keys().hasAll(['name', 'email', 'contact', 'message', 'createdAt']) &&
+        request.resource.data.keys().hasOnly(['name', 'email', 'contact', 'message', 'createdAt']) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.name.size() <= 100 &&
+        request.resource.data.email is string &&
+        request.resource.data.email.size() > 5 &&
+        request.resource.data.email.size() <= 100 &&
+        request.resource.data.email.matches('.*@.*') &&
+        request.resource.data.contact is string &&
+        request.resource.data.contact.size() <= 20 &&
+        request.resource.data.message is string &&
+        request.resource.data.message.size() > 0 &&
+        request.resource.data.message.size() <= 2000 &&
+        request.resource.data.createdAt == request.time;
+
+      // Only administrators can read customer inquiries, reply, or delete messages
+      allow read, update, delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // 3. ADMINISTRATIVE 2FA SECURITY & PERMISSIONS
+    // --------------------------------------------------------------------------
+    // Used by `useAdminAuth()` and `<AdminAuthGuard />`
+    match /admin_security/{userId} {
+      // Administrators can only read their own security credentials
+      allow read: if request.auth != null && request.auth.uid == userId;
+      // Client writes blocked: PIN hashes must be provisioned via Firebase Admin SDK or Console
+      allow write: if false;
+    }
+
+    // --------------------------------------------------------------------------
+    // 4. ADMIN LOGIN ATTEMPT AUDIT TRAIL (Paginated 18 per doc)
+    // --------------------------------------------------------------------------
+    match /admin_login_log/{document} {
+      // Allow writing login attempt records (login failures occur before full auth)
+      allow create, update: if true;
+      // Only authenticated administrators can inspect or delete audit logs
+      allow read, delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // 5. BRUTE-FORCE LOCKOUT DEFENSE
+    // --------------------------------------------------------------------------
+    match /admin_lockout/{document} {
+      // Client reads and updates consecutive failed attempts to enforce 24-hr lockout
+      allow read, create, update: if true;
+      // Only administrator can manually clear/delete an IP lockout
+      allow delete: if isAdmin();
+    }
+  }
+}
