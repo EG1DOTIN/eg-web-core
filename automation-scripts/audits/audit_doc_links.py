@@ -51,6 +51,12 @@ def audit_markdown_file(file_path: Path) -> list:
         # Resolve relative to current markdown file directory
         resolved_file = (file_path.parent / rel_path).resolve()
 
+        try:
+            resolved_file.relative_to(ROOT_DIR)
+        except ValueError:
+            errors.append(f"{file_path.name}: Link '{target}' traverses outside standalone repository root. Use full URL (e.g. https://github.com/...) instead.")
+            continue
+
         if not resolved_file.exists():
             errors.append(f"{file_path.name}: Broken link '{target}' -> file not found at {rel_path}")
         elif anchor and resolved_file.suffix.lower() == '.md':

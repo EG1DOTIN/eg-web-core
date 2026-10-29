@@ -1,9 +1,9 @@
 # EG-Web-Core Library
 
-**EG-Web-Core Library** (`eg-web-core`) is the shared React component library, design token engine, client services framework, and administrative management suite powering the EG web ecosystem:
-- [`eg1.in`](../eg1.in) — Main portal & product catalog
-- [`mchess.eg1.in`](../mchess.eg1.in) — Multiplayer and engine chess platform
-- [`av.eg1.in`](../av.eg1.in) — pyEGClamUI antivirus suite & documentation
+**EG-Web-Core Library** (`eg-web-core`) is a shared React component library, design token engine, client services framework, and administrative management suite powering the EG1 web ecosystem:
+- [`eg1.in`](https://github.com/EG1DOTIN/eg1.in) — Main portal & product catalog
+- [`mchess.eg1.in`](https://github.com/EG1DOTIN/mchess.eg1.in) — Multiplayer and engine chess platform
+- [`av.eg1.in`](https://github.com/EG1DOTIN/av.eg1.in) — pyEGClamUI antivirus website portal & documentation
 
 ---
 
@@ -187,9 +187,9 @@ firebase deploy --only hosting
 
 | Consumer Portal | Documentation Hub | Key Features Consumed |
 | :--- | :--- | :--- |
-| **EG1 Portal** | [`../eg1.in/docs/README.md`](../eg1.in/docs/README.md) | `Header` (eg1), `Footer` (eg1), `MarkdownViewer` (47 blogs), `AdminSuite` (2FA), `DataCache`, `ImageSlider` |
-| **Marwadi Chess** | [`../mchess.eg1.in/docs/README.md`](../mchess.eg1.in/docs/README.md) | `Header` (mchess), `Footer` (mchess), `ThemeProvider` (dark), `AdminSuite` (2FA), `VisitorTracker` |
-| **pyEGClamUI** | [`../av.eg1.in/docs/README.md`](../av.eg1.in/docs/README.md) | `Header` (av), `Footer` (av), `DocsViewer` (17 guides), `MarkdownViewer`, `VisitorTracker` |
+| **EG1 Portal** | [Documentation](https://github.com/EG1DOTIN/eg1.in#readme) | `Header` (eg1), `Footer` (eg1), `MarkdownViewer` (47 blogs), `AdminSuite` (2FA), `DataCache`, `ImageSlider` |
+| **Marwadi Chess** | [Documentation](https://github.com/EG1DOTIN/mchess.eg1.in#readme) | `Header` (mchess), `Footer` (mchess), `ThemeProvider` (dark), `AdminSuite` (2FA), `VisitorTracker` |
+| **pyEGClamUI** | [Documentation](https://github.com/EG1DOTIN/av.eg1.in#readme) | `Header` (av), `Footer` (av), `DocsViewer` (17 guides), `MarkdownViewer`, `VisitorTracker` |
 
 ---
 
