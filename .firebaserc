@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "eg1-admin"
+  },
+  "targets": {
+    "eg1-admin": {
+      "hosting": {
+        "web-core-eg1": [
+          "web-core-eg1"
+        ]
+      }
+    }
+  }
+}

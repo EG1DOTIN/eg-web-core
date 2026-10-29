@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "web-core-eg1",
     "public": "dist-site",
     "ignore": [
       "firebase.json",

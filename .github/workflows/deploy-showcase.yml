@@ -38,3 +38,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EG1_ADMIN }}
           channelId: live
           projectId: eg1-admin
+          target: web-core-eg1
