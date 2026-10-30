@@ -1,12 +1,15 @@
-name: Deploy EG-Web-Core Showcase to Firebase Hosting on merge
+name: Deploy to Firebase Hosting on PR
 
-on:
-  push:
-    branches:
-      - main
+on: pull_request
+
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
 
 jobs:
-  build_and_deploy_showcase:
+  build_and_preview:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,10 +34,8 @@ jobs:
       - name: Build Showcase Web Portal (dist-site)
         run: npm run build:site
 
-      - name: Deploy to Firebase Hosting (web-core.eg1.in)
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EG_WEB_CORE }}
-          channelId: live
           projectId: eg-web-core
