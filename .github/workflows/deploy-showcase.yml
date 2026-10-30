@@ -35,7 +35,6 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EG1_ADMIN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EG_WEB_CORE }}
           channelId: live
-          projectId: eg1-admin
-          target: web-core-eg1
+          projectId: eg-web-core
