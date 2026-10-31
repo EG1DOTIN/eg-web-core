@@ -112,7 +112,7 @@ export function useAdminAuth(config: AdminAuthConfig = {}): UseAdminAuthResult {
           setLockout(lockStatus);
         }
 
-        const auth = await getFirebaseAuth(config.firebaseConfig);
+        const auth = await getFirebaseAuth(config.firebaseConfig, config.appName);
         if (auth && typeof auth.onAuthStateChanged === 'function') {
           auth.onAuthStateChanged((fbUser: any) => {
             if (!isMounted) return;
@@ -165,7 +165,7 @@ export function useAdminAuth(config: AdminAuthConfig = {}): UseAdminAuthResult {
     return () => {
       isMounted = false;
     };
-  }, [config.sessionKey, config.firebaseConfig]);
+  }, [config.sessionKey, config.firebaseConfig, config.appName]);
 
   // Step 1: Login with Google
   const loginWithGoogle = useCallback(async (): Promise<AdminUser | null> => {

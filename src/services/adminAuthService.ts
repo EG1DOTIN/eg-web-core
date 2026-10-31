@@ -62,6 +62,8 @@ export interface AdminAuthConfig {
   securityCollection?: string;
   /** Optional custom Firebase App configuration */
   firebaseConfig?: FirebaseAppConfig;
+  /** Optional custom Firebase App instance name */
+  appName?: string;
 }
 
 export const DEFAULT_PIN_SALT = 'EG_ADMIN_SALT_2026';
@@ -400,7 +402,7 @@ export async function signInWithGooglePopup(config: AdminAuthConfig = {}): Promi
   }
 
   // 2. Obtain Firebase Auth instance
-  const auth = await getFirebaseAuth(config.firebaseConfig);
+  const auth = await getFirebaseAuth(config.firebaseConfig, config.appName);
   const fb = (window as any).firebase;
   if (!auth || !fb || !fb.auth) {
     throw new Error('[eg-web-core] Firebase Authentication SDK is unavailable.');

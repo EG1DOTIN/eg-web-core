@@ -153,10 +153,13 @@ export async function initFirebase(
       throw new Error(`[eg-web-core] Cannot initialize Firebase app "${appName}": valid apiKey is required.`);
     }
   } else {
-    if (fb.apps && fb.apps.length > 0) {
-      app = fb.app();
+    const defaultApp = fb.apps && fb.apps.find((a: any) => a && a.name === '[DEFAULT]');
+    if (defaultApp) {
+      app = defaultApp;
     } else if (config && config.apiKey) {
       app = fb.initializeApp(config);
+    } else if (fb.apps && fb.apps.length > 0) {
+      app = fb.apps[0];
     } else {
       throw new Error('[eg-web-core] Cannot initialize default Firebase app: valid apiKey is required.');
     }
