@@ -23,6 +23,7 @@
     "build": "tsc && vite build",
     "build:lib": "tsc && vite build",
     "build:site": "vite build --config vite.config.site.ts",
+    "prepare": "npm run build:lib",
     "preview": "vite preview",
     "preview:site": "vite preview --config vite.config.site.ts"
   },
