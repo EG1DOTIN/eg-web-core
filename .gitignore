@@ -4,9 +4,9 @@ node_modules/
 .pnp.js
 
 # Build Outputs & Bundles
-dist/
 dist-site/
 *.tsbuildinfo
+*.map
 
 # Environment & Secret files
 .env
