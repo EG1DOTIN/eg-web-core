@@ -224,3 +224,61 @@ After modifying `eg-web-core/`, immediately verify all consumer web portals:
 python3 HELP-DOCS/run_all_workspace_checks.py
 ```
 
+---
+
+## 🏷️ 7. How to Bump & Release a New Library Version
+
+`eg-web-core` follows [Semantic Versioning (SemVer)](https://semver.org/): `MAJOR.MINOR.PATCH`.
+
+```mermaid
+flowchart TD
+    ChangeType{"Type of Library Change"}
+    ChangeType -- "Bug fix, styling fix, doc tweak, non-breaking patch" --> Patch["Increment PATCH: 1.0.0 → 1.0.1"]
+    ChangeType -- "New component, new hook, new prop (backward-compatible)" --> Minor["Increment MINOR: 1.0.1 → 1.1.0"]
+    ChangeType -- "Breaking prop change or architectural redesign" --> Major["Increment MAJOR: 1.0.1 → 2.0.0"]
+
+    Patch --> Step1["1. Edit package.json 'version'"]
+    Minor --> Step1
+    Major --> Step1
+
+    Step1 --> Step2["2. Build Distribution: npm run build"]
+    Step2 --> Step3["3. Run Workspace Verification:<br/>python3 HELP-DOCS/run_all_workspace_checks.py"]
+    Step3 --> Step4["4. Commit & Tag:<br/>git commit -m 'chore(release): bump version to 1.0.x'"]
+```
+
+### Step-by-Step Procedure:
+
+1. **Decide Version Increment**:
+   - **Patch (`1.0.x`)**: Bug fixes, styling refinements, CSS adjustments, internal documentation.
+   - **Minor (`1.x.0`)**: New components, new hooks, additive optional props, backward-compatible features.
+   - **Major (`x.0.0`)**: Breaking API changes (strictly avoided per Critical Rule 6).
+
+2. **Update `package.json`**:
+   Open [`package.json`](../package.json) and update the `"version"` field:
+   ```json
+   {
+     "name": "eg-web-core",
+     "version": "1.0.1",
+     ...
+   }
+   ```
+
+3. **Rebuild Distribution Artifacts**:
+   Run build to regenerate the `dist/` directory:
+   ```bash
+   npm run build
+   ```
+
+4. **Verify All Downstream Consumers**:
+   Ensure no consumer applications (`eg1.in`, `mchess.eg1.in`, `av.eg1.in`) break:
+   ```bash
+   python3 ../HELP-DOCS/run_all_workspace_checks.py
+   ```
+
+5. **Commit the Version Bump**:
+   ```bash
+   git add package.json dist/
+   git commit -m "chore(release): bump eg-web-core to 1.0.1"
+   ```
+
+
