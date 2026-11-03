@@ -2,8 +2,8 @@ var Cn = Object.defineProperty;
 var An = (t, e, n) => e in t ? Cn(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
 var q = (t, e, n) => An(t, typeof e != "symbol" ? e + "" : e, n);
 import { jsx as r, jsxs as c, Fragment as se } from "react/jsx-runtime";
-import { createContext as vr, useState as W, useCallback as te, useEffect as Z, useContext as wr, useMemo as re, useRef as he } from "react";
-const Jt = ["light", "light-gray", "dark", "crystal", "slate-dark", "clamui-dark"], kr = "eg_theme", Sr = vr(void 0), pl = ({
+import { createContext as vr, useState as W, useCallback as te, useEffect as Y, useContext as wr, useMemo as ee, useRef as me } from "react";
+const Jt = ["light", "light-gray", "dark", "crystal", "slate-dark", "clamui-dark"], kr = "eg_theme", Sr = vr(void 0), gl = ({
   children: t,
   defaultTheme: e = "light-gray",
   storageKey: n = kr,
@@ -28,7 +28,7 @@ const Jt = ["light", "light-gray", "dark", "crystal", "slate-dark", "clamui-dark
     } catch {
     }
   }, [n]);
-  Z(() => {
+  Y(() => {
     s(o);
   }, [o, s]);
   const p = te((h) => {
@@ -51,12 +51,12 @@ const Jt = ["light", "light-gray", "dark", "crystal", "slate-dark", "clamui-dark
     });
   }, [i, s]), u = l(o);
   return /* @__PURE__ */ r(Sr.Provider, { value: { theme: o, setTheme: p, toggleTheme: d, cycleTheme: g, isDark: u, allowedThemes: i }, children: t });
-}, yt = () => {
+}, vt = () => {
   const t = wr(Sr);
   if (!t)
     throw new Error("useTheme must be used within a ThemeProvider");
   return t;
-}, gl = (t = kr, e = "light-gray") => `
+}, hl = (t = kr, e = "light-gray") => `
 (function() {
   try {
     var saved = localStorage.getItem('${t}') || '${e}';
@@ -65,15 +65,15 @@ const Jt = ["light", "light-gray", "dark", "crystal", "slate-dark", "clamui-dark
     document.documentElement.setAttribute('data-theme', '${e}');
   }
 })();
-`.trim(), Ue = {
+`.trim(), Ke = {
   apiKey: "",
   authDomain: "",
   projectId: "",
   appId: ""
 };
-let ze = null;
+let _e = null;
 function In() {
-  return typeof window > "u" ? Promise.resolve(null) : window.firebase && window.firebase.firestore ? Promise.resolve(window.firebase) : ze || (ze = new Promise((t, e) => {
+  return typeof window > "u" ? Promise.resolve(null) : window.firebase && window.firebase.firestore ? Promise.resolve(window.firebase) : _e || (_e = new Promise((t, e) => {
     function n(i) {
       return new Promise((o, a) => {
         if (document.querySelector(`script[src="${i}"]`)) {
@@ -85,13 +85,13 @@ function In() {
       });
     }
     n("https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js").then(() => n("https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js")).then(() => t(window.firebase)).catch((i) => {
-      ze = null, e(i);
+      _e = null, e(i);
     });
-  }), ze);
+  }), _e);
 }
-let Re = null;
+let Me = null;
 function Ln() {
-  return typeof window > "u" ? Promise.resolve(null) : window.firebase && window.firebase.auth && window.firebase.firestore ? Promise.resolve(window.firebase) : Re || (Re = new Promise((t, e) => {
+  return typeof window > "u" ? Promise.resolve(null) : window.firebase && window.firebase.auth && window.firebase.firestore ? Promise.resolve(window.firebase) : Me || (Me = new Promise((t, e) => {
     function n(i) {
       return new Promise((o, a) => {
         if (document.querySelector(`script[src="${i}"]`)) {
@@ -103,11 +103,11 @@ function Ln() {
       });
     }
     n("https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js").then(() => n("https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js")).then(() => n("https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js")).then(() => t(window.firebase)).catch((i) => {
-      Re = null, e(i);
+      Me = null, e(i);
     });
-  }), Re);
+  }), Me);
 }
-async function Ce(t = Ue, e, n = {}) {
+async function Le(t = Ke, e, n = {}) {
   if (typeof window > "u")
     return { app: null, db: null, auth: null };
   n.includeAuth ? await Ln() : await In();
@@ -137,12 +137,12 @@ async function Ce(t = Ue, e, n = {}) {
   const a = o.firestore ? o.firestore() : null, l = n.includeAuth && o.auth || o.auth ? o.auth() : null;
   return window.firebaseApp = o, a && (window.db = a), { app: o, db: a, auth: l };
 }
-async function Tn(t = Ue, e) {
-  const { db: n } = await Ce(t, e);
+async function Tn(t = Ke, e) {
+  const { db: n } = await Le(t, e);
   return n;
 }
-async function $t(t = Ue, e) {
-  const { auth: n } = await Ce(t, e, { includeAuth: !0 });
+async function Dt(t = Ke, e) {
+  const { auth: n } = await Le(t, e, { includeAuth: !0 });
   return n;
 }
 const Cr = {
@@ -151,27 +151,27 @@ const Cr = {
   adminLockout: "admin_lockout",
   adminAuditLog: "admin_login_log"
 }, Ar = vr({
-  config: Ue,
+  config: Ke,
   appName: "web-app",
   collections: Cr,
   db: null,
   isReady: !1,
   error: null
-}), hl = ({
+}), ul = ({
   children: t,
-  config: e = Ue,
+  config: e = Ke,
   appName: n = "web-app",
   collections: i,
   autoInit: o = !0
 }) => {
-  const [a, l] = W(null), [s, p] = W(!1), [d, g] = W(null), u = re(() => ({
+  const [a, l] = W(null), [s, p] = W(!1), [d, g] = W(null), u = ee(() => ({
     ...Cr,
     ...i || {}
   }), [i]);
-  Z(() => {
+  Y(() => {
     if (!o || !e.apiKey) return;
     let x = !0;
-    return Ce(e, n === "web-app" ? void 0 : n).then(({ db: f }) => {
+    return Le(e, n === "web-app" ? void 0 : n).then(({ db: f }) => {
       x && (l(f), p(!0));
     }).catch((f) => {
       x && (console.warn("[FirebaseProvider] Firebase auto-init warning:", f), g(f instanceof Error ? f : new Error(String(f))));
@@ -179,7 +179,7 @@ const Cr = {
       x = !1;
     };
   }, [e, n, o]);
-  const h = re(() => ({
+  const h = ee(() => ({
     config: e,
     appName: n,
     collections: u,
@@ -188,7 +188,7 @@ const Cr = {
     error: d
   }), [e, n, u, a, s, d]);
   return /* @__PURE__ */ r(Ar.Provider, { value: h, children: t });
-}, bt = () => wr(Ar), Tt = ({
+}, wt = () => wr(Ar), Wt = ({
   variant: t = "primary",
   size: e = "md",
   icon: n,
@@ -256,7 +256,7 @@ const Cr = {
       ]
     }
   );
-}, ue = ({
+}, ye = ({
   children: t,
   variant: e = "neutral",
   size: n = "md",
@@ -313,14 +313,14 @@ const Cr = {
       children: t
     }
   );
-}, lt = ({
+}, ct = ({
   isOpen: t,
   onClose: e,
   title: n,
   children: i,
   maxWidth: o = "560px",
   footer: a
-}) => (Z(() => {
+}) => (Y(() => {
   const l = (s) => {
     s.key === "Escape" && e();
   };
@@ -444,7 +444,7 @@ const Cr = {
   showLabel: i = !1,
   mode: o = "auto"
 }) => {
-  const { theme: a, toggleTheme: l, cycleTheme: s, isDark: p, allowedThemes: d } = yt(), g = o === "toggle" || o === "auto" && d && d.length <= 2, u = g ? l : s, h = n === "sm" ? 18 : n === "lg" ? 24 : 20, x = n === "sm" ? "6px" : n === "lg" ? "10px" : "8px";
+  const { theme: a, toggleTheme: l, cycleTheme: s, isDark: p, allowedThemes: d } = vt(), g = o === "toggle" || o === "auto" && d && d.length <= 2, u = g ? l : s, h = n === "sm" ? 18 : n === "lg" ? 24 : 20, x = n === "sm" ? "6px" : n === "lg" ? "10px" : "8px";
   return /* @__PURE__ */ c(
     "button",
     {
@@ -568,7 +568,7 @@ const Cr = {
     },
     [t]
   );
-  Z(() => {
+  Y(() => {
     if (!n) return;
     let x = !0;
     return fetch(n).then((f) => f.ok ? f.json() : null).then((f) => {
@@ -581,7 +581,7 @@ const Cr = {
       x = !1;
     };
   }, [n]);
-  const d = re(() => o.slice(0, i).map((x) => {
+  const d = ee(() => o.slice(0, i).map((x) => {
     const f = x;
     return {
       id: x.id || String(f.version || Math.random()),
@@ -592,7 +592,7 @@ const Cr = {
       category: x.category || f.badge || "",
       read: l.includes(x.id)
     };
-  }), [o, l, i]), g = re(() => d.filter((x) => !x.read).length, [d]), u = te(
+  }), [o, l, i]), g = ee(() => d.filter((x) => !x.read).length, [d]), u = te(
     (x) => {
       l.includes(x) || p([...l, x]);
     },
@@ -609,7 +609,7 @@ const Cr = {
     markAllAsRead: h,
     setItems: a
   };
-}, zn = /* @__PURE__ */ new Set(["http:", "https:", "mailto:", "tel:"]), ie = (t, e = "#") => {
+}, zn = /* @__PURE__ */ new Set(["http:", "https:", "mailto:", "tel:"]), ne = (t, e = "#") => {
   if (typeof t != "string" || !t.trim()) return e;
   const n = t.trim(), i = n.replace(/[\x00-\x1F\x7F-\x9F]+/g, "").trim();
   if (!i) return e;
@@ -635,7 +635,7 @@ const Cr = {
   "META",
   "LINK",
   "FORM"
-]), ke = (t) => {
+]), Ae = (t) => {
   if (!t || typeof t != "string") return "";
   let e = t.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "").replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "").replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "").replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, "").replace(/<embed\b[^>]*>/gi, "").replace(/<applet\b[^<]*(?:(?!<\/applet>)<[^<]*)*<\/applet>/gi, "").replace(/<base\b[^>]*>/gi, "").replace(/<meta\b[^>]*>/gi, "").replace(/<link\b[^>]*>/gi, "").replace(/(?:[\s/]|&[\w#]+;)+on[a-zA-Z]+\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, "").replace(/(href|action|formaction)\s*=\s*(['"])\s*(?:javascript|vbscript|data|blob):.*?\2/gi, '$1="#"').replace(/(src|xlink:href)\s*=\s*(['"])\s*(?:javascript|vbscript|data:(?!image\/(?:png|jpe?g|gif|webp|svg\+xml);base64,)|blob):.*?\2/gi, '$1="#"');
   if (typeof window < "u" && typeof DOMParser < "u")
@@ -654,7 +654,7 @@ const Cr = {
               s.removeAttribute(g.name);
               continue;
             }
-            ["href", "src", "action", "formaction", "xlink:href"].includes(u) && ie(h, "#") === "#" && s.setAttribute(g.name, "#"), u === "style" && /(expression|javascript:|url\(["']?data:)/i.test(h) && s.removeAttribute("style");
+            ["href", "src", "action", "formaction", "xlink:href"].includes(u) && ne(h, "#") === "#" && s.setAttribute(g.name, "#"), u === "style" && /(expression|javascript:|url\(["']?data:)/i.test(h) && s.removeAttribute("style");
           }
         }
         let l = a.firstChild;
@@ -675,10 +675,10 @@ const Cr = {
   allUpdatesUrl: i = "updates",
   onNavigate: o
 }) => {
-  const [a, l] = W(!1), [s, p] = W({}), d = he(null), { isDark: g } = yt(), u = Wn({
+  const [a, l] = W(!1), [s, p] = W({}), d = me(null), { isDark: g } = vt(), u = Wn({
     storageKey: t,
     fetchUrl: e
-  }), h = n || u.notifications, x = n ? n.filter((m) => !m.read).length : u.unreadCount, f = u.markAsRead, b = u.markAllAsRead, S = () => {
+  }), h = n || u.notifications, x = n ? n.filter((m) => !m.read).length : u.unreadCount, f = u.markAsRead, b = u.markAllAsRead, C = () => {
     if (!d.current) return {};
     const m = d.current.getBoundingClientRect(), y = typeof window < "u" ? window.innerWidth : 1024, w = Math.min(360, y - 24);
     if (y <= 768 || m.right - 320 < 12) {
@@ -703,17 +703,17 @@ const Cr = {
         zIndex: 1e3
       };
   }, v = () => {
-    a ? l(!1) : (p(S()), l(!0));
+    a ? l(!1) : (p(C()), l(!0));
   };
-  return Z(() => {
+  return Y(() => {
     if (!a) return;
     const m = () => {
-      p(S());
+      p(C());
     };
     return m(), window.addEventListener("resize", m), window.addEventListener("scroll", m, !0), () => {
       window.removeEventListener("resize", m), window.removeEventListener("scroll", m, !0);
     };
-  }, [a]), Z(() => {
+  }, [a]), Y(() => {
     const m = (y) => {
       d.current && !d.current.contains(y.target) && l(!1);
     };
@@ -978,7 +978,7 @@ const Cr = {
               children: /* @__PURE__ */ r(
                 "a",
                 {
-                  href: ie(i),
+                  href: ne(i),
                   onClick: (m) => {
                     o && (m.preventDefault(), o(i), l(!1));
                   },
@@ -998,7 +998,7 @@ const Cr = {
     )
   ] });
 };
-function Dt() {
+function Et() {
   return {
     async: !1,
     breaks: !1,
@@ -1012,12 +1012,12 @@ function Dt() {
     walkTokens: null
   };
 }
-var Ae = Dt();
+var Te = Et();
 function Lr(t) {
-  Ae = t;
+  Te = t;
 }
-var De = { exec: () => null };
-function Q(t, e = "") {
+var Ne = { exec: () => null };
+function X(t, e = "") {
   let n = typeof t == "string" ? t : t.source;
   const i = {
     replace: (o, a) => {
@@ -1085,56 +1085,56 @@ var le = {
   fencesBeginRegex: (t) => new RegExp(`^ {0,${Math.min(3, t - 1)}}(?:\`\`\`|~~~)`),
   headingBeginRegex: (t) => new RegExp(`^ {0,${Math.min(3, t - 1)}}#`),
   htmlBeginRegex: (t) => new RegExp(`^ {0,${Math.min(3, t - 1)}}<(?:[a-z].*>|!--)`, "i")
-}, _n = /^(?:[ \t]*(?:\n|$))+/, Mn = /^((?: {4}| {0,3}\t)[^\n]+(?:\n(?:[ \t]*(?:\n|$))*)?)+/, $n = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/, Ge = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/, Dn = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/, Et = /(?:[*+-]|\d{1,9}[.)])/, Tr = /^(?!bull |blockCode|fences|blockquote|heading|html|table)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html|table))+?)\n {0,3}(=+|-+) *(?:\n+|$)/, Wr = Q(Tr).replace(/bull/g, Et).replace(/blockCode/g, /(?: {4}| {0,3}\t)/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).replace(/\|table/g, "").getRegex(), En = Q(Tr).replace(/bull/g, Et).replace(/blockCode/g, /(?: {4}| {0,3}\t)/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).replace(/table/g, / {0,3}\|?(?:[:\- ]*\|)+[\:\- ]*\n/).getRegex(), jt = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/, jn = /^[^\n]+/, Nt = /(?!\s*\])(?:\\.|[^\[\]\\])+/, Nn = Q(/^ {0,3}\[(label)\]: *(?:\n[ \t]*)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n[ \t]*)?| *\n[ \t]*)(title))? *(?:\n+|$)/).replace("label", Nt).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(), Pn = Q(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, Et).getRegex(), vt = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul", Pt = /<!--(?:-?>|[\s\S]*?(?:-->|$))/, Hn = Q(
+}, _n = /^(?:[ \t]*(?:\n|$))+/, Mn = /^((?: {4}| {0,3}\t)[^\n]+(?:\n(?:[ \t]*(?:\n|$))*)?)+/, $n = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/, Ze = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/, Dn = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/, jt = /(?:[*+-]|\d{1,9}[.)])/, Tr = /^(?!bull |blockCode|fences|blockquote|heading|html|table)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html|table))+?)\n {0,3}(=+|-+) *(?:\n+|$)/, Wr = X(Tr).replace(/bull/g, jt).replace(/blockCode/g, /(?: {4}| {0,3}\t)/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).replace(/\|table/g, "").getRegex(), En = X(Tr).replace(/bull/g, jt).replace(/blockCode/g, /(?: {4}| {0,3}\t)/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).replace(/table/g, / {0,3}\|?(?:[:\- ]*\|)+[\:\- ]*\n/).getRegex(), Nt = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/, jn = /^[^\n]+/, Pt = /(?!\s*\])(?:\\.|[^\[\]\\])+/, Nn = X(/^ {0,3}\[(label)\]: *(?:\n[ \t]*)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n[ \t]*)?| *\n[ \t]*)(title))? *(?:\n+|$)/).replace("label", Pt).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(), Pn = X(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, jt).getRegex(), kt = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul", Ht = /<!--(?:-?>|[\s\S]*?(?:-->|$))/, Hn = X(
   "^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$))",
   "i"
-).replace("comment", Pt).replace("tag", vt).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(), zr = Q(jt).replace("hr", Ge).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", vt).getRegex(), Fn = Q(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", zr).getRegex(), Ht = {
+).replace("comment", Ht).replace("tag", kt).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(), zr = X(Nt).replace("hr", Ze).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", kt).getRegex(), Fn = X(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", zr).getRegex(), Ft = {
   blockquote: Fn,
   code: Mn,
   def: Nn,
   fences: $n,
   heading: Dn,
-  hr: Ge,
+  hr: Ze,
   html: Hn,
   lheading: Wr,
   list: Pn,
   newline: _n,
   paragraph: zr,
-  table: De,
+  table: Ne,
   text: jn
-}, er = Q(
+}, er = X(
   "^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)"
-).replace("hr", Ge).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", "(?: {4}| {0,3}	)[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", vt).getRegex(), On = {
-  ...Ht,
+).replace("hr", Ze).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", "(?: {4}| {0,3}	)[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", kt).getRegex(), On = {
+  ...Ft,
   lheading: En,
   table: er,
-  paragraph: Q(jt).replace("hr", Ge).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", er).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", vt).getRegex()
+  paragraph: X(Nt).replace("hr", Ze).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", er).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", kt).getRegex()
 }, Vn = {
-  ...Ht,
-  html: Q(
+  ...Ft,
+  html: X(
     `^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`
-  ).replace("comment", Pt).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
+  ).replace("comment", Ht).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
   def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
   heading: /^(#{1,6})(.*)(?:\n+|$)/,
-  fences: De,
+  fences: Ne,
   // fences not supported
   lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
-  paragraph: Q(jt).replace("hr", Ge).replace("heading", ` *#{1,6} *[^
+  paragraph: X(Nt).replace("hr", Ze).replace("heading", ` *#{1,6} *[^
 ]`).replace("lheading", Wr).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex()
-}, Un = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Gn = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, Rr = /^( {2,}|\\)\n(?!\s*$)/, qn = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, wt = /[\p{P}\p{S}]/u, Ft = /[\s\p{P}\p{S}]/u, Br = /[^\s\p{P}\p{S}]/u, Kn = Q(/^((?![*_])punctSpace)/, "u").replace(/punctSpace/g, Ft).getRegex(), _r = /(?!~)[\p{P}\p{S}]/u, Zn = /(?!~)[\s\p{P}\p{S}]/u, Yn = /(?:[^\s\p{P}\p{S}]|~)/u, Qn = /\[[^[\]]*?\]\((?:\\.|[^\\\(\)]|\((?:\\.|[^\\\(\)])*\))*\)|`[^`]*?`|<[^<>]*?>/g, Mr = /^(?:\*+(?:((?!\*)punct)|[^\s*]))|^_+(?:((?!_)punct)|([^\s_]))/, Xn = Q(Mr, "u").replace(/punct/g, wt).getRegex(), Jn = Q(Mr, "u").replace(/punct/g, _r).getRegex(), $r = "^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)punct(\\*+)(?=[\\s]|$)|notPunctSpace(\\*+)(?!\\*)(?=punctSpace|$)|(?!\\*)punctSpace(\\*+)(?=notPunctSpace)|[\\s](\\*+)(?!\\*)(?=punct)|(?!\\*)punct(\\*+)(?!\\*)(?=punct)|notPunctSpace(\\*+)(?=notPunctSpace)", ei = Q($r, "gu").replace(/notPunctSpace/g, Br).replace(/punctSpace/g, Ft).replace(/punct/g, wt).getRegex(), ti = Q($r, "gu").replace(/notPunctSpace/g, Yn).replace(/punctSpace/g, Zn).replace(/punct/g, _r).getRegex(), ri = Q(
+}, Un = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Gn = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, Rr = /^( {2,}|\\)\n(?!\s*$)/, qn = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, St = /[\p{P}\p{S}]/u, Ot = /[\s\p{P}\p{S}]/u, Br = /[^\s\p{P}\p{S}]/u, Kn = X(/^((?![*_])punctSpace)/, "u").replace(/punctSpace/g, Ot).getRegex(), _r = /(?!~)[\p{P}\p{S}]/u, Zn = /(?!~)[\s\p{P}\p{S}]/u, Yn = /(?:[^\s\p{P}\p{S}]|~)/u, Qn = /\[[^[\]]*?\]\((?:\\.|[^\\\(\)]|\((?:\\.|[^\\\(\)])*\))*\)|`[^`]*?`|<[^<>]*?>/g, Mr = /^(?:\*+(?:((?!\*)punct)|[^\s*]))|^_+(?:((?!_)punct)|([^\s_]))/, Xn = X(Mr, "u").replace(/punct/g, St).getRegex(), Jn = X(Mr, "u").replace(/punct/g, _r).getRegex(), $r = "^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)punct(\\*+)(?=[\\s]|$)|notPunctSpace(\\*+)(?!\\*)(?=punctSpace|$)|(?!\\*)punctSpace(\\*+)(?=notPunctSpace)|[\\s](\\*+)(?!\\*)(?=punct)|(?!\\*)punct(\\*+)(?!\\*)(?=punct)|notPunctSpace(\\*+)(?=notPunctSpace)", ei = X($r, "gu").replace(/notPunctSpace/g, Br).replace(/punctSpace/g, Ot).replace(/punct/g, St).getRegex(), ti = X($r, "gu").replace(/notPunctSpace/g, Yn).replace(/punctSpace/g, Zn).replace(/punct/g, _r).getRegex(), ri = X(
   "^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)punct(_+)(?=[\\s]|$)|notPunctSpace(_+)(?!_)(?=punctSpace|$)|(?!_)punctSpace(_+)(?=notPunctSpace)|[\\s](_+)(?!_)(?=punct)|(?!_)punct(_+)(?!_)(?=punct)",
   "gu"
-).replace(/notPunctSpace/g, Br).replace(/punctSpace/g, Ft).replace(/punct/g, wt).getRegex(), ni = Q(/\\(punct)/, "gu").replace(/punct/g, wt).getRegex(), ii = Q(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), oi = Q(Pt).replace("(?:-->|$)", "-->").getRegex(), ai = Q(
+).replace(/notPunctSpace/g, Br).replace(/punctSpace/g, Ot).replace(/punct/g, St).getRegex(), ni = X(/\\(punct)/, "gu").replace(/punct/g, St).getRegex(), ii = X(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), oi = X(Ht).replace("(?:-->|$)", "-->").getRegex(), ai = X(
   "^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>"
-).replace("comment", oi).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), st = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, li = Q(/^!?\[(label)\]\(\s*(href)(?:(?:[ \t]*(?:\n[ \t]*)?)(title))?\s*\)/).replace("label", st).replace("href", /<(?:\\.|[^\n<>\\])+>|[^ \t\n\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), Dr = Q(/^!?\[(label)\]\[(ref)\]/).replace("label", st).replace("ref", Nt).getRegex(), Er = Q(/^!?\[(ref)\](?:\[\])?/).replace("ref", Nt).getRegex(), si = Q("reflink|nolink(?!\\()", "g").replace("reflink", Dr).replace("nolink", Er).getRegex(), Ot = {
-  _backpedal: De,
+).replace("comment", oi).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), dt = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, li = X(/^!?\[(label)\]\(\s*(href)(?:(?:[ \t]*(?:\n[ \t]*)?)(title))?\s*\)/).replace("label", dt).replace("href", /<(?:\\.|[^\n<>\\])+>|[^ \t\n\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), Dr = X(/^!?\[(label)\]\[(ref)\]/).replace("label", dt).replace("ref", Pt).getRegex(), Er = X(/^!?\[(ref)\](?:\[\])?/).replace("ref", Pt).getRegex(), si = X("reflink|nolink(?!\\()", "g").replace("reflink", Dr).replace("nolink", Er).getRegex(), Vt = {
+  _backpedal: Ne,
   // only used for GFM url
   anyPunctuation: ni,
   autolink: ii,
   blockSkip: Qn,
   br: Rr,
   code: Gn,
-  del: De,
+  del: Ne,
   emStrongLDelim: Xn,
   emStrongRDelimAst: ei,
   emStrongRDelimUnd: ri,
@@ -1146,30 +1146,30 @@ var le = {
   reflinkSearch: si,
   tag: ai,
   text: qn,
-  url: De
+  url: Ne
 }, ci = {
-  ...Ot,
-  link: Q(/^!?\[(label)\]\((.*?)\)/).replace("label", st).getRegex(),
-  reflink: Q(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", st).getRegex()
-}, Wt = {
-  ...Ot,
+  ...Vt,
+  link: X(/^!?\[(label)\]\((.*?)\)/).replace("label", dt).getRegex(),
+  reflink: X(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", dt).getRegex()
+}, zt = {
+  ...Vt,
   emStrongRDelimAst: ti,
   emStrongLDelim: Jn,
-  url: Q(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),
+  url: X(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),
   _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,
   del: /^(~~?)(?=[^\s~])((?:\\.|[^\\])*?(?:\\.|[^\s~\\]))\1(?=[^~]|$)/,
   text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
 }, di = {
-  ...Wt,
-  br: Q(Rr).replace("{2,}", "*").getRegex(),
-  text: Q(Wt.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex()
-}, Je = {
-  normal: Ht,
+  ...zt,
+  br: X(Rr).replace("{2,}", "*").getRegex(),
+  text: X(zt.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex()
+}, tt = {
+  normal: Ft,
   gfm: On,
   pedantic: Vn
-}, Be = {
-  normal: Ot,
-  gfm: Wt,
+}, $e = {
+  normal: Vt,
+  gfm: zt,
   breaks: di,
   pedantic: ci
 }, pi = {
@@ -1179,7 +1179,7 @@ var le = {
   '"': "&quot;",
   "'": "&#39;"
 }, tr = (t) => pi[t];
-function ge(t, e) {
+function xe(t, e) {
   if (e) {
     if (le.escapeTest.test(t))
       return t.replace(le.escapeReplace, tr);
@@ -1212,7 +1212,7 @@ function nr(t, e) {
     i[o] = i[o].trim().replace(le.slashPipe, "|");
   return i;
 }
-function _e(t, e, n) {
+function De(t, e, n) {
   const i = t.length;
   if (i === 0)
     return "";
@@ -1262,14 +1262,14 @@ function hi(t, e, n) {
   }).join(`
 `);
 }
-var ct = class {
+var pt = class {
   // set by the lexer
   constructor(t) {
     q(this, "options");
     q(this, "rules");
     // set by the lexer
     q(this, "lexer");
-    this.options = t || Ae;
+    this.options = t || Te;
   }
   space(t) {
     const e = this.rules.block.newline.exec(t);
@@ -1287,7 +1287,7 @@ var ct = class {
         type: "code",
         raw: e[0],
         codeBlockStyle: "indented",
-        text: this.options.pedantic ? n : _e(n, `
+        text: this.options.pedantic ? n : De(n, `
 `)
       };
     }
@@ -1309,7 +1309,7 @@ var ct = class {
     if (e) {
       let n = e[2].trim();
       if (this.rules.other.endingHash.test(n)) {
-        const i = _e(n, "#");
+        const i = De(n, "#");
         (this.options.pedantic || !i || this.rules.other.endingSpaceChar.test(i)) && (n = i.trim());
       }
       return {
@@ -1326,14 +1326,14 @@ var ct = class {
     if (e)
       return {
         type: "hr",
-        raw: _e(e[0], `
+        raw: De(e[0], `
 `)
       };
   }
   blockquote(t) {
     const e = this.rules.block.blockquote.exec(t);
     if (e) {
-      let n = _e(e[0], `
+      let n = De(e[0], `
 `).split(`
 `), i = "", o = "";
       const a = [];
@@ -1413,12 +1413,12 @@ ${g}` : g;
           for (; t; ) {
             const z = t.split(`
 `, 1)[0];
-            let C;
-            if (h = z, this.options.pedantic ? (h = h.replace(this.rules.other.listReplaceNesting, "  "), C = h) : C = h.replace(this.rules.other.tabCharGlobal, "    "), y.test(h) || w.test(h) || L.test(h) || v.test(h) || m.test(h))
+            let A;
+            if (h = z, this.options.pedantic ? (h = h.replace(this.rules.other.listReplaceNesting, "  "), A = h) : A = h.replace(this.rules.other.tabCharGlobal, "    "), y.test(h) || w.test(h) || L.test(h) || v.test(h) || m.test(h))
               break;
-            if (C.search(this.rules.other.nonSpaceChar) >= f || !h.trim())
+            if (A.search(this.rules.other.nonSpaceChar) >= f || !h.trim())
               g += `
-` + C.slice(f);
+` + A.slice(f);
             else {
               if (x || u.replace(this.rules.other.tabCharGlobal, "    ").search(this.rules.other.nonSpaceChar) >= 4 || y.test(u) || w.test(u) || m.test(u))
                 break;
@@ -1426,16 +1426,16 @@ ${g}` : g;
 ` + h;
             }
             !x && !h.trim() && (x = !0), d += z + `
-`, t = t.substring(z.length + 1), u = C.slice(f);
+`, t = t.substring(z.length + 1), u = A.slice(f);
           }
         }
         o.loose || (l ? o.loose = !0 : this.rules.other.doubleBlankLine.test(d) && (l = !0));
-        let b = null, S;
-        this.options.gfm && (b = this.rules.other.listIsTask.exec(g), b && (S = b[0] !== "[ ] ", g = g.replace(this.rules.other.listReplaceTask, ""))), o.items.push({
+        let b = null, C;
+        this.options.gfm && (b = this.rules.other.listIsTask.exec(g), b && (C = b[0] !== "[ ] ", g = g.replace(this.rules.other.listReplaceTask, ""))), o.items.push({
           type: "list_item",
           raw: d,
           task: !!b,
-          checked: S,
+          checked: C,
           loose: !1,
           text: g,
           tokens: []
@@ -1577,7 +1577,7 @@ ${g}` : g;
       if (!this.options.pedantic && this.rules.other.startAngleBracket.test(n)) {
         if (!this.rules.other.endAngleBracket.test(n))
           return;
-        const a = _e(n.slice(0, -1), "\\");
+        const a = De(n.slice(0, -1), "\\");
         if ((n.length - a.length) % 2 === 0)
           return;
       } else {
@@ -1744,45 +1744,45 @@ ${g}` : g;
       };
     }
   }
-}, fe = class zt {
+}, be = class Rt {
   constructor(e) {
     q(this, "tokens");
     q(this, "options");
     q(this, "state");
     q(this, "tokenizer");
     q(this, "inlineQueue");
-    this.tokens = [], this.tokens.links = /* @__PURE__ */ Object.create(null), this.options = e || Ae, this.options.tokenizer = this.options.tokenizer || new ct(), this.tokenizer = this.options.tokenizer, this.tokenizer.options = this.options, this.tokenizer.lexer = this, this.inlineQueue = [], this.state = {
+    this.tokens = [], this.tokens.links = /* @__PURE__ */ Object.create(null), this.options = e || Te, this.options.tokenizer = this.options.tokenizer || new pt(), this.tokenizer = this.options.tokenizer, this.tokenizer.options = this.options, this.tokenizer.lexer = this, this.inlineQueue = [], this.state = {
       inLink: !1,
       inRawBlock: !1,
       top: !0
     };
     const n = {
       other: le,
-      block: Je.normal,
-      inline: Be.normal
+      block: tt.normal,
+      inline: $e.normal
     };
-    this.options.pedantic ? (n.block = Je.pedantic, n.inline = Be.pedantic) : this.options.gfm && (n.block = Je.gfm, this.options.breaks ? n.inline = Be.breaks : n.inline = Be.gfm), this.tokenizer.rules = n;
+    this.options.pedantic ? (n.block = tt.pedantic, n.inline = $e.pedantic) : this.options.gfm && (n.block = tt.gfm, this.options.breaks ? n.inline = $e.breaks : n.inline = $e.gfm), this.tokenizer.rules = n;
   }
   /**
    * Expose Rules
    */
   static get rules() {
     return {
-      block: Je,
-      inline: Be
+      block: tt,
+      inline: $e
     };
   }
   /**
    * Static Lex Method
    */
   static lex(e, n) {
-    return new zt(n).lex(e);
+    return new Rt(n).lex(e);
   }
   /**
    * Static Lex Inline Method
    */
   static lexInline(e, n) {
-    return new zt(n).inlineTokens(e);
+    return new Rt(n).inlineTokens(e);
   }
   /**
    * Preprocessing
@@ -1988,12 +1988,12 @@ ${g}` : g;
     }
     return n;
   }
-}, dt = class {
+}, gt = class {
   // set by the parser
   constructor(t) {
     q(this, "options");
     q(this, "parser");
-    this.options = t || Ae;
+    this.options = t || Te;
   }
   space(t) {
     return "";
@@ -2002,8 +2002,8 @@ ${g}` : g;
     var a;
     const i = (a = (e || "").match(le.notSpaceStart)) == null ? void 0 : a[0], o = t.replace(le.endingNewline, "") + `
 `;
-    return i ? '<pre><code class="language-' + ge(i) + '">' + (n ? o : ge(o, !0)) + `</code></pre>
-` : "<pre><code>" + (n ? o : ge(o, !0)) + `</code></pre>
+    return i ? '<pre><code class="language-' + xe(i) + '">' + (n ? o : xe(o, !0)) + `</code></pre>
+` : "<pre><code>" + (n ? o : xe(o, !0)) + `</code></pre>
 `;
   }
   blockquote({ tokens: t }) {
@@ -2039,7 +2039,7 @@ ${this.parser.parse(t)}</blockquote>
     let e = "";
     if (t.task) {
       const i = this.checkbox({ checked: !!t.checked });
-      t.loose ? ((n = t.tokens[0]) == null ? void 0 : n.type) === "paragraph" ? (t.tokens[0].text = i + " " + t.tokens[0].text, t.tokens[0].tokens && t.tokens[0].tokens.length > 0 && t.tokens[0].tokens[0].type === "text" && (t.tokens[0].tokens[0].text = i + " " + ge(t.tokens[0].tokens[0].text), t.tokens[0].tokens[0].escaped = !0)) : t.tokens.unshift({
+      t.loose ? ((n = t.tokens[0]) == null ? void 0 : n.type) === "paragraph" ? (t.tokens[0].text = i + " " + t.tokens[0].text, t.tokens[0].tokens && t.tokens[0].tokens.length > 0 && t.tokens[0].tokens[0].type === "text" && (t.tokens[0].tokens[0].text = i + " " + xe(t.tokens[0].tokens[0].text), t.tokens[0].tokens[0].escaped = !0)) : t.tokens.unshift({
         type: "text",
         raw: i + " ",
         text: i + " ",
@@ -2095,7 +2095,7 @@ ${t}</tr>
     return `<em>${this.parser.parseInline(t)}</em>`;
   }
   codespan({ text: t }) {
-    return `<code>${ge(t, !0)}</code>`;
+    return `<code>${xe(t, !0)}</code>`;
   }
   br(t) {
     return "<br>";
@@ -2109,21 +2109,21 @@ ${t}</tr>
       return i;
     t = o;
     let a = '<a href="' + t + '"';
-    return e && (a += ' title="' + ge(e) + '"'), a += ">" + i + "</a>", a;
+    return e && (a += ' title="' + xe(e) + '"'), a += ">" + i + "</a>", a;
   }
   image({ href: t, title: e, text: n, tokens: i }) {
     i && (n = this.parser.parseInline(i, this.parser.textRenderer));
     const o = rr(t);
     if (o === null)
-      return ge(n);
+      return xe(n);
     t = o;
     let a = `<img src="${t}" alt="${n}"`;
-    return e && (a += ` title="${ge(e)}"`), a += ">", a;
+    return e && (a += ` title="${xe(e)}"`), a += ">", a;
   }
   text(t) {
-    return "tokens" in t && t.tokens ? this.parser.parseInline(t.tokens) : "escaped" in t && t.escaped ? t.text : ge(t.text);
+    return "tokens" in t && t.tokens ? this.parser.parseInline(t.tokens) : "escaped" in t && t.escaped ? t.text : xe(t.text);
   }
-}, Vt = class {
+}, Ut = class {
   // no need for block level renderers
   strong({ text: t }) {
     return t;
@@ -2152,24 +2152,24 @@ ${t}</tr>
   br() {
     return "";
   }
-}, xe = class Rt {
+}, ve = class Bt {
   constructor(e) {
     q(this, "options");
     q(this, "renderer");
     q(this, "textRenderer");
-    this.options = e || Ae, this.options.renderer = this.options.renderer || new dt(), this.renderer = this.options.renderer, this.renderer.options = this.options, this.renderer.parser = this, this.textRenderer = new Vt();
+    this.options = e || Te, this.options.renderer = this.options.renderer || new gt(), this.renderer = this.options.renderer, this.renderer.options = this.options, this.renderer.parser = this, this.textRenderer = new Ut();
   }
   /**
    * Static Parse Method
    */
   static parse(e, n) {
-    return new Rt(n).parse(e);
+    return new Bt(n).parse(e);
   }
   /**
    * Static Parse Inline Method
    */
   static parseInline(e, n) {
-    return new Rt(n).parseInline(e);
+    return new Bt(n).parseInline(e);
   }
   /**
    * Parse Loop
@@ -2314,11 +2314,11 @@ ${t}</tr>
     }
     return i;
   }
-}, Lt, at = (Lt = class {
+}, Tt, st = (Tt = class {
   constructor(t) {
     q(this, "options");
     q(this, "block");
-    this.options = t || Ae;
+    this.options = t || Te;
   }
   /**
    * Process markdown before marked
@@ -2342,30 +2342,30 @@ ${t}</tr>
    * Provide function to tokenize markdown
    */
   provideLexer() {
-    return this.block ? fe.lex : fe.lexInline;
+    return this.block ? be.lex : be.lexInline;
   }
   /**
    * Provide function to parse tokens
    */
   provideParser() {
-    return this.block ? xe.parse : xe.parseInline;
+    return this.block ? ve.parse : ve.parseInline;
   }
-}, q(Lt, "passThroughHooks", /* @__PURE__ */ new Set([
+}, q(Tt, "passThroughHooks", /* @__PURE__ */ new Set([
   "preprocess",
   "postprocess",
   "processAllTokens"
-])), Lt), ui = class {
+])), Tt), ui = class {
   constructor(...t) {
-    q(this, "defaults", Dt());
+    q(this, "defaults", Et());
     q(this, "options", this.setOptions);
     q(this, "parse", this.parseMarkdown(!0));
     q(this, "parseInline", this.parseMarkdown(!1));
-    q(this, "Parser", xe);
-    q(this, "Renderer", dt);
-    q(this, "TextRenderer", Vt);
-    q(this, "Lexer", fe);
-    q(this, "Tokenizer", ct);
-    q(this, "Hooks", at);
+    q(this, "Parser", ve);
+    q(this, "Renderer", gt);
+    q(this, "TextRenderer", Ut);
+    q(this, "Lexer", be);
+    q(this, "Tokenizer", pt);
+    q(this, "Hooks", st);
     this.use(...t);
   }
   /**
@@ -2422,7 +2422,7 @@ ${t}</tr>
         }
         "childTokens" in o && o.childTokens && (e.childTokens[o.name] = o.childTokens);
       }), i.extensions = e), n.renderer) {
-        const o = this.defaults.renderer || new dt(this.defaults);
+        const o = this.defaults.renderer || new gt(this.defaults);
         for (const a in n.renderer) {
           if (!(a in o))
             throw new Error(`renderer '${a}' does not exist`);
@@ -2437,7 +2437,7 @@ ${t}</tr>
         i.renderer = o;
       }
       if (n.tokenizer) {
-        const o = this.defaults.tokenizer || new ct(this.defaults);
+        const o = this.defaults.tokenizer || new pt(this.defaults);
         for (const a in n.tokenizer) {
           if (!(a in o))
             throw new Error(`tokenizer '${a}' does not exist`);
@@ -2452,14 +2452,14 @@ ${t}</tr>
         i.tokenizer = o;
       }
       if (n.hooks) {
-        const o = this.defaults.hooks || new at();
+        const o = this.defaults.hooks || new st();
         for (const a in n.hooks) {
           if (!(a in o))
             throw new Error(`hook '${a}' does not exist`);
           if (["options", "block"].includes(a))
             continue;
           const l = a, s = n.hooks[l], p = o[l];
-          at.passThroughHooks.has(a) ? o[l] = (d) => {
+          st.passThroughHooks.has(a) ? o[l] = (d) => {
             if (this.defaults.async)
               return Promise.resolve(s.call(o, d)).then((u) => p.call(o, u));
             const g = s.call(o, d);
@@ -2485,10 +2485,10 @@ ${t}</tr>
     return this.defaults = { ...this.defaults, ...t }, this;
   }
   lexer(t, e) {
-    return fe.lex(t, e ?? this.defaults);
+    return be.lex(t, e ?? this.defaults);
   }
   parser(t, e) {
-    return xe.parse(t, e ?? this.defaults);
+    return ve.parse(t, e ?? this.defaults);
   }
   parseMarkdown(t) {
     return (n, i) => {
@@ -2500,7 +2500,7 @@ ${t}</tr>
       if (typeof n != "string")
         return l(new Error("marked(): input parameter is of type " + Object.prototype.toString.call(n) + ", string expected"));
       a.hooks && (a.hooks.options = a, a.hooks.block = t);
-      const s = a.hooks ? a.hooks.provideLexer() : t ? fe.lex : fe.lexInline, p = a.hooks ? a.hooks.provideParser() : t ? xe.parse : xe.parseInline;
+      const s = a.hooks ? a.hooks.provideLexer() : t ? be.lex : be.lexInline, p = a.hooks ? a.hooks.provideParser() : t ? ve.parse : ve.parseInline;
       if (a.async)
         return Promise.resolve(a.hooks ? a.hooks.preprocess(n) : n).then((d) => s(d, a)).then((d) => a.hooks ? a.hooks.processAllTokens(d) : d).then((d) => a.walkTokens ? Promise.all(this.walkTokens(d, a.walkTokens)).then(() => d) : d).then((d) => p(d, a)).then((d) => a.hooks ? a.hooks.postprocess(d) : d).catch(l);
       try {
@@ -2518,7 +2518,7 @@ ${t}</tr>
     return (n) => {
       if (n.message += `
 Please report this to https://github.com/markedjs/marked.`, t) {
-        const i = "<p>An error occurred:</p><pre>" + ge(n.message + "", !0) + "</pre>";
+        const i = "<p>An error occurred:</p><pre>" + xe(n.message + "", !0) + "</pre>";
         return e ? Promise.resolve(i) : i;
       }
       if (e)
@@ -2526,38 +2526,38 @@ Please report this to https://github.com/markedjs/marked.`, t) {
       throw n;
     };
   }
-}, Se = new ui();
-function K(t, e) {
-  return Se.parse(t, e);
+}, Ie = new ui();
+function Z(t, e) {
+  return Ie.parse(t, e);
 }
-K.options = K.setOptions = function(t) {
-  return Se.setOptions(t), K.defaults = Se.defaults, Lr(K.defaults), K;
+Z.options = Z.setOptions = function(t) {
+  return Ie.setOptions(t), Z.defaults = Ie.defaults, Lr(Z.defaults), Z;
 };
-K.getDefaults = Dt;
-K.defaults = Ae;
-K.use = function(...t) {
-  return Se.use(...t), K.defaults = Se.defaults, Lr(K.defaults), K;
+Z.getDefaults = Et;
+Z.defaults = Te;
+Z.use = function(...t) {
+  return Ie.use(...t), Z.defaults = Ie.defaults, Lr(Z.defaults), Z;
 };
-K.walkTokens = function(t, e) {
-  return Se.walkTokens(t, e);
+Z.walkTokens = function(t, e) {
+  return Ie.walkTokens(t, e);
 };
-K.parseInline = Se.parseInline;
-K.Parser = xe;
-K.parser = xe.parse;
-K.Renderer = dt;
-K.TextRenderer = Vt;
-K.Lexer = fe;
-K.lexer = fe.lex;
-K.Tokenizer = ct;
-K.Hooks = at;
-K.parse = K;
-K.options;
-K.setOptions;
-K.use;
-K.walkTokens;
-K.parseInline;
-xe.parse;
-fe.lex;
+Z.parseInline = Ie.parseInline;
+Z.Parser = ve;
+Z.parser = ve.parse;
+Z.Renderer = gt;
+Z.TextRenderer = Ut;
+Z.Lexer = be;
+Z.lexer = be.lex;
+Z.Tokenizer = pt;
+Z.Hooks = st;
+Z.parse = Z;
+Z.options;
+Z.setOptions;
+Z.use;
+Z.walkTokens;
+Z.parseInline;
+ve.parse;
+be.lex;
 class fi {
   constructor() {
     q(this, "products", null);
@@ -2676,8 +2676,8 @@ class fi {
     const o = i[1], a = (i[2] || "").trim(), l = {}, s = o.split(/\r?\n/);
     let p = null;
     for (let f = 0; f < s.length; f++) {
-      const b = s[f], S = b.trim();
-      if (!S || S.startsWith("#")) continue;
+      const b = s[f], C = b.trim();
+      if (!C || C.startsWith("#")) continue;
       const v = /^(\s{2,}|\t)/.test(b), m = b.indexOf(":");
       if (m === -1) continue;
       const y = b.slice(0, m).trim();
@@ -2687,9 +2687,9 @@ class fi {
     }
     let d = "";
     try {
-      d = ke(K.parse(a));
+      d = Ae(Z.parse(a));
     } catch {
-      d = ke("<p>" + a.replace(/\n\n+/g, "</p><p>") + "</p>");
+      d = Ae("<p>" + a.replace(/\n\n+/g, "</p><p>") + "</p>");
     }
     const g = l.name || l.product_name || l.title || n || "Unknown App", u = l.slug || n || g.toLowerCase().replace(/[^a-z0-9\s-]/g, "").replace(/[\s-]+/g, "-"), h = l.id || u;
     let x = "1.0.0";
@@ -2748,25 +2748,25 @@ class fi {
             `${o}${f.toLowerCase()}.md`,
             `${o}${f}.md`
           ];
-          let S = null;
+          let C = null;
           for (const v of b)
             try {
               const m = await fetch(v);
               if (m.ok) {
-                S = await m.text();
+                C = await m.text();
                 break;
               }
             } catch {
             }
-          return S ? this.parseAppMarkdown(S, f) : null;
+          return C ? this.parseAppMarkdown(C, f) : null;
         } catch {
           return null;
         }
       }), h = (await Promise.all(g)).filter((x) => x !== null);
       if (h.length > 0)
         return h.sort((x, f) => {
-          const b = new Date(x.createdAt || x.updatedAt || 0).getTime(), S = new Date(f.createdAt || f.updatedAt || 0).getTime();
-          return !isNaN(b) && !isNaN(S) && b !== S ? S - b : String(f.id || "").localeCompare(String(x.id || ""));
+          const b = new Date(x.createdAt || x.updatedAt || 0).getTime(), C = new Date(f.createdAt || f.updatedAt || 0).getTime();
+          return !isNaN(b) && !isNaN(C) && b !== C ? C - b : String(f.id || "").localeCompare(String(x.id || ""));
         }), this.products = h, this.setPersistent(l, h), a ? h.filter((x) => x.active === "1" || x.active === 1 || x.active === !0 || x.active === void 0) : h;
     } catch (g) {
       console.warn("[DataCache] Failed loading markdown apps:", g);
@@ -2898,13 +2898,13 @@ class fi {
     const i = e.match(/^---\s*[\r\n]+([\s\S]*?)[\r\n]+---\s*[\r\n]+([\s\S]*)$/);
     if (!i) return null;
     const o = i[1], a = (i[2] || "").trim(), l = {}, s = o.split(/\r?\n/);
-    for (const S of s) {
-      const v = S.trim();
+    for (const C of s) {
+      const v = C.trim();
       if (!v || v.startsWith("#")) continue;
-      const m = S.indexOf(":");
+      const m = C.indexOf(":");
       if (m === -1) continue;
-      const y = S.slice(0, m).trim();
-      let w = S.slice(m + 1).trim();
+      const y = C.slice(0, m).trim();
+      let w = C.slice(m + 1).trim();
       w.startsWith('"') && w.endsWith('"') || w.startsWith("'") && w.endsWith("'") ? w = w.slice(1, -1) : w.startsWith("[") && w.endsWith("]") && (w = w.slice(1, -1).split(",").map((z) => z.trim().replace(/^["']|["']$/g, "")).filter(Boolean)), l[y] = w;
     }
     const p = String(l.id || n || "").trim().replace(/^id/i, ""), d = l.title || l.heading || `Blog ${p}`, g = Array.isArray(l.tags) ? l.tags : l.category ? [l.category] : ["General"], u = (l.short_description || l.description || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), h = u.length > 140 ? u.slice(0, 140) + "..." : u, x = (a || "").split(/\s+/).length, b = `${Math.max(1, Math.round(x / 200))} min read`;
@@ -2984,7 +2984,7 @@ class fi {
     return [];
   }
 }
-const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${t.id}`).trim().toLowerCase().replace(/[^a-z0-9\s-]/g, "").replace(/[\s-]+/g, "-"), fl = (t) => t.slug ? t.slug : String(t.heading || t.title || `article-${t.id}`).trim().replace(/c\+\+/gi, "cpp").replace(/c#/gi, "csharp").replace(/f#/gi, "fsharp").replace(/\.net\b/gi, "dotnet").replace(/&/g, " and ").toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/[\s-]+/g, "-") || `article-${t.id}`, or = ({
+const we = new fi(), fl = (t) => t.slug ? t.slug : (t.title || t.name || `app-${t.id}`).trim().toLowerCase().replace(/[^a-z0-9\s-]/g, "").replace(/[\s-]+/g, "-"), xi = (t) => t.slug && !/^post-\d+$/i.test(t.slug) && !/^article-\d+$/i.test(t.slug) && !/^\d+$/.test(t.slug) ? t.slug : String(t.heading || t.title || `article-${t.id}`).trim().replace(/c\+\+/gi, "cpp").replace(/c#/gi, "csharp").replace(/f#/gi, "fsharp").replace(/\.net\b/gi, "dotnet").replace(/&/g, " and ").toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/[\s-]+/g, "-") || `article-${t.id}`, or = ({
   className: t = "",
   size: e = "md",
   showLabel: n = !1,
@@ -2995,7 +2995,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     if (!(a || typeof window > "u")) {
       l(!0);
       try {
-        me.clearCache("ALL");
+        we.clearCache("ALL");
         try {
           localStorage.removeItem("analytics_consent"), localStorage.removeItem("analytics_optout"), localStorage.removeItem("analytics_session"), i && Array.isArray(i) && i.forEach((d) => localStorage.removeItem(d)), sessionStorage.clear();
         } catch (d) {
@@ -3084,15 +3084,15 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   className: o = "",
   style: a = {}
 }) => {
-  const [l, s] = W(0), [p, d] = W(!1), { isDark: g } = yt();
-  if (Z(() => {
+  const [l, s] = W(0), [p, d] = W(!1), { isDark: g } = vt();
+  if (Y(() => {
     if (!t || t.length <= 1 || p) return;
     const m = setInterval(() => {
       s((y) => (y + 1) % t.length);
     }, e);
     return () => clearInterval(m);
   }, [t, e, p]), !t || t.length === 0) return null;
-  const u = t[l], h = i === "dark" ? !0 : i === "light" ? !1 : g, x = h ? "rgba(255, 255, 255, 0.08)" : "var(--eg-bg-subtle, rgba(0, 0, 0, 0.05))", f = h ? "1px solid rgba(255, 255, 255, 0.15)" : "1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.08))", b = h ? "#ffffff" : "var(--eg-text-primary, #0f172a)", S = h ? "#cbd5e1" : "var(--eg-text-secondary, #475569)", v = h ? "#94a3b8" : "var(--eg-text-muted, #94a3b8)";
+  const u = t[l], h = i === "dark" ? !0 : i === "light" ? !1 : g, x = h ? "rgba(255, 255, 255, 0.08)" : "var(--eg-bg-subtle, rgba(0, 0, 0, 0.05))", f = h ? "1px solid rgba(255, 255, 255, 0.15)" : "1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.08))", b = h ? "#ffffff" : "var(--eg-text-primary, #0f172a)", C = h ? "#cbd5e1" : "var(--eg-text-secondary, #475569)", v = h ? "#94a3b8" : "var(--eg-text-muted, #94a3b8)";
   return /* @__PURE__ */ c(
     "div",
     {
@@ -3135,7 +3135,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         /* @__PURE__ */ r("div", { style: { flex: 1, minWidth: 0, overflow: "hidden" }, children: /* @__PURE__ */ c(
           "a",
           {
-            href: ie(u.link),
+            href: ne(u.link),
             style: {
               color: b,
               textDecoration: "none",
@@ -3153,7 +3153,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
             },
             children: [
               /* @__PURE__ */ r("strong", { children: u.title }),
-              u.description && /* @__PURE__ */ c("span", { style: { color: S, marginLeft: "8px" }, children: [
+              u.description && /* @__PURE__ */ c("span", { style: { color: C, marginLeft: "8px" }, children: [
                 "— ",
                 u.description
               ] })
@@ -3199,51 +3199,126 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       ]
     }
   );
-}, Ut = ({
+}, Gt = ({
   isOpen: t,
   onClose: e,
   title: n,
   url: i,
-  description: o = ""
+  description: o = "",
+  imageUrl: a
 }) => {
-  const [a, l] = W(!1), s = i || (typeof window < "u" ? window.location.href : ""), p = async () => {
+  const [l, s] = W(!1), p = i || (typeof window < "u" ? window.location.href : ""), d = async () => {
     try {
-      await navigator.clipboard.writeText(s), l(!0), setTimeout(() => l(!1), 2500);
+      await navigator.clipboard.writeText(p), s(!0), setTimeout(() => s(!1), 2500);
     } catch {
     }
-  }, d = encodeURIComponent(s), g = encodeURIComponent(`${n}: ${o}`), u = [
+  }, g = encodeURIComponent(p), u = o && o.trim() && o.trim() !== n.trim() ? `${n} - ${o.trim()}` : n, h = encodeURIComponent(u), x = [
     {
       name: "WhatsApp",
-      url: `https://api.whatsapp.com/send?text=${g}%20${d}`,
+      url: `https://api.whatsapp.com/send?text=${h}%20${g}`,
       color: "#25D366"
     },
     {
       name: "X (Twitter)",
-      url: `https://twitter.com/intent/tweet?text=${g}&url=${d}`,
+      url: `https://twitter.com/intent/tweet?text=${h}&url=${g}`,
       color: "#1DA1F2"
     },
     {
       name: "LinkedIn",
-      url: `https://www.linkedin.com/sharing/share-offsite/?url=${d}`,
+      url: `https://www.linkedin.com/sharing/share-offsite/?url=${g}`,
       color: "#0A66C2"
     },
     {
+      name: "Facebook",
+      url: `https://www.facebook.com/sharer/sharer.php?u=${g}`,
+      color: "#1877F2"
+    },
+    {
       name: "Telegram",
-      url: `https://t.me/share/url?url=${d}&text=${g}`,
+      url: `https://t.me/share/url?url=${g}&text=${h}`,
       color: "#229ED9"
     },
     {
       name: "Reddit",
-      url: `https://reddit.com/submit?url=${d}&title=${g}`,
+      url: `https://reddit.com/submit?url=${g}&title=${h}`,
       color: "#FF4500"
     }
   ];
-  return /* @__PURE__ */ r(lt, { isOpen: t, onClose: e, title: `Share "${n}"`, maxWidth: "480px", children: /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: "18px" }, children: [
-    /* @__PURE__ */ r("p", { style: { margin: 0, fontSize: "13.5px", color: "var(--eg-text-secondary, #cbd5e1)" }, children: "Share this link with friends, developers, or colleagues:" }),
-    /* @__PURE__ */ r("div", { style: { display: "flex", flexWrap: "wrap", gap: "10px" }, children: u.map((h) => /* @__PURE__ */ r(
+  return /* @__PURE__ */ r(ct, { isOpen: t, onClose: e, title: `Share "${n}"`, maxWidth: "480px", children: /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: [
+    (a || o) && /* @__PURE__ */ c(
+      "div",
+      {
+        style: {
+          display: "flex",
+          gap: "12px",
+          alignItems: "center",
+          padding: "10px 12px",
+          background: "var(--eg-bg-subtle, rgba(255, 255, 255, 0.04))",
+          border: "1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.1))",
+          borderRadius: "var(--eg-radius-md, 8px)",
+          overflow: "hidden"
+        },
+        children: [
+          a && /* @__PURE__ */ r(
+            "img",
+            {
+              src: a,
+              alt: n,
+              style: {
+                width: "58px",
+                height: "58px",
+                objectFit: "cover",
+                borderRadius: "6px",
+                flexShrink: 0,
+                backgroundColor: "rgba(0, 0, 0, 0.1)"
+              },
+              onError: (f) => {
+                f.currentTarget.style.display = "none";
+              }
+            }
+          ),
+          /* @__PURE__ */ c("div", { style: { minWidth: 0, flex: 1 }, children: [
+            /* @__PURE__ */ r(
+              "div",
+              {
+                style: {
+                  margin: 0,
+                  fontSize: "13.5px",
+                  fontWeight: 600,
+                  color: "var(--eg-text-primary, #f8fafc)",
+                  lineHeight: 1.35,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical"
+                },
+                children: n
+              }
+            ),
+            o && o.trim() !== n.trim() && /* @__PURE__ */ r(
+              "div",
+              {
+                style: {
+                  margin: "4px 0 0 0",
+                  fontSize: "12px",
+                  color: "var(--eg-text-muted, #94a3b8)",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap"
+                },
+                children: o
+              }
+            )
+          ] })
+        ]
+      }
+    ),
+    /* @__PURE__ */ r("p", { style: { margin: 0, fontSize: "13px", color: "var(--eg-text-secondary, #cbd5e1)" }, children: "Share this link with friends, developers, or colleagues:" }),
+    /* @__PURE__ */ r("div", { style: { display: "flex", flexWrap: "wrap", gap: "10px" }, children: x.map((f) => /* @__PURE__ */ r(
       "a",
       {
-        href: ie(h.url),
+        href: ne(f.url),
         target: "_blank",
         rel: "noopener noreferrer",
         style: {
@@ -3260,15 +3335,15 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           textDecoration: "none",
           transition: "all 0.15s ease"
         },
-        onMouseEnter: (x) => {
-          x.currentTarget.style.borderColor = h.color, x.currentTarget.style.color = h.color;
+        onMouseEnter: (b) => {
+          b.currentTarget.style.borderColor = f.color, b.currentTarget.style.color = f.color;
         },
-        onMouseLeave: (x) => {
-          x.currentTarget.style.borderColor = "var(--eg-border-subtle, rgba(255, 255, 255, 0.12))", x.currentTarget.style.color = "var(--eg-text-primary, #f8fafc)";
+        onMouseLeave: (b) => {
+          b.currentTarget.style.borderColor = "var(--eg-border-subtle, rgba(255, 255, 255, 0.12))", b.currentTarget.style.color = "var(--eg-text-primary, #f8fafc)";
         },
-        children: h.name
+        children: f.name
       },
-      h.name
+      f.name
     )) }),
     /* @__PURE__ */ c("div", { children: [
       /* @__PURE__ */ r(
@@ -3290,7 +3365,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           {
             type: "text",
             readOnly: !0,
-            value: s,
+            value: p,
             style: {
               flex: 1,
               padding: "8px 12px",
@@ -3307,10 +3382,10 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           "button",
           {
             type: "button",
-            onClick: p,
+            onClick: d,
             style: {
               padding: "8px 16px",
-              background: a ? "#10b981" : "var(--eg-color-primary, #2563eb)",
+              background: l ? "#10b981" : "var(--eg-color-primary, #2563eb)",
               color: "#ffffff",
               border: "none",
               borderRadius: "var(--eg-radius-md, 8px)",
@@ -3320,16 +3395,16 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
               transition: "background 0.2s ease",
               flexShrink: 0
             },
-            children: a ? "Copied!" : "Copy"
+            children: l ? "Copied!" : "Copy"
           }
         )
       ] })
     ] })
   ] }) });
-}, be = "analytics_consent", qe = "analytics_session", xi = 50, mi = 3500, yi = () => {
+}, ke = "analytics_consent", Ye = "analytics_session", mi = 50, yi = 3500, bi = () => {
   const t = /* @__PURE__ */ new Date(), e = t.getFullYear(), n = String(t.getMonth() + 1).padStart(2, "0"), i = String(t.getDate()).padStart(2, "0");
   return `${e}-${n}-${i}`;
-}, bi = (t) => /windows/i.test(t) ? "Windows" : /macintosh|mac os x/i.test(t) ? "macOS" : /linux/i.test(t) ? "Linux" : /android/i.test(t) ? "Android" : /iphone|ipad|ipod/i.test(t) ? "iOS" : "Unknown OS", vi = (t) => /edg\//i.test(t) ? "Edge" : /opr\/|opera/i.test(t) ? "Opera" : /chrome|crios/i.test(t) ? "Chrome" : /firefox|fxios/i.test(t) ? "Firefox" : /safari/i.test(t) && !/chrome|crios/i.test(t) ? "Safari" : "Unknown Browser", wi = async () => {
+}, vi = (t) => /windows/i.test(t) ? "Windows" : /macintosh|mac os x/i.test(t) ? "macOS" : /linux/i.test(t) ? "Linux" : /android/i.test(t) ? "Android" : /iphone|ipad|ipod/i.test(t) ? "iOS" : "Unknown OS", wi = (t) => /edg\//i.test(t) ? "Edge" : /opr\/|opera/i.test(t) ? "Opera" : /chrome|crios/i.test(t) ? "Chrome" : /firefox|fxios/i.test(t) ? "Firefox" : /safari/i.test(t) && !/chrome|crios/i.test(t) ? "Safari" : "Unknown Browser", ki = async () => {
   const t = {
     ip: "Unknown",
     city: "Unknown",
@@ -3340,7 +3415,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   };
   if (typeof window > "u") return t;
   try {
-    const e = new AbortController(), n = setTimeout(() => e.abort(), mi);
+    const e = new AbortController(), n = setTimeout(() => e.abort(), yi);
     try {
       const o = await fetch("https://ipapi.co/json/", { signal: e.signal });
       if (clearTimeout(n), o.ok) {
@@ -3371,19 +3446,19 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   } catch {
   }
   return t;
-}, Gt = (t) => {
+}, qt = (t) => {
   if (typeof window > "u") return !1;
   try {
-    const e = t || be;
+    const e = t || ke;
     return localStorage.getItem(e) === "denied" ? !0 : localStorage.getItem("analytics_optout") === "true";
   } catch {
     return !1;
   }
-}, ki = (t) => {
+}, Si = (t) => {
   if (typeof window > "u") return !1;
   try {
-    if (Gt(t)) return !1;
-    const e = t || be;
+    if (qt(t)) return !1;
+    const e = t || ke;
     return localStorage.getItem(e) === "granted";
   } catch {
     return !1;
@@ -3391,21 +3466,21 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
 }, jr = (t) => {
   if (typeof window > "u") return !1;
   try {
-    const e = t || qe;
+    const e = t || Ye;
     return !!sessionStorage.getItem(e);
   } catch {
     return !1;
   }
-}, Si = (t) => {
+}, Ci = (t) => {
   if (!(typeof window > "u"))
     try {
-      const e = t || qe;
+      const e = t || Ye;
       sessionStorage.setItem(e, "1");
     } catch {
     }
-}, Ci = async (t, e = {}) => {
-  if (typeof window > "u" || Gt(e.consentStorageKey) || jr(e.sessionStorageKey)) return null;
-  const n = t || (typeof window < "u" && window.location.hostname ? window.location.hostname : "web-app"), i = navigator.userAgent || "", o = bi(i), a = vi(i), l = window.location.pathname + (window.location.search || "");
+}, Ai = async (t, e = {}) => {
+  if (typeof window > "u" || qt(e.consentStorageKey) || jr(e.sessionStorageKey)) return null;
+  const n = t || (typeof window < "u" && window.location.hostname ? window.location.hostname : "web-app"), i = navigator.userAgent || "", o = vi(i), a = wi(i), l = window.location.pathname + (window.location.search || "");
   let s = "Direct";
   if (document.referrer)
     try {
@@ -3413,7 +3488,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     } catch {
       s = "Unknown";
     }
-  const p = window.screen ? `${window.screen.width}x${window.screen.height}` : "Unknown", d = typeof Intl < "u" && Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown", g = navigator.language || "en", u = await wi();
+  const p = window.screen ? `${window.screen.width}x${window.screen.height}` : "Unknown", d = typeof Intl < "u" && Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown", g = navigator.language || "en", u = await ki();
   return {
     id: typeof crypto < "u" && crypto.randomUUID ? crypto.randomUUID() : `v_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     timestamp: (/* @__PURE__ */ new Date()).toISOString(),
@@ -3432,30 +3507,30 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     screen: p,
     language: g
   };
-}, Ai = async (t, e, n = {}) => {
-  var g, u, h, x, f, b, S;
+}, Ii = async (t, e, n = {}) => {
+  var g, u, h, x, f, b, C;
   if (!t || !e) return !1;
-  const i = n.collectionName || "visitor_analytics", o = n.pageSize || xi, a = yi(), l = {};
+  const i = n.collectionName || "visitor_analytics", o = n.pageSize || mi, a = bi(), l = {};
   for (const [v, m] of Object.entries(e))
     l[v] = m == null ? "" : String(m);
-  const s = typeof window < "u" && ((u = (g = window.firebase) == null ? void 0 : g.firestore) == null ? void 0 : u.FieldValue) || ((h = t == null ? void 0 : t.constructor) == null ? void 0 : h.FieldValue) || ((b = (f = (x = t == null ? void 0 : t.app) == null ? void 0 : x.firebase) == null ? void 0 : f.firestore) == null ? void 0 : b.FieldValue) || ((S = t == null ? void 0 : t.firestore) == null ? void 0 : S.FieldValue), p = s && typeof s.serverTimestamp == "function" ? s.serverTimestamp() : (/* @__PURE__ */ new Date()).toISOString(), d = t.collection(i).doc("meta");
+  const s = typeof window < "u" && ((u = (g = window.firebase) == null ? void 0 : g.firestore) == null ? void 0 : u.FieldValue) || ((h = t == null ? void 0 : t.constructor) == null ? void 0 : h.FieldValue) || ((b = (f = (x = t == null ? void 0 : t.app) == null ? void 0 : x.firebase) == null ? void 0 : f.firestore) == null ? void 0 : b.FieldValue) || ((C = t == null ? void 0 : t.firestore) == null ? void 0 : C.FieldValue), p = s && typeof s.serverTimestamp == "function" ? s.serverTimestamp() : (/* @__PURE__ */ new Date()).toISOString(), d = t.collection(i).doc("meta");
   try {
     return await t.runTransaction(async (v) => {
       const m = await v.get(d);
-      let y = 1, w = 0, L = 0, z = a, C = 0;
+      let y = 1, w = 0, L = 0, z = a, A = 0;
       if (m && (typeof m.exists == "function" ? m.exists() : m.exists)) {
-        const N = m.data() || {};
-        y = N.currentPage || 1, w = N.currentCount || 0, L = N.totalVisitors || 0, N.todayDate === a ? C = N.todayCount || 0 : (z = a, C = 0);
+        const j = m.data() || {};
+        y = j.currentPage || 1, w = j.currentCount || 0, L = j.totalVisitors || 0, j.todayDate === a ? A = j.todayCount || 0 : (z = a, A = 0);
       }
       w >= o && (y++, w = 0);
-      const B = t.collection(i).doc(`page_${y}`);
-      let R;
-      s && typeof s.arrayUnion == "function" ? R = s.arrayUnion(l) : R = [l], v.set(
-        B,
+      const R = t.collection(i).doc(`page_${y}`);
+      let B;
+      s && typeof s.arrayUnion == "function" ? B = s.arrayUnion(l) : B = [l], v.set(
+        R,
         {
           pageNum: y,
           lastUpdated: (/* @__PURE__ */ new Date()).toISOString(),
-          logs: R
+          logs: B
         },
         { merge: !0 }
       ), v.set(
@@ -3465,7 +3540,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           currentCount: w + 1,
           totalVisitors: L + 1,
           todayDate: z,
-          todayCount: C + 1,
+          todayCount: A + 1,
           lastUpdated: p
         },
         { merge: !0 }
@@ -3481,18 +3556,18 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       console.warn("[writeVisitorLogToFirestore] Transaction failed, attempting direct batch fallback:", v);
       try {
         const y = await d.get();
-        let w = 1, L = 0, z = 0, C = 0, B = a;
+        let w = 1, L = 0, z = 0, A = 0, R = a;
         if (y && (typeof y.exists == "function" ? y.exists() : y.exists)) {
           const I = y.data() || {};
-          w = I.currentPage || 1, L = I.currentCount || 0, z = I.totalVisitors || 0, I.todayDate === a && (C = I.todayCount || 0);
+          w = I.currentPage || 1, L = I.currentCount || 0, z = I.totalVisitors || 0, I.todayDate === a && (A = I.todayCount || 0);
         }
         L >= o && (w++, L = 0);
-        const R = t.collection(i).doc(`page_${w}`), N = s && typeof s.arrayUnion == "function" ? s.arrayUnion(l) : [l];
-        return await R.set(
+        const B = t.collection(i).doc(`page_${w}`), j = s && typeof s.arrayUnion == "function" ? s.arrayUnion(l) : [l];
+        return await B.set(
           {
             pageNum: w,
             lastUpdated: (/* @__PURE__ */ new Date()).toISOString(),
-            logs: N
+            logs: j
           },
           { merge: !0 }
         ), await d.set(
@@ -3500,8 +3575,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
             currentPage: w,
             currentCount: L + 1,
             totalVisitors: z + 1,
-            todayDate: B,
-            todayCount: C + 1,
+            todayDate: R,
+            todayCount: A + 1,
             lastUpdated: p
           },
           { merge: !0 }
@@ -3521,10 +3596,10 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   declineLabel: a = "Decline",
   onConsentChange: l
 }) => {
-  const [s, p] = W(!1), d = e || be;
-  Z(() => {
+  const [s, p] = W(!1), d = e || ke;
+  Y(() => {
     try {
-      localStorage.getItem(d) || localStorage.getItem(be) || localStorage.getItem("analytics_consent") || p(!0);
+      localStorage.getItem(d) || localStorage.getItem(ke) || localStorage.getItem("analytics_consent") || p(!0);
     } catch {
     }
     const u = () => {
@@ -3549,7 +3624,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   }, [d]);
   const g = (u) => {
     try {
-      localStorage.setItem(d, u), d !== be && localStorage.setItem(be, u), localStorage.setItem("analytics_consent", u), u === "denied" ? (localStorage.setItem("analytics_optout", "true"), sessionStorage.removeItem(qe)) : localStorage.removeItem("analytics_optout");
+      localStorage.setItem(d, u), d !== ke && localStorage.setItem(ke, u), localStorage.setItem("analytics_consent", u), u === "denied" ? (localStorage.setItem("analytics_optout", "true"), sessionStorage.removeItem(Ye)) : localStorage.removeItem("analytics_optout");
     } catch {
     }
     p(!1), window.dispatchEvent(new CustomEvent("analytics_consent_changed", { detail: u })), window.dispatchEvent(new CustomEvent("eg_consent_changed", { detail: u })), l && l(u);
@@ -3592,7 +3667,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           t && /* @__PURE__ */ r(
             "a",
             {
-              href: ie(t),
+              href: ne(t),
               style: {
                 color: "#60a5fa",
                 textDecoration: "underline",
@@ -3659,9 +3734,9 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     }
   ) : null;
 }, yl = ({
-  storageKey: t = be,
+  storageKey: t = ke,
   legacyKeys: e = [],
-  sessionStorageKey: n = qe,
+  sessionStorageKey: n = Ye,
   title: i = "Analytics & Telemetry Preferences",
   description: o,
   showToggle: a = !0,
@@ -3685,7 +3760,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     }
     return "pending";
   }, [t, e]);
-  Z(() => {
+  Y(() => {
     h(x());
     const m = (y) => {
       const w = y;
@@ -3710,7 +3785,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     } catch {
     }
     h("pending"), window.dispatchEvent(new CustomEvent("show_consent_banner")), window.dispatchEvent(new CustomEvent("eg_show_consent_banner"));
-  }, S = () => {
+  }, C = () => {
     window.dispatchEvent(new CustomEvent("show_consent_banner")), window.dispatchEvent(new CustomEvent("eg_show_consent_banner"));
   }, v = u === "granted";
   return /* @__PURE__ */ c(
@@ -3898,7 +3973,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                   {
                     type: "button",
                     id: "btnReopenConsent",
-                    onClick: S,
+                    onClick: C,
                     style: {
                       background: "rgba(0, 0, 0, 0.05)",
                       border: "1px solid var(--eg-border-default, rgba(0, 0, 0, 0.15))",
@@ -3968,26 +4043,26 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   ringBorder: x,
   ringHoverBorder: f,
   icon: b,
-  fontFamily: S = "inherit",
+  fontFamily: C = "inherit",
   fontSize: v,
   size: m = 80,
   shape: y = "circle",
   innerRing: w = y === "circle",
   ringOnHoverOnly: L = !1,
   theme: z = "auto",
-  dataInfo: C,
-  onClick: B,
-  className: R = "",
-  style: N = {}
+  dataInfo: A,
+  onClick: R,
+  className: B = "",
+  style: j = {}
 }) => {
-  const [I, j] = W(!1), { isDark: H } = yt(), $ = z === "dark" ? !0 : z === "light" ? !1 : H, O = v || Math.round(m * 0.38), M = Math.round(m * 0.135), T = Math.max(7, Math.round(m * 0.075)), k = Math.max(3, Math.round(m * 0.045)), E = L ? I : !0, A = y === "none" || L && !I ? "transparent" : $ ? I ? "var(--eg-bg-surface-hover, rgba(255, 255, 255, 0.08))" : "var(--eg-bg-surface, rgba(255, 255, 255, 0.04))" : I ? "var(--eg-bg-surface-hover, rgba(0, 0, 0, 0.04))" : "var(--eg-bg-surface, rgba(0, 0, 0, 0.02))", D = y === "none" || L && !I ? "transparent" : I ? h || u || A : u || A, V = L && !I ? "transparent" : $ ? I ? "var(--eg-border-hover, rgba(255, 255, 255, 0.35))" : "var(--eg-border-default, rgba(255, 255, 255, 0.15))" : I ? "var(--eg-border-hover, rgba(0, 0, 0, 0.25))" : "var(--eg-border-default, rgba(0, 0, 0, 0.12))", _ = L && !I ? "transparent" : I ? f || x || V : x || V, P = e || ($ ? "#ffffff" : "var(--eg-text-primary, #0f172a)"), U = $ ? i ? I ? "var(--eg-text-primary, #ffffff)" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.45))" : "var(--eg-text-primary, #ffffff)" : i ? I ? "var(--eg-text-primary, #0f172a)" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.45))" : "var(--eg-text-primary, #0f172a)", G = I ? a || o || U : o || U, ee = $ ? p ? I ? "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : "var(--eg-text-muted, rgba(255, 255, 255, 0.25))" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : p ? I ? "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))" : "var(--eg-text-muted, rgba(0, 0, 0, 0.25))" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))", F = I ? g || d || ee : d || ee, oe = y === "circle" ? "50%" : y === "rounded" ? `${Math.max(6, Math.round(m * 0.18))}px` : y === "square" ? "4px" : "0";
+  const [I, E] = W(!1), { isDark: H } = vt(), $ = z === "dark" ? !0 : z === "light" ? !1 : H, U = v || Math.round(m * 0.38), _ = Math.round(m * 0.135), T = Math.max(7, Math.round(m * 0.075)), S = Math.max(3, Math.round(m * 0.045)), N = L ? I : !0, k = y === "none" || L && !I ? "transparent" : $ ? I ? "var(--eg-bg-surface-hover, rgba(255, 255, 255, 0.08))" : "var(--eg-bg-surface, rgba(255, 255, 255, 0.04))" : I ? "var(--eg-bg-surface-hover, rgba(0, 0, 0, 0.04))" : "var(--eg-bg-surface, rgba(0, 0, 0, 0.02))", D = y === "none" || L && !I ? "transparent" : I ? h || u || k : u || k, O = L && !I ? "transparent" : $ ? I ? "var(--eg-border-hover, rgba(255, 255, 255, 0.35))" : "var(--eg-border-default, rgba(255, 255, 255, 0.15))" : I ? "var(--eg-border-hover, rgba(0, 0, 0, 0.25))" : "var(--eg-border-default, rgba(0, 0, 0, 0.12))", M = L && !I ? "transparent" : I ? f || x || O : x || O, P = e || ($ ? "#ffffff" : "var(--eg-text-primary, #0f172a)"), V = $ ? i ? I ? "var(--eg-text-primary, #ffffff)" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.45))" : "var(--eg-text-primary, #ffffff)" : i ? I ? "var(--eg-text-primary, #0f172a)" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.45))" : "var(--eg-text-primary, #0f172a)", G = I ? a || o || V : o || V, Q = $ ? p ? I ? "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : "var(--eg-text-muted, rgba(255, 255, 255, 0.25))" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : p ? I ? "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))" : "var(--eg-text-muted, rgba(0, 0, 0, 0.25))" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))", F = I ? g || d || Q : d || Q, oe = y === "circle" ? "50%" : y === "rounded" ? `${Math.max(6, Math.round(m * 0.18))}px` : y === "square" ? "4px" : "0";
   return /* @__PURE__ */ c(
     "div",
     {
-      className: `eg-logo-badge ${R}`,
-      onClick: B,
-      onMouseEnter: () => j(!0),
-      onMouseLeave: () => j(!1),
+      className: `eg-logo-badge ${B}`,
+      onClick: R,
+      onMouseEnter: () => E(!0),
+      onMouseLeave: () => E(!1),
       style: {
         width: `${m}px`,
         height: `${m}px`,
@@ -3999,14 +4074,14 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         alignItems: "center",
         justifyContent: "center",
         userSelect: "none",
-        boxShadow: y !== "none" && E ? $ ? "0 2px 10px rgba(0, 0, 0, 0.25)" : "0 2px 8px rgba(0, 0, 0, 0.04)" : "none",
+        boxShadow: y !== "none" && N ? $ ? "0 2px 10px rgba(0, 0, 0, 0.25)" : "0 2px 8px rgba(0, 0, 0, 0.04)" : "none",
         transition: "background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
-        cursor: B ? "pointer" : "default",
+        cursor: R ? "pointer" : "default",
         overflow: "visible",
         // Prevents cursive clipping
         boxSizing: "border-box",
         flexShrink: 0,
-        ...N
+        ...j
       },
       children: [
         w && y !== "none" && /* @__PURE__ */ r(
@@ -4014,14 +4089,14 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           {
             style: {
               position: "absolute",
-              top: `${k}px`,
-              left: `${k}px`,
-              right: `${k}px`,
-              bottom: `${k}px`,
-              border: `1.5px solid ${_}`,
+              top: `${S}px`,
+              left: `${S}px`,
+              right: `${S}px`,
+              bottom: `${S}px`,
+              border: `1.5px solid ${M}`,
               borderRadius: oe,
               pointerEvents: "none",
-              opacity: E ? 1 : 0,
+              opacity: N ? 1 : 0,
               transition: "opacity 0.25s ease, border-color 0.25s ease"
             }
           }
@@ -4048,11 +4123,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                 {
                   className: "eg-logo-main-text",
                   style: {
-                    fontFamily: S,
+                    fontFamily: C,
                     color: P,
-                    fontSize: `${O}px`,
+                    fontSize: `${U}px`,
                     lineHeight: 1.15,
-                    fontWeight: S.includes("cursive") || S.includes("Vibes") ? 300 : 700,
+                    fontWeight: C.includes("cursive") || C.includes("Vibes") ? 300 : 700,
                     whiteSpace: "nowrap",
                     letterSpacing: "-0.5px",
                     padding: "0 2px",
@@ -4069,7 +4144,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                   className: "eg-logo-domain-text",
                   style: {
                     fontFamily: 'var(--eg-font-sans, "Plus Jakarta Sans", sans-serif)',
-                    fontSize: `${M}px`,
+                    fontSize: `${_}px`,
                     fontWeight: 500,
                     color: G,
                     marginLeft: "2.5px",
@@ -4088,7 +4163,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           "span",
           {
             className: "eg-logo-byline",
-            "data-info": C,
+            "data-info": A,
             style: {
               position: "absolute",
               bottom: `${Math.round(m * 0.1)}px`,
@@ -4109,7 +4184,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       ]
     }
   );
-}, Ii = ({
+}, Li = ({
   variant: t = "primary",
   preset: e,
   id: n = "backToTopBtn",
@@ -4122,35 +4197,35 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   className: d = "",
   style: g = {}
 }) => {
-  const [u, h] = W("down"), [x, f] = W(!1), [b, S] = W(!1), v = te(() => {
+  const [u, h] = W("down"), [x, f] = W(!1), [b, C] = W(!1), v = te(() => {
     if (typeof window > "u" || typeof document > "u") return;
-    const N = window.scrollY || document.documentElement.scrollTop || 0, I = document.documentElement.scrollHeight || document.body.scrollHeight || 0, j = window.innerHeight || document.documentElement.clientHeight || 0, H = I - j;
+    const j = window.scrollY || document.documentElement.scrollTop || 0, I = document.documentElement.scrollHeight || document.body.scrollHeight || 0, E = window.innerHeight || document.documentElement.clientHeight || 0, H = I - E;
     if (H <= 80) {
       f(!1);
       return;
     }
     f(!0);
     const $ = i ?? Math.min(300, H * 0.35);
-    N < $ ? h("down") : h("up");
+    j < $ ? h("down") : h("up");
   }, [i]);
-  Z(() => {
+  Y(() => {
     v();
-    let N = !1;
+    let j = !1;
     const I = () => {
-      N || (window.requestAnimationFrame(() => {
-        v(), N = !1;
-      }), N = !0);
+      j || (window.requestAnimationFrame(() => {
+        v(), j = !1;
+      }), j = !0);
     };
     return window.addEventListener("scroll", I, { passive: !0 }), window.addEventListener("resize", I, { passive: !0 }), () => {
       window.removeEventListener("scroll", I), window.removeEventListener("resize", I);
     };
   }, [v]);
-  const m = (N) => {
-    if (N.preventDefault(), !(typeof window > "u"))
+  const m = (j) => {
+    if (j.preventDefault(), !(typeof window > "u"))
       if (u === "down") {
-        const I = document.documentElement.scrollHeight || document.body.scrollHeight || 0, j = window.innerHeight || 0;
+        const I = document.documentElement.scrollHeight || document.body.scrollHeight || 0, E = window.innerHeight || 0;
         window.scrollTo({
-          top: Math.max(0, I - j),
+          top: Math.max(0, I - E),
           behavior: "smooth"
         });
       } else
@@ -4158,9 +4233,9 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           top: 0,
           behavior: "smooth"
         });
-  }, y = t === "accent" || e === "mchess", w = o || (y ? "rgba(245, 158, 11, 0.75)" : "var(--eg-color-primary, #10b981)"), L = a || (y ? "#f59e0b" : "var(--eg-color-primary-hover, #059669)"), z = l || (y ? "#0f172a" : "#ffffff"), C = y ? "0 4px 14px rgba(245, 158, 11, 0.38)" : "0 4px 14px rgba(0, 0, 0, 0.25)", B = y ? "0 6px 20px rgba(212, 175, 55, 0.65)" : "0 6px 20px rgba(16, 185, 129, 0.5)";
+  }, y = t === "accent" || e === "mchess", w = o || (y ? "rgba(245, 158, 11, 0.75)" : "var(--eg-color-primary, #10b981)"), L = a || (y ? "#f59e0b" : "var(--eg-color-primary-hover, #059669)"), z = l || (y ? "#0f172a" : "#ffffff"), A = y ? "0 4px 14px rgba(245, 158, 11, 0.38)" : "0 4px 14px rgba(0, 0, 0, 0.25)", R = y ? "0 6px 20px rgba(212, 175, 55, 0.65)" : "0 6px 20px rgba(16, 185, 129, 0.5)";
   if (!x) return null;
-  const R = u === "down" ? "Scroll to Bottom" : "Scroll to Top";
+  const B = u === "down" ? "Scroll to Bottom" : "Scroll to Top";
   return /* @__PURE__ */ c(se, { children: [
     /* @__PURE__ */ r(
       "button",
@@ -4169,10 +4244,10 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         id: n,
         className: `back-to-top-btn ${d}`,
         onClick: m,
-        onMouseEnter: () => S(!0),
-        onMouseLeave: () => S(!1),
-        title: R,
-        "aria-label": R,
+        onMouseEnter: () => C(!0),
+        onMouseLeave: () => C(!1),
+        title: B,
+        "aria-label": B,
         "data-direction": u,
         style: {
           position: "fixed",
@@ -4189,7 +4264,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           justifyContent: "center",
           cursor: "pointer",
           zIndex: 9999,
-          boxShadow: b ? B : C,
+          boxShadow: b ? R : A,
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
           transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -4236,7 +4311,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         }
       ` })
   ] });
-}, Li = ({
+}, Ti = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4255,7 +4330,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" })
   }
-), Ti = ({
+), Wi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4293,7 +4368,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" })
   }
-), bl = Pr, Wi = ({
+), bl = Pr, zi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4312,7 +4387,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" })
   }
-), qt = ({
+), Kt = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4331,7 +4406,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M19 272.47c-11.2 -4.98 -19 -16.2 -19 -29.24v-0.02v-137.21c0 -0.02 0 -0.04 0 -0.06 0 -6.61 2.68 -12.6 7 -16.94l9 -9l-14.21 -28.42c-1.14 -2.27 -1.79 -4.86 -1.79 -7.57v-0.01c0 -6.62 5.38 -12 12 -12h147.94c106 0 191.92 86 191.92 192v192h-319.86v-14.52c0 -0.01 -0.08 0.03 -0.08 0.02 0 -31.31 18.03 -58.45 44.27 -71.58l57.22 -28.65c15.75 -7.88 26.53 -24.13 26.53 -42.93v-0.01v-50.33l-22.12 11.08c-6.19 3.1 -10.84 8.79 -12.55 15.65l-9.22 30.65c-2.81 9.36 -9.77 16.9 -18.76 20.5l-12.78 5.12c-3.67 1.47 -7.72 2.27 -11.91 2.27c-4.62 0 -9.01 -0.98 -12.97 -2.74zM52 128c-11.04 0 -20 8.96 -20 20s8.96 20 20 20 20 -8.96 20 -20 -8.96 -20 -20 -20zM368 448c8.83 0 16 7.17 16 16v32c0 8.83 -7.17 16 -16 16h-352c-8.83 0 -16 -7.17 -16 -16v-32c0 -8.83 7.17 -16 16 -16h352z" })
   }
-), zi = qt, Hr = ({
+), Ri = Kt, Hr = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4350,7 +4425,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M105.10 224.00c-29.39 -18.38 -49.10 -50.78 -49.10 -88.00c0.00 -57.40 46.60 -104.00 104.00 -104.00s104.00 46.60 104.00 104.00c0.00 37.22 -19.71 69.62 -49.10 88.00h25.10c8.83 -0.00 16.00 7.17 16.00 16.00v32.00c0.00 8.83 -7.17 16.00 -16.00 16.00h-16.00v5.49c0.00 44.00 4.11 86.60 24.00 122.51h-176.00c19.86 -35.91 24.00 -78.51 24.00 -122.51v-5.49h-16.00c-8.83 -0.00 -16.00 -7.17 -16.00 -16.00v-32.00c0.00 -8.83 7.17 -16.00 16.00 -16.00h25.10zM304.00 448.00c8.83 -0.00 16.00 7.17 16.00 16.00v32.00c0.00 8.83 -7.17 16.00 -16.00 16.00h-288.00c-8.83 -0.00 -16.00 -7.17 -16.00 -16.00v-32.00c0.00 -8.83 7.17 -16.00 16.00 -16.00h288.00z" })
   }
-), Ri = ({
+), Bi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4388,7 +4463,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432c3.2-18.7-14.7-32.7-35.6-24.8z" })
   }
-), vl = Fr, Bi = ({
+), vl = Fr, _i = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4407,7 +4482,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" })
   }
-), _i = ({
+), Mi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4426,7 +4501,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" })
   }
-), Mi = ({
+), $i = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4445,7 +4520,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" })
   }
-), $i = ({
+), Di = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4464,7 +4539,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" })
   }
-), Di = ({
+), Ei = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4483,7 +4558,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" })
   }
-), Ei = ({
+), ji = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4502,7 +4577,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.56 12 8 12.56 8 13.25c0 .688.56 1.25 1.25 1.25.688 0 1.25-.562 1.25-1.25 0-.69-.562-1.25-1.25-1.25zm5.5 0c-.688 0-1.25.56-1.25 1.25 0 .688.562 1.25 1.25 1.25.69 0 1.25-.562 1.25-1.25 0-.69-.56-1.25-1.25-1.25zm-5.465 4.417a.364.364 0 0 0-.046.513c.738.868 2.062 1.07 2.76 1.07.7 0 2.023-.202 2.761-1.07a.364.364 0 0 0-.047-.513.364.364 0 0 0-.512.047c-.51.6-.1.498-2.202.732-1.704 0-1.692-.132-2.202-.732a.364.364 0 0 0-.512-.047z" })
   }
-), ji = ({
+), Ni = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4521,7 +4596,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 2.89 3.5 2.77 1.81-.07 3.25-1.55 3.32-3.36.07-2.61.03-5.23.03-7.85 0-3.33-.02-6.66-.02-9.98z" })
   }
-), Ni = ({
+), Pi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4540,7 +4615,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.269h-2.149V6.269h2.149zm-5.731 0v6.269H9.851V6.269h2.15z" })
   }
-), Pi = ({
+), Hi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4559,7 +4634,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.26 18.3 1.5 15.342 1.5 11.696c0-3.834.81-6.834 2.408-8.916C5.584.815 8.48 0 12.186 0c3.785 0 6.697.834 8.653 2.48 1.944 1.635 3.011 4.07 3.172 7.237h-3.46c-.15-2.222-.84-3.874-2.05-4.912-1.34-1.148-3.414-1.745-6.166-1.745-2.825 0-4.98.618-6.406 1.837-1.402 1.2-2.144 3.078-2.144 5.799 0 2.766.713 4.67 2.12 5.658 1.34 1.034 3.42 1.558 6.18 1.558 2.05 0 3.73-.34 5.03-1.01.69-.356 1.25-.844 1.67-1.455.45-.65.74-1.46.86-2.418H12.18V9.897h10.32c.11.83.16 1.7.16 2.6 0 3.48-.96 6.37-2.85 8.58C17.96 23.08 15.36 24 12.186 24z" })
   }
-), Hi = ({
+), Fi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4578,7 +4653,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.511.914 5.086.322 7.702.25 10.993.25 11.45c0 2.222.067 4.444.2 6.666.19 3.056 1.785 5.777 4.887 6.185 2.58.337 5.088-.04 7.42-1.111l-.16-2.217c-2.02.664-4.22.756-6.28.172-.88-.248-1.75-.724-1.92-1.684a4.42 4.42 0 0 1-.08-.916h.05c1.88.75 3.86 1.13 5.86 1.13h.1c2.81 0 5.46-.35 8.16-1.04 2.87-.73 4.49-3.27 4.67-6.23.23-3.79.16-7.14-.07-9.092zm-4.32 8.625h-2.5v-6.5c0-1.37-.58-2.07-1.73-2.07-1.27 0-1.9.82-1.9 2.45v3.52h-2.5v-3.52c0-1.63-.63-2.45-1.9-2.45-1.15 0-1.73.7-1.73 2.07v6.5H6.07v-6.7c0-1.37.35-2.46 1.05-3.26.72-.8 1.66-1.22 2.83-1.22 1.35 0 2.4.52 3.11 1.57l.63 1.06.63-1.06c.71-1.05 1.76-1.57 3.11-1.57 1.17 0 2.11.42 2.83 1.22.7.8 1.05 1.89 1.05 3.26v6.7z" })
   }
-), Fi = ({
+), Oi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4597,7 +4672,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.365-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" })
   }
-), Oi = ({
+), Vi = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4616,7 +4691,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.508 17.308a.747.747 0 0 1-1.026.248c-2.809-1.716-6.345-2.105-10.51-1.153a.75.75 0 1 1-.334-1.463c4.561-1.041 8.486-.604 11.622 1.312a.748.748 0 0 1 .248 1.056zm1.47-3.268a.936.936 0 0 1-1.288.308c-3.216-1.977-8.118-2.548-11.922-1.393a.936.936 0 1 1-.548-1.79c4.347-1.319 9.74-.683 13.45 1.597a.936.936 0 0 1 .308 1.278zm.126-3.41c-3.856-2.29-10.222-2.502-13.916-1.381a1.124 1.124 0 1 1-.652-2.152c4.25-1.29 11.28-1.042 15.728 1.594a1.124 1.124 0 0 1-1.16 1.939z" })
   }
-), Kt = ({
+), Zt = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4635,7 +4710,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     ...o,
     children: /* @__PURE__ */ r("path", { d: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" })
   }
-), kt = ({
+), Ct = ({
   size: t = 18,
   color: e = "currentColor",
   className: n = "",
@@ -4660,11 +4735,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "facebook":
     case "facebook-f":
     case "fb":
-      return /* @__PURE__ */ r(Li, { ...e });
+      return /* @__PURE__ */ r(Ti, { ...e });
     case "instagram":
     case "ig":
     case "insta":
-      return /* @__PURE__ */ r(Ti, { ...e });
+      return /* @__PURE__ */ r(Wi, { ...e });
     case "x":
     case "twitter":
     case "x-twitter":
@@ -4672,45 +4747,45 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       return /* @__PURE__ */ r(Pr, { ...e });
     case "youtube":
     case "yt":
-      return /* @__PURE__ */ r(Wi, { ...e });
-    case "lichess":
       return /* @__PURE__ */ r(zi, { ...e });
+    case "lichess":
+      return /* @__PURE__ */ r(Ri, { ...e });
     case "chess-knight":
     case "knight":
-      return /* @__PURE__ */ r(qt, { ...e });
+      return /* @__PURE__ */ r(Kt, { ...e });
     case "chess-pawn":
     case "pawn":
       return /* @__PURE__ */ r(Hr, { ...e });
     case "chesscom":
     case "chess.com":
-      return /* @__PURE__ */ r(Ri, { ...e });
+      return /* @__PURE__ */ r(Bi, { ...e });
     case "github":
     case "gh":
-      return /* @__PURE__ */ r(Bi, { ...e });
-    case "linkedin":
       return /* @__PURE__ */ r(_i, { ...e });
-    case "discord":
+    case "linkedin":
       return /* @__PURE__ */ r(Mi, { ...e });
+    case "discord":
+      return /* @__PURE__ */ r($i, { ...e });
     case "telegram":
     case "tg":
-      return /* @__PURE__ */ r($i, { ...e });
+      return /* @__PURE__ */ r(Di, { ...e });
     case "whatsapp":
     case "wa":
-      return /* @__PURE__ */ r(Di, { ...e });
-    case "reddit":
       return /* @__PURE__ */ r(Ei, { ...e });
-    case "tiktok":
+    case "reddit":
       return /* @__PURE__ */ r(ji, { ...e });
-    case "twitch":
+    case "tiktok":
       return /* @__PURE__ */ r(Ni, { ...e });
-    case "threads":
+    case "twitch":
       return /* @__PURE__ */ r(Pi, { ...e });
-    case "mastodon":
+    case "threads":
       return /* @__PURE__ */ r(Hi, { ...e });
-    case "pinterest":
+    case "mastodon":
       return /* @__PURE__ */ r(Fi, { ...e });
-    case "spotify":
+    case "pinterest":
       return /* @__PURE__ */ r(Oi, { ...e });
+    case "spotify":
+      return /* @__PURE__ */ r(Vi, { ...e });
     case "paper-plane":
     case "paperplane":
     case "send":
@@ -4719,11 +4794,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "email":
     case "mail":
     case "envelope":
-      return /* @__PURE__ */ r(Kt, { ...e });
+      return /* @__PURE__ */ r(Zt, { ...e });
     case "globe":
     case "web":
     case "website":
-      return /* @__PURE__ */ r(kt, { ...e });
+      return /* @__PURE__ */ r(Ct, { ...e });
     default:
       return n.length > 0 ? /* @__PURE__ */ r(
         "span",
@@ -4742,22 +4817,22 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         }
       ) : null;
   }
-}, Vi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+}, Ui = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "19", y1: "12", x2: "5", y2: "12" }),
   /* @__PURE__ */ r("polyline", { points: "12 19 5 12 12 5" })
-] }), Ui = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Gi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "5", y1: "12", x2: "19", y2: "12" }),
   /* @__PURE__ */ r("polyline", { points: "12 5 19 12 12 19" })
-] }), Gi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), qi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "12", y1: "19", x2: "12", y2: "5" }),
   /* @__PURE__ */ r("polyline", { points: "5 12 12 5 19 12" })
-] }), qi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Ki = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "12", y1: "5", x2: "12", y2: "19" }),
   /* @__PURE__ */ r("polyline", { points: "19 12 12 19 5 12" })
-] }), Ki = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "15 18 9 12 15 6" }) }), Zi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "9 18 15 12 9 6" }) }), Yi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "18 15 12 9 6 15" }) }), Qi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "6 9 12 15 18 9" }) }), Xi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "20 6 9 17 4 12" }) }), Vr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Zi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "15 18 9 12 15 6" }) }), Yi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "9 18 15 12 9 6" }) }), Qi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "18 15 12 9 6 15" }) }), Xi = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "6 9 12 15 18 9" }) }), Ji = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polyline", { points: "20 6 9 17 4 12" }) }), Vr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
   /* @__PURE__ */ r("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
-] }), wl = Vr, Ji = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), wl = Vr, eo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "11", cy: "11", r: "8" }),
   /* @__PURE__ */ r("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })
 ] }), Ur = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
@@ -4767,28 +4842,28 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
 ] }), kl = Ur, Gr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M21.5 2v6h-6" }),
   /* @__PURE__ */ r("path", { d: "M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" })
-] }), Sl = Gr, eo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Sl = Gr, to = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polyline", { points: "1 4 1 10 7 10" }),
   /* @__PURE__ */ r("path", { d: "M3.51 15a9 9 0 1 0 2.13-9.36L1 10" })
-] }), to = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), ro = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polyline", { points: "23 4 23 10 17 10" }),
   /* @__PURE__ */ r("path", { d: "M20.49 15a9 9 0 1 1-2.12-9.36L23 10" })
-] }), ro = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), no = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
   /* @__PURE__ */ r("polyline", { points: "7 10 12 15 17 10" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "15", x2: "12", y2: "3" })
-] }), no = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), io = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
   /* @__PURE__ */ r("polyline", { points: "17 8 12 3 7 8" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "3", x2: "12", y2: "15" })
-] }), io = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), oo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "9", y: "9", width: "13", height: "13", rx: "2", ry: "2" }),
   /* @__PURE__ */ r("path", { d: "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" })
-] }), oo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), ao = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" }),
   /* @__PURE__ */ r("polyline", { points: "15 3 21 3 21 9" }),
   /* @__PURE__ */ r("line", { x1: "10", y1: "14", x2: "21", y2: "3" })
-] }), ao = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" }) }), lo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), lo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" }) }), so = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "4", y1: "21", x2: "4", y2: "14" }),
   /* @__PURE__ */ r("line", { x1: "4", y1: "10", x2: "4", y2: "3" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "21", x2: "12", y2: "12" }),
@@ -4798,44 +4873,44 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("line", { x1: "1", y1: "14", x2: "7", y2: "14" }),
   /* @__PURE__ */ r("line", { x1: "9", y1: "8", x2: "15", y2: "8" }),
   /* @__PURE__ */ r("line", { x1: "17", y1: "16", x2: "23", y2: "16" })
-] }), so = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "5 3 19 12 5 21 5 3" }) }), co = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), co = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "5 3 19 12 5 21 5 3" }) }), po = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "6", y: "4", width: "4", height: "16", rx: "1" }),
   /* @__PURE__ */ r("rect", { x: "14", y: "4", width: "4", height: "16", rx: "1" })
-] }), po = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("rect", { x: "5", y: "5", width: "14", height: "14", rx: "2" }) }), go = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), go = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("rect", { x: "5", y: "5", width: "14", height: "14", rx: "2" }) }), ho = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polygon", { points: "19 20 9 12 19 4 19 20" }),
   /* @__PURE__ */ r("line", { x1: "5", y1: "19", x2: "5", y2: "5", stroke: e, strokeWidth: "2.5", strokeLinecap: "round" })
-] }), ho = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), uo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polygon", { points: "5 4 15 12 5 20 5 4" }),
   /* @__PURE__ */ r("line", { x1: "19", y1: "5", x2: "19", y2: "19", stroke: e, strokeWidth: "2.5", strokeLinecap: "round" })
-] }), uo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), fo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polygon", { points: "11 19 2 12 11 5 11 19" }),
   /* @__PURE__ */ r("polygon", { points: "22 19 13 12 22 5 22 19" })
-] }), fo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), xo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polygon", { points: "13 19 22 12 13 5 13 19" }),
   /* @__PURE__ */ r("polygon", { points: "2 19 11 12 2 5 2 19" })
-] }), xo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" }) }), mo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), mo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2.5", strokeLinecap: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" }) }), yo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polyline", { points: "15 3 21 3 21 9" }),
   /* @__PURE__ */ r("polyline", { points: "9 21 3 21 3 15" }),
   /* @__PURE__ */ r("line", { x1: "21", y1: "3", x2: "14", y2: "10" }),
   /* @__PURE__ */ r("line", { x1: "3", y1: "21", x2: "10", y2: "14" })
-] }), yo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), bo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polyline", { points: "4 14 10 14 10 20" }),
   /* @__PURE__ */ r("polyline", { points: "20 10 14 10 14 4" }),
   /* @__PURE__ */ r("line", { x1: "14", y1: "10", x2: "21", y2: "3" }),
   /* @__PURE__ */ r("line", { x1: "10", y1: "14", x2: "3", y2: "21" })
-] }), bo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), vo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" }),
   /* @__PURE__ */ r("polyline", { points: "9 22 9 12 15 12 15 22" })
-] }), vo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), wo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" }),
   /* @__PURE__ */ r("path", { d: "M13.73 21a2 2 0 0 1-3.46 0" })
-] }), wo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
-  /* @__PURE__ */ r("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2", ry: "2" }),
-  /* @__PURE__ */ r("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" })
 ] }), ko = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2", ry: "2" }),
-  /* @__PURE__ */ r("path", { d: "M7 11V7a5 5 0 0 1 9.9-1" })
+  /* @__PURE__ */ r("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" })
 ] }), So = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+  /* @__PURE__ */ r("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2", ry: "2" }),
+  /* @__PURE__ */ r("path", { d: "M7 11V7a5 5 0 0 1 9.9-1" })
+] }), Co = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "5" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "1", x2: "12", y2: "3" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "21", x2: "12", y2: "23" }),
@@ -4845,65 +4920,65 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("line", { x1: "21", y1: "12", x2: "23", y2: "12" }),
   /* @__PURE__ */ r("line", { x1: "4.22", y1: "19.78", x2: "5.64", y2: "18.36" }),
   /* @__PURE__ */ r("line", { x1: "18.36", y1: "5.64", x2: "19.78", y2: "4.22" })
-] }), Co = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" }) }), Ao = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Ao = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" }) }), Io = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polyline", { points: "3 6 5 6 21 6" }),
   /* @__PURE__ */ r("path", { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" })
-] }), Io = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Lo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" }),
   /* @__PURE__ */ r("path", { d: "M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" })
-] }), Lo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" }) }), To = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, stroke: e, strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" }) }), Wo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, stroke: e, strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" }) }), zo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), To = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" }) }), Wo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, stroke: e, strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" }) }), zo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, stroke: e, strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" }) }), Ro = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
   /* @__PURE__ */ r("polyline", { points: "12 6 12 12 16 14" })
-] }), Ro = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Bo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "3", y: "4", width: "18", height: "18", rx: "2", ry: "2" }),
   /* @__PURE__ */ r("line", { x1: "16", y1: "2", x2: "16", y2: "6" }),
   /* @__PURE__ */ r("line", { x1: "8", y1: "2", x2: "8", y2: "6" }),
   /* @__PURE__ */ r("line", { x1: "3", y1: "10", x2: "21", y2: "10" })
-] }), Bo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), _o = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "16", x2: "12", y2: "12", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "8", x2: "12.01", y2: "8", strokeWidth: "3" })
-] }), _o = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Mo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "9", x2: "12", y2: "13", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "17", x2: "12.01", y2: "17", strokeWidth: "3" })
-] }), Mo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), $o = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M22 11.08V12a10 10 0 1 1-5.93-9.14" }),
   /* @__PURE__ */ r("polyline", { points: "22 4 12 14.01 9 11.01", strokeWidth: "2.5" })
-] }), $o = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Do = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
   /* @__PURE__ */ r("line", { x1: "15", y1: "9", x2: "9", y2: "15", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "9", y1: "9", x2: "15", y2: "15", strokeWidth: "2.5" })
-] }), Do = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Eo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
   /* @__PURE__ */ r("path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "17", x2: "12.01", y2: "17", strokeWidth: "3" })
 ] }), qr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "3" }),
   /* @__PURE__ */ r("path", { d: "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" })
-] }), Cl = qr, Eo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" }) }), jo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Cl = qr, jo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" }) }), No = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" }),
   /* @__PURE__ */ r("polyline", { points: "9 12 11 14 15 10", strokeWidth: "2.5" })
-] }), No = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Po = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "6", y: "8", width: "12", height: "12", rx: "6" }),
   /* @__PURE__ */ r("path", { d: "M12 2v6M4 11h4M16 11h4M4 17h4M16 17h4M7 5l2.5 3M17 5l-2.5 3" })
-] }), Po = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Ho = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "2", y: "3", width: "20", height: "14", rx: "2", ry: "2" }),
   /* @__PURE__ */ r("line", { x1: "8", y1: "21", x2: "16", y2: "21" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "17", x2: "12", y2: "21" })
-] }), Ho = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Fo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("polyline", { points: "16 18 22 12 16 6" }),
   /* @__PURE__ */ r("polyline", { points: "8 6 2 12 8 18" })
-] }), Fo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Oo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("ellipse", { cx: "12", cy: "5", rx: "9", ry: "3" }),
   /* @__PURE__ */ r("path", { d: "M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" }),
   /* @__PURE__ */ r("path", { d: "M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" })
-] }), Oo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Vo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "2", y: "2", width: "20", height: "8", rx: "2", ry: "2" }),
   /* @__PURE__ */ r("rect", { x: "2", y: "14", width: "20", height: "8", rx: "2", ry: "2" }),
   /* @__PURE__ */ r("line", { x1: "6", y1: "6", x2: "6.01", y2: "6", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "6", y1: "18", x2: "6.01", y2: "18", strokeWidth: "2.5" })
-] }), Vo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" }) }), Kr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Uo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" }) }), Kr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "4", y: "4", width: "16", height: "16", rx: "2" }),
   /* @__PURE__ */ r("rect", { x: "9", y: "9", width: "6", height: "6", fill: e }),
   /* @__PURE__ */ r("line", { x1: "9", y1: "1", x2: "9", y2: "4" }),
@@ -4914,37 +4989,37 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("line", { x1: "20", y1: "15", x2: "23", y2: "15" }),
   /* @__PURE__ */ r("line", { x1: "1", y1: "9", x2: "4", y2: "9" }),
   /* @__PURE__ */ r("line", { x1: "1", y1: "15", x2: "4", y2: "15" })
-] }), Al = Kr, Uo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Al = Kr, Go = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "3", y: "11", width: "18", height: "10", rx: "2" }),
   /* @__PURE__ */ r("circle", { cx: "12", cy: "5", r: "2" }),
   /* @__PURE__ */ r("path", { d: "M12 7v4" }),
   /* @__PURE__ */ r("line", { x1: "8", y1: "16", x2: "8.01", y2: "16", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "16", y1: "16", x2: "16.01", y2: "16", strokeWidth: "2.5" })
-] }), Go = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), qo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" }),
   /* @__PURE__ */ r("path", { d: "M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" })
-] }), qo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Ko = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M6 18h8M3 22h18M14 22a7 7 0 1 0 0-14h-1M9 14h2" }),
   /* @__PURE__ */ r("rect", { x: "7", y: "4", width: "4", height: "8", rx: "1" })
-] }), Zr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" }) }), Il = Zr, Yr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "13 2 3 14 12 14 11 22 21 10 12 10 13 2" }) }), Ll = Yr, Ko = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" }) }), Zo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Zr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" }) }), Il = Zr, Yr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("polygon", { points: "13 2 3 14 12 14 11 22 21 10 12 10 13 2" }) }), Ll = Yr, Zo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" }) }), Yo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M2 10v4a2 2 0 0 0 2 2h4l6 4V4L8 8H4a2 2 0 0 0-2 2z" }),
   /* @__PURE__ */ r("path", { d: "M18 8a5 5 0 0 1 0 8M21 5a9 9 0 0 1 0 14" })
-] }), Yo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2M6 3h12v7a6 6 0 0 1-12 0V3zM9 21h6M12 16v5" }) }), Qo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Qo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2M6 3h12v7a6 6 0 0 1-12 0V3zM9 21h6M12 16v5" }) }), Xo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "14", r: "7" }),
   /* @__PURE__ */ r("polyline", { points: "8.21 13.89 7 23 12 20 17 23 15.79 13.88" })
 ] }), Qr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "6" }),
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "2", fill: e })
-] }), Tl = Qr, Xo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4a2 2 0 0 0-2 2v4h1.5a2.5 2.5 0 0 1 0 5H2v4a2 2 0 0 0 2 2h4v-1.5a2.5 2.5 0 0 1 5 0V21h4a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z" }) }), Jo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8zm13 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8z" }) }), Xr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" }) }), Wl = Xr, ea = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M10 6h8v4h-8V6z" }) }), ta = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Tl = Qr, Jo = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4a2 2 0 0 0-2 2v4h1.5a2.5 2.5 0 0 1 0 5H2v4a2 2 0 0 0 2 2h4v-1.5a2.5 2.5 0 0 1 5 0V21h4a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z" }) }), ea = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8zm13 0c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4-1 6-1 8z" }) }), Xr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" }) }), Wl = Xr, ta = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5M10 6h8v4h-8V6z" }) }), ra = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" }),
   /* @__PURE__ */ r("circle", { cx: "12", cy: "7", r: "4" })
-] }), ra = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), na = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" }),
   /* @__PURE__ */ r("circle", { cx: "9", cy: "7", r: "4" }),
   /* @__PURE__ */ r("path", { d: "M23 21v-2a4 4 0 0 0-3-3.87" }),
   /* @__PURE__ */ r("path", { d: "M16 3.13a4 4 0 0 1 0 7.75" })
-] }), na = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), ia = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "2", y1: "22", x2: "22", y2: "22" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "2", x2: "2", y2: "7" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "2", x2: "22", y2: "7" }),
@@ -4953,19 +5028,19 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("line", { x1: "9", y1: "10", x2: "9", y2: "18" }),
   /* @__PURE__ */ r("line", { x1: "15", y1: "10", x2: "15", y2: "18" }),
   /* @__PURE__ */ r("line", { x1: "19", y1: "10", x2: "19", y2: "18" })
-] }), ia = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), oa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
   /* @__PURE__ */ r("polygon", { points: "16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76", fill: e })
-] }), oa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), aa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M11 17l-5-5a2.828 2.828 0 1 1 4-4l1 1 1-1a2.828 2.828 0 1 1 4 4l-5 5z" }),
   /* @__PURE__ */ r("path", { d: "M12 11l4 4 5-5M2 13l4-4" })
-] }), aa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7" }) }), zl = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), la = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7" }) }), zl = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "2", y: "7", width: "20", height: "15", rx: "2", ry: "2" }),
   /* @__PURE__ */ r("polyline", { points: "17 2 12 7 7 2" })
-] }), Zt = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Yt = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M22 10v6M2 10l10-5 10 5-10 5z" }),
   /* @__PURE__ */ r("path", { d: "M6 12v5c3 3 9 3 12 0v-5" })
-] }), Rl = Zt, Bl = Zt, Jr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Rl = Yt, Bl = Yt, Jr = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "2", y: "6", width: "20", height: "12", rx: "6" }),
   /* @__PURE__ */ r("line", { x1: "6", y1: "12", x2: "10", y2: "12" }),
   /* @__PURE__ */ r("line", { x1: "8", y1: "10", x2: "8", y2: "14" }),
@@ -4978,36 +5053,36 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("path", { d: "M8 2h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8a2 2 0 0 0-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h2z" }),
   /* @__PURE__ */ r("path", { d: "M4 18a2 2 0 0 0 2 2h13" }),
   /* @__PURE__ */ r("path", { d: "M8 7h8M8 11h6" })
-] }), $l = tn, Dl = kt, El = kt, la = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), $l = tn, Dl = Ct, El = Ct, sa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" }),
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "3" })
-] }), sa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), ca = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" }),
   /* @__PURE__ */ r("line", { x1: "1", y1: "1", x2: "23", y2: "23" })
-] }), ca = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), da = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M2 4l3 12h14l3-12-6 7-4-11-4 11-6-7z", fill: e, fillOpacity: "0.2" }),
   /* @__PURE__ */ r("path", { d: "M2 4l3 12h14l3-12-6 7-4-11-4 11-6-7z" }),
   /* @__PURE__ */ r("rect", { x: "4", y: "18", width: "16", height: "3", rx: "1", fill: e })
 ] }), rn = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" }) }), jl = rn, nn = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M3 3v18h18" }),
   /* @__PURE__ */ r("polyline", { points: "19 9 14 14 10 10 7 13" })
-] }), Nl = nn, da = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Nl = nn, pa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" }),
   /* @__PURE__ */ r("rect", { x: "8", y: "2", width: "8", height: "4", rx: "1" })
 ] }), on = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("path", { d: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" }),
   /* @__PURE__ */ r("circle", { cx: "12", cy: "10", r: "3" })
-] }), Pl = on, Hl = Kt, an = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Pl = on, Hl = Zt, an = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("line", { x1: "8", y1: "6", x2: "21", y2: "6" }),
   /* @__PURE__ */ r("line", { x1: "8", y1: "12", x2: "21", y2: "12" }),
   /* @__PURE__ */ r("line", { x1: "8", y1: "18", x2: "21", y2: "18" }),
   /* @__PURE__ */ r("line", { x1: "3", y1: "6", x2: "3.01", y2: "6", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "3", y1: "12", x2: "3.01", y2: "12", strokeWidth: "2.5" }),
   /* @__PURE__ */ r("line", { x1: "3", y1: "18", x2: "3.01", y2: "18", strokeWidth: "2.5" })
-] }), Fl = an, pa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Fl = an, ga = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "9" }),
   /* @__PURE__ */ r("polyline", { points: "12 7 12 12 15 15" })
-] }), ga = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 20V4" }) }), ha = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), ha = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 20V4" }) }), ua = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "9", y: "2", width: "6", height: "4", rx: "1" }),
   /* @__PURE__ */ r("rect", { x: "2", y: "18", width: "6", height: "4", rx: "1" }),
   /* @__PURE__ */ r("rect", { x: "16", y: "18", width: "6", height: "4", rx: "1" }),
@@ -5023,11 +5098,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("path", { d: "M12 2a8 8 0 0 0-8 8c0 3 1.5 5 2.5 6.5V19a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2.5c1-1.5 2.5-3.5 2.5-6.5a8 8 0 0 0-8-8z" }),
   /* @__PURE__ */ r("line", { x1: "10", y1: "18", x2: "10", y2: "21" }),
   /* @__PURE__ */ r("line", { x1: "14", y1: "18", x2: "14", y2: "21" })
-] }), Vl = sn, ua = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Vl = sn, fa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "13", r: "8" }),
   /* @__PURE__ */ r("line", { x1: "12", y1: "9", x2: "12", y2: "13" }),
   /* @__PURE__ */ r("path", { d: "M12 2v3M10 2h4M19 6l-1.5 1.5" })
-] }), fa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M9 18h6M10 22h4M15.09 14c.18-.98.65-1.74 1.41-2.5A6 6 0 1 0 7.5 11.5c.76.76 1.23 1.52 1.41 2.5" }) }), xa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), xa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M9 18h6M10 22h4M15.09 14c.18-.98.65-1.74 1.41-2.5A6 6 0 1 0 7.5 11.5c.76.76 1.23 1.52 1.41 2.5" }) }), ma = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "2", y: "4", width: "20", height: "16", rx: "2" }),
   /* @__PURE__ */ r("line", { x1: "6", y1: "8", x2: "6.01", y2: "8", strokeWidth: "2" }),
   /* @__PURE__ */ r("line", { x1: "10", y1: "8", x2: "10.01", y2: "8", strokeWidth: "2" }),
@@ -5040,13 +5115,13 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("polygon", { points: "12 2 2 7 12 12 22 7 12 2" }),
   /* @__PURE__ */ r("polyline", { points: "2 12 12 17 22 12" }),
   /* @__PURE__ */ r("polyline", { points: "2 17 12 22 22 17" })
-] }), Ul = cn, ma = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Ul = cn, ya = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "13.5", cy: "6.5", r: ".8", fill: e }),
   /* @__PURE__ */ r("circle", { cx: "17.5", cy: "10.5", r: ".8", fill: e }),
   /* @__PURE__ */ r("circle", { cx: "8.5", cy: "7.5", r: ".8", fill: e }),
   /* @__PURE__ */ r("circle", { cx: "6.5", cy: "12.5", r: ".8", fill: e }),
   /* @__PURE__ */ r("path", { d: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.24-.28-.39-.63-.39-1.02 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z" })
-] }), ya = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), ba = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
   /* @__PURE__ */ r("line", { x1: "22", y1: "12", x2: "18", y2: "12" }),
   /* @__PURE__ */ r("line", { x1: "6", y1: "12", x2: "2", y2: "12" }),
@@ -5069,7 +5144,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   /* @__PURE__ */ r("circle", { cx: "18", cy: "19", r: "3" }),
   /* @__PURE__ */ r("line", { x1: "8.59", y1: "13.51", x2: "15.42", y2: "17.49" }),
   /* @__PURE__ */ r("line", { x1: "15.41", y1: "6.51", x2: "8.59", y2: "10.49" })
-] }), Kl = gn, hn = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" }) }), Zl = hn, ba = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 512 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M501.97 187.35l-71.09 177.72c-2.45 6.13-7.51 10.74-13.8 12.59l-42.92 12.63c-3.15.93-6.49.52-9.33-1.15l-108.83-64-108.83 64c-2.84 1.67-6.18 2.08-9.33 1.15l-42.92-12.63c-6.29-1.85-11.35-6.46-13.8-12.59L10.03 187.35C4.25 172.9 14.86 157.5 30.41 157.5c6.51 0 12.82 2.76 17.26 7.56l72.97 78.85 41.56-173.18C165.26 56.44 178.69 48 193.28 48h125.44c14.59 0 28.02 8.44 31.08 22.73l41.56 173.18 72.97-78.85c4.44-4.8 10.75-7.56 17.26-7.56 15.55 0 26.16 15.4 20.38 29.85zM448 432H64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h384c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), va = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 448 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M384 432H64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zm48-272h-40.42c-1.35-25.13-13.43-47.53-31.95-63.02L382.72 48H320V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v32h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v32H65.28l23.09 48.98C69.85 112.47 57.77 134.87 56.42 160H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h34.61c16.29 88.58 87.27 160 173.39 160s157.1-71.42 173.39-160H432c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), wa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 384 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M384 128V48c0-8.84-7.16-16-16-16h-48c-8.84 0-16 7.16-16 16v32h-64V48c0-8.84-7.16-16-16-16h-48c-8.84 0-16 7.16-16 16v32H96V48c0-8.84-7.16-16-16-16H32c-8.84 0-16 7.16-16 16v80c0 14.59 9.87 27.08 24 30.65v146.7c-14.13 3.57-24 16.06-24 30.65 0 17.67 14.33 32 32 32h288c17.67 0 32-14.33 32-32 0-14.59-9.87-27.08-24-30.65V158.65c14.13-3.57 24-16.06 24-30.65zM352 432H32c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), ka = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 320 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M160 0c-44.18 0-80 35.82-80 80 0 16.27 4.95 31.33 13.31 44.07C64.95 145.45 48 181.76 48 224c0 38.64 14.19 72.44 37.66 96H48c-26.51 0-48 21.49-48 48v16h320v-16c0-26.51-21.49-48-48-48h-37.66C257.81 296.44 272 262.64 272 224c0-42.24-16.95-78.55-45.31-99.93C235.05 111.33 240 96.27 240 80c0-44.18-35.82-80-80-80zm128 432H32c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h256c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), Sa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
+] }), Kl = gn, hn = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 24 24", fill: "none", stroke: e, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" }) }), Zl = hn, va = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 512 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M501.97 187.35l-71.09 177.72c-2.45 6.13-7.51 10.74-13.8 12.59l-42.92 12.63c-3.15.93-6.49.52-9.33-1.15l-108.83-64-108.83 64c-2.84 1.67-6.18 2.08-9.33 1.15l-42.92-12.63c-6.29-1.85-11.35-6.46-13.8-12.59L10.03 187.35C4.25 172.9 14.86 157.5 30.41 157.5c6.51 0 12.82 2.76 17.26 7.56l72.97 78.85 41.56-173.18C165.26 56.44 178.69 48 193.28 48h125.44c14.59 0 28.02 8.44 31.08 22.73l41.56 173.18 72.97-78.85c4.44-4.8 10.75-7.56 17.26-7.56 15.55 0 26.16 15.4 20.38 29.85zM448 432H64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h384c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), wa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 448 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M384 432H64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zm48-272h-40.42c-1.35-25.13-13.43-47.53-31.95-63.02L382.72 48H320V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v32h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v32H65.28l23.09 48.98C69.85 112.47 57.77 134.87 56.42 160H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h34.61c16.29 88.58 87.27 160 173.39 160s157.1-71.42 173.39-160H432c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), ka = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 384 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M384 128V48c0-8.84-7.16-16-16-16h-48c-8.84 0-16 7.16-16 16v32h-64V48c0-8.84-7.16-16-16-16h-48c-8.84 0-16 7.16-16 16v32H96V48c0-8.84-7.16-16-16-16H32c-8.84 0-16 7.16-16 16v80c0 14.59 9.87 27.08 24 30.65v146.7c-14.13 3.57-24 16.06-24 30.65 0 17.67 14.33 32 32 32h288c17.67 0 32-14.33 32-32 0-14.59-9.87-27.08-24-30.65V158.65c14.13-3.57 24-16.06 24-30.65zM352 432H32c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), Sa = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ r("svg", { width: t, height: t, viewBox: "0 0 320 512", fill: e, className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: /* @__PURE__ */ r("path", { d: "M160 0c-44.18 0-80 35.82-80 80 0 16.27 4.95 31.33 13.31 44.07C64.95 145.45 48 181.76 48 224c0 38.64 14.19 72.44 37.66 96H48c-26.51 0-48 21.49-48 48v16h320v-16c0-26.51-21.49-48-48-48h-37.66C257.81 296.44 272 262.64 272 224c0-42.24-16.95-78.55-45.31-99.93C235.05 111.33 240 96.27 240 80c0-44.18-35.82-80-80-80zm128 432H32c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h256c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" }) }), Ca = ({ size: t = 18, color: e = "currentColor", className: n = "", style: i, ...o }) => /* @__PURE__ */ c("svg", { width: t, height: t, viewBox: "0 0 24 24", className: n, style: { display: "inline-block", verticalAlign: "middle", ...i }, "aria-hidden": "true", ...o, children: [
   /* @__PURE__ */ r("rect", { x: "3", y: "3", width: "18", height: "18", rx: "2", stroke: e, strokeWidth: "2", fill: "none" }),
   /* @__PURE__ */ r("rect", { x: "3", y: "3", width: "4.5", height: "4.5", fill: e }),
   /* @__PURE__ */ r("rect", { x: "12", y: "3", width: "4.5", height: "4.5", fill: e }),
@@ -5085,36 +5160,36 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "arrow-left":
     case "long-arrow-left":
     case "arrowleft":
-      return /* @__PURE__ */ r(Vi, { ...e });
+      return /* @__PURE__ */ r(Ui, { ...e });
     case "arrow-right":
     case "long-arrow-right":
     case "arrowright":
-      return /* @__PURE__ */ r(Ui, { ...e });
+      return /* @__PURE__ */ r(Gi, { ...e });
     case "arrow-up":
     case "arrowup":
-      return /* @__PURE__ */ r(Gi, { ...e });
+      return /* @__PURE__ */ r(qi, { ...e });
     case "arrow-down":
     case "arrowdown":
-      return /* @__PURE__ */ r(qi, { ...e });
+      return /* @__PURE__ */ r(Ki, { ...e });
     case "chevron-left":
     case "angle-left":
-      return /* @__PURE__ */ r(Ki, { ...e });
+      return /* @__PURE__ */ r(Zi, { ...e });
     case "chevron-right":
     case "angle-right":
-      return /* @__PURE__ */ r(Zi, { ...e });
+      return /* @__PURE__ */ r(Yi, { ...e });
     case "chevron-up":
     case "angle-up":
-      return /* @__PURE__ */ r(Yi, { ...e });
+      return /* @__PURE__ */ r(Qi, { ...e });
     case "chevron-down":
     case "angle-down":
-      return /* @__PURE__ */ r(Qi, { ...e });
-    case "check":
       return /* @__PURE__ */ r(Xi, { ...e });
+    case "check":
+      return /* @__PURE__ */ r(Ji, { ...e });
     case "close":
     case "times":
       return /* @__PURE__ */ r(Vr, { ...e });
     case "search":
-      return /* @__PURE__ */ r(Ji, { ...e });
+      return /* @__PURE__ */ r(eo, { ...e });
     case "menu":
     case "bars":
       return /* @__PURE__ */ r(Ur, { ...e });
@@ -5124,86 +5199,86 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "redo-alt":
       return /* @__PURE__ */ r(Gr, { ...e });
     case "undo":
-      return /* @__PURE__ */ r(eo, { ...e });
-    case "redo":
       return /* @__PURE__ */ r(to, { ...e });
-    case "download":
+    case "redo":
       return /* @__PURE__ */ r(ro, { ...e });
-    case "upload":
+    case "download":
       return /* @__PURE__ */ r(no, { ...e });
-    case "copy":
+    case "upload":
       return /* @__PURE__ */ r(io, { ...e });
+    case "copy":
+      return /* @__PURE__ */ r(oo, { ...e });
     case "external-link":
     case "external-link-alt":
-      return /* @__PURE__ */ r(oo, { ...e });
-    case "filter":
       return /* @__PURE__ */ r(ao, { ...e });
+    case "filter":
+      return /* @__PURE__ */ r(lo, { ...e });
     case "sliders":
     case "sliders-h":
-      return /* @__PURE__ */ r(lo, { ...e });
-    case "play":
       return /* @__PURE__ */ r(so, { ...e });
-    case "pause":
+    case "play":
       return /* @__PURE__ */ r(co, { ...e });
-    case "stop":
+    case "pause":
       return /* @__PURE__ */ r(po, { ...e });
-    case "step-backward":
+    case "stop":
       return /* @__PURE__ */ r(go, { ...e });
-    case "step-forward":
+    case "step-backward":
       return /* @__PURE__ */ r(ho, { ...e });
-    case "fast-backward":
+    case "step-forward":
       return /* @__PURE__ */ r(uo, { ...e });
-    case "fast-forward":
+    case "fast-backward":
       return /* @__PURE__ */ r(fo, { ...e });
-    case "spinner":
+    case "fast-forward":
       return /* @__PURE__ */ r(xo, { ...e });
-    case "expand":
+    case "spinner":
       return /* @__PURE__ */ r(mo, { ...e });
-    case "compress":
+    case "expand":
       return /* @__PURE__ */ r(yo, { ...e });
-    case "home":
+    case "compress":
       return /* @__PURE__ */ r(bo, { ...e });
-    case "bell":
+    case "home":
       return /* @__PURE__ */ r(vo, { ...e });
-    case "lock":
+    case "bell":
       return /* @__PURE__ */ r(wo, { ...e });
+    case "lock":
+      return /* @__PURE__ */ r(ko, { ...e });
     case "unlock":
     case "unlock-alt":
-      return /* @__PURE__ */ r(ko, { ...e });
-    case "sun":
       return /* @__PURE__ */ r(So, { ...e });
-    case "moon":
+    case "sun":
       return /* @__PURE__ */ r(Co, { ...e });
-    case "trash":
+    case "moon":
       return /* @__PURE__ */ r(Ao, { ...e });
-    case "edit":
+    case "trash":
       return /* @__PURE__ */ r(Io, { ...e });
-    case "bookmark":
+    case "edit":
       return /* @__PURE__ */ r(Lo, { ...e });
-    case "star":
+    case "bookmark":
       return /* @__PURE__ */ r(To, { ...e });
-    case "heart":
+    case "star":
       return /* @__PURE__ */ r(Wo, { ...e });
-    case "clock":
+    case "heart":
       return /* @__PURE__ */ r(zo, { ...e });
+    case "clock":
+      return /* @__PURE__ */ r(Ro, { ...e });
     case "calendar":
     case "calendar-alt":
     case "calendar-day":
     case "calendar-check":
-      return /* @__PURE__ */ r(Ro, { ...e });
+      return /* @__PURE__ */ r(Bo, { ...e });
     case "info":
     case "info-circle":
-      return /* @__PURE__ */ r(Bo, { ...e });
+      return /* @__PURE__ */ r(_o, { ...e });
     case "warning":
     case "exclamation-triangle":
-      return /* @__PURE__ */ r(_o, { ...e });
-    case "check-circle":
       return /* @__PURE__ */ r(Mo, { ...e });
-    case "times-circle":
+    case "check-circle":
       return /* @__PURE__ */ r($o, { ...e });
+    case "times-circle":
+      return /* @__PURE__ */ r(Do, { ...e });
     case "question":
     case "question-circle":
-      return /* @__PURE__ */ r(Do, { ...e });
+      return /* @__PURE__ */ r(Eo, { ...e });
     case "cog":
     case "cogs":
     case "settings":
@@ -5211,35 +5286,35 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "shield":
     case "shield-alt":
     case "user-shield":
-      return /* @__PURE__ */ r(Eo, { ...e });
-    case "shield-check":
       return /* @__PURE__ */ r(jo, { ...e });
+    case "shield-check":
+      return /* @__PURE__ */ r(No, { ...e });
     case "bug":
     case "virus":
-      return /* @__PURE__ */ r(No, { ...e });
+      return /* @__PURE__ */ r(Po, { ...e });
     case "desktop":
     case "tv":
-      return /* @__PURE__ */ r(Po, { ...e });
+      return /* @__PURE__ */ r(Ho, { ...e });
     case "code":
     case "laptop-code":
     case "terminal":
-      return /* @__PURE__ */ r(Ho, { ...e });
-    case "database":
       return /* @__PURE__ */ r(Fo, { ...e });
-    case "server":
+    case "database":
       return /* @__PURE__ */ r(Oo, { ...e });
-    case "cloud":
+    case "server":
       return /* @__PURE__ */ r(Vo, { ...e });
+    case "cloud":
+      return /* @__PURE__ */ r(Uo, { ...e });
     case "cpu":
     case "microchip":
       return /* @__PURE__ */ r(Kr, { ...e });
     case "robot":
-      return /* @__PURE__ */ r(Uo, { ...e });
-    case "rocket":
       return /* @__PURE__ */ r(Go, { ...e });
+    case "rocket":
+      return /* @__PURE__ */ r(qo, { ...e });
     case "microscope":
     case "vial":
-      return /* @__PURE__ */ r(qo, { ...e });
+      return /* @__PURE__ */ r(Ko, { ...e });
     case "wrench":
     case "tools":
       return /* @__PURE__ */ r(Zr, { ...e });
@@ -5249,49 +5324,49 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       return /* @__PURE__ */ r(Yr, { ...e });
     case "sparkles":
     case "magic":
-      return /* @__PURE__ */ r(Ko, { ...e });
-    case "bullhorn":
       return /* @__PURE__ */ r(Zo, { ...e });
-    case "trophy":
+    case "bullhorn":
       return /* @__PURE__ */ r(Yo, { ...e });
-    case "medal":
+    case "trophy":
       return /* @__PURE__ */ r(Qo, { ...e });
+    case "medal":
+      return /* @__PURE__ */ r(Xo, { ...e });
     case "target":
     case "bullseye":
       return /* @__PURE__ */ r(Qr, { ...e });
     case "puzzle":
     case "puzzle-piece":
-      return /* @__PURE__ */ r(Xo, { ...e });
+      return /* @__PURE__ */ r(Jo, { ...e });
     case "quote":
     case "quote-left":
     case "quote-right":
-      return /* @__PURE__ */ r(Jo, { ...e });
+      return /* @__PURE__ */ r(ea, { ...e });
     case "book":
     case "book-open":
       return /* @__PURE__ */ r(Xr, { ...e });
     case "newspaper":
     case "blog":
-      return /* @__PURE__ */ r(ea, { ...e });
-    case "user":
       return /* @__PURE__ */ r(ta, { ...e });
+    case "user":
+      return /* @__PURE__ */ r(ra, { ...e });
     case "users":
     case "user-friends":
-      return /* @__PURE__ */ r(ra, { ...e });
-    case "landmark":
       return /* @__PURE__ */ r(na, { ...e });
-    case "compass":
+    case "landmark":
       return /* @__PURE__ */ r(ia, { ...e });
+    case "compass":
+      return /* @__PURE__ */ r(oa, { ...e });
     case "handshake":
     case "hands-helping":
-      return /* @__PURE__ */ r(oa, { ...e });
+      return /* @__PURE__ */ r(aa, { ...e });
     case "flag":
     case "flag-checkered":
-      return /* @__PURE__ */ r(aa, { ...e });
+      return /* @__PURE__ */ r(la, { ...e });
     case "graduation-cap":
     case "academic-cap":
     case "learn":
     case "chalkboard-teacher":
-      return /* @__PURE__ */ r(Zt, { ...e });
+      return /* @__PURE__ */ r(Yt, { ...e });
     case "gamepad":
     case "controller":
       return /* @__PURE__ */ r(Jr, { ...e });
@@ -5305,15 +5380,15 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "globe-asia":
     case "world":
     case "online":
-      return /* @__PURE__ */ r(kt, { ...e });
+      return /* @__PURE__ */ r(Ct, { ...e });
     case "eye":
     case "watch":
     case "view":
-      return /* @__PURE__ */ r(la, { ...e });
-    case "eye-slash":
       return /* @__PURE__ */ r(sa, { ...e });
-    case "crown":
+    case "eye-slash":
       return /* @__PURE__ */ r(ca, { ...e });
+    case "crown":
+      return /* @__PURE__ */ r(da, { ...e });
     case "fire":
     case "flame":
     case "hot":
@@ -5324,7 +5399,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       return /* @__PURE__ */ r(nn, { ...e });
     case "clipboard":
     case "clipboard-check":
-      return /* @__PURE__ */ r(da, { ...e });
+      return /* @__PURE__ */ r(pa, { ...e });
     case "map-marker":
     case "map-marker-alt":
     case "pin":
@@ -5332,19 +5407,19 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "envelope":
     case "mail":
     case "email":
-      return /* @__PURE__ */ r(Kt, { ...e });
+      return /* @__PURE__ */ r(Zt, { ...e });
     case "list":
     case "list-alt":
     case "list-ol":
     case "list-ul":
       return /* @__PURE__ */ r(an, { ...e });
     case "history":
-      return /* @__PURE__ */ r(pa, { ...e });
+      return /* @__PURE__ */ r(ga, { ...e });
     case "signal":
     case "wifi":
-      return /* @__PURE__ */ r(ga, { ...e });
-    case "network-wired":
       return /* @__PURE__ */ r(ha, { ...e });
+    case "network-wired":
+      return /* @__PURE__ */ r(ua, { ...e });
     case "balance-scale":
     case "scale":
     case "justice":
@@ -5353,18 +5428,18 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     case "skull-crossbones":
       return /* @__PURE__ */ r(sn, { ...e });
     case "stopwatch":
-      return /* @__PURE__ */ r(ua, { ...e });
-    case "lightbulb":
       return /* @__PURE__ */ r(fa, { ...e });
-    case "keyboard":
+    case "lightbulb":
       return /* @__PURE__ */ r(xa, { ...e });
+    case "keyboard":
+      return /* @__PURE__ */ r(ma, { ...e });
     case "layer-group":
     case "layers":
       return /* @__PURE__ */ r(cn, { ...e });
     case "palette":
-      return /* @__PURE__ */ r(ma, { ...e });
-    case "crosshairs":
       return /* @__PURE__ */ r(ya, { ...e });
+    case "crosshairs":
+      return /* @__PURE__ */ r(ba, { ...e });
     case "cut":
     case "scissors":
       return /* @__PURE__ */ r(dn, { ...e });
@@ -5380,25 +5455,25 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       return /* @__PURE__ */ r(hn, { ...e });
     case "chess":
     case "chess-board":
-      return /* @__PURE__ */ r(Sa, { ...e });
+      return /* @__PURE__ */ r(Ca, { ...e });
     case "chess-queen":
     case "queen":
-      return /* @__PURE__ */ r(ba, { ...e });
+      return /* @__PURE__ */ r(va, { ...e });
     case "chess-king":
     case "king":
-      return /* @__PURE__ */ r(va, { ...e });
+      return /* @__PURE__ */ r(wa, { ...e });
     case "chess-knight":
     case "knight":
-      return /* @__PURE__ */ r(qt, { ...e });
+      return /* @__PURE__ */ r(Kt, { ...e });
     case "chess-pawn":
     case "pawn":
       return /* @__PURE__ */ r(Hr, { ...e });
     case "chess-rook":
     case "rook":
-      return /* @__PURE__ */ r(wa, { ...e });
+      return /* @__PURE__ */ r(ka, { ...e });
     case "chess-bishop":
     case "bishop":
-      return /* @__PURE__ */ r(ka, { ...e });
+      return /* @__PURE__ */ r(Sa, { ...e });
     default:
       return /* @__PURE__ */ r(Or, { name: n, ...e });
   }
@@ -5419,44 +5494,44 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   forkRibbonText: x = "FORK ME",
   forkRibbonPosition: f = "right",
   showNotificationBell: b = !0,
-  notificationFetchUrl: S,
+  notificationFetchUrl: C,
   notificationStorageKey: v = "notifications_seen_updates",
   showThemeToggle: m = !0,
   showCacheBuster: y = !0,
   quickAction: w,
   customControls: L,
   containerMaxWidth: z = "var(--eg-container-max, min(1536px, 94%))",
-  containerPadding: C = "0 clamp(16px, 2.5vw, 32px)",
-  onNavigate: B,
-  className: R = "",
-  style: N = {}
+  containerPadding: A = "0 clamp(16px, 2.5vw, 32px)",
+  onNavigate: R,
+  className: B = "",
+  style: j = {}
 }) => {
-  const [I, j] = W(!1), [H, $] = W(null), O = he(null);
-  Z(() => {
-    const A = (D) => {
-      O.current && !O.current.contains(D.target) && $(null);
+  const [I, E] = W(!1), [H, $] = W(null), U = me(null);
+  Y(() => {
+    const k = (D) => {
+      U.current && !U.current.contains(D.target) && $(null);
     };
-    return document.addEventListener("mousedown", A), () => document.removeEventListener("mousedown", A);
+    return document.addEventListener("mousedown", k), () => document.removeEventListener("mousedown", k);
   }, []);
-  const M = [
+  const _ = [
     { label: "HOME", href: "index.html" }
-  ], T = p && p.length > 0 ? p : M, k = (A, D, V) => {
-    if (!(V || D.startsWith("http://") || D.startsWith("https://"))) {
+  ], T = p && p.length > 0 ? p : _, S = (k, D, O) => {
+    if (!(O || D.startsWith("http://") || D.startsWith("https://"))) {
       if (D === "#" || D === "javascript:void(0);") {
-        A.preventDefault();
+        k.preventDefault();
         return;
       }
-      B && (A.preventDefault(), B(D), j(!1), $(null));
+      R && (k.preventDefault(), R(D), E(!1), $(null));
     }
-  }, E = (A) => {
-    if (A.active) return !0;
-    const D = g.replace(/^\/+/, "").split("?")[0].split("#")[0].toLowerCase().replace(/\.html$/, "") || "index", V = A.href.replace(/^\/+/, "").split("?")[0].split("#")[0].toLowerCase().replace(/\.html$/, "");
-    return D === V || (V === "index" || V === "") && (D === "" || D === "index") ? !0 : A.children ? A.children.some((_) => E(_)) : !1;
+  }, N = (k) => {
+    if (k.active) return !0;
+    const D = g.replace(/^\/+/, "").split("?")[0].split("#")[0].toLowerCase().replace(/\.html$/, "") || "index", O = k.href.replace(/^\/+/, "").split("?")[0].split("#")[0].toLowerCase().replace(/\.html$/, "");
+    return D === O || (O === "index" || O === "") && (D === "" || D === "index") ? !0 : k.children ? k.children.some((M) => N(M)) : !1;
   };
   return /* @__PURE__ */ c(
     "header",
     {
-      className: `eg-header ${R}`,
+      className: `eg-header ${B}`,
       style: {
         background: "var(--eg-bg-surface, #ffffff)",
         borderBottom: "1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.08))",
@@ -5467,7 +5542,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         WebkitBackdropFilter: "blur(12px)",
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)",
         transition: "background var(--eg-transition-normal, 220ms)",
-        ...N
+        ...j
       },
       children: [
         u && h && /* @__PURE__ */ r(
@@ -5518,11 +5593,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                   lineHeight: 1,
                   transition: "all 0.25s ease"
                 },
-                onMouseEnter: (A) => {
-                  A.currentTarget.style.background = "linear-gradient(135deg, #10b981 0%, #059669 100%)", A.currentTarget.style.color = "#ffffff", A.currentTarget.style.boxShadow = "0 6px 18px rgba(16, 185, 129, 0.5)";
+                onMouseEnter: (k) => {
+                  k.currentTarget.style.background = "linear-gradient(135deg, #10b981 0%, #059669 100%)", k.currentTarget.style.color = "#ffffff", k.currentTarget.style.boxShadow = "0 6px 18px rgba(16, 185, 129, 0.5)";
                 },
-                onMouseLeave: (A) => {
-                  A.currentTarget.style.background = "linear-gradient(135deg, #24292e 0%, #161b22 100%)", A.currentTarget.style.color = "#ffffff", A.currentTarget.style.boxShadow = "0 4px 14px rgba(0, 0, 0, 0.45)";
+                onMouseLeave: (k) => {
+                  k.currentTarget.style.background = "linear-gradient(135deg, #24292e 0%, #161b22 100%)", k.currentTarget.style.color = "#ffffff", k.currentTarget.style.boxShadow = "0 4px 14px rgba(0, 0, 0, 0.45)";
                 },
                 children: [
                   /* @__PURE__ */ r("svg", { width: "14", height: "14", viewBox: "0 0 16 16", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ r("path", { d: "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" }) }),
@@ -5539,7 +5614,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
             style: {
               maxWidth: z,
               margin: "0 auto",
-              padding: C
+              padding: A
             },
             children: /* @__PURE__ */ c(
               "div",
@@ -5570,7 +5645,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                         "a",
                         {
                           href: s,
-                          onClick: (A) => k(A, s),
+                          onClick: (k) => S(k, s),
                           style: { textDecoration: "none", display: "flex", alignItems: "center" },
                           title: a || "Home",
                           children: e || n ? e || n : a ? /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column" }, children: [
@@ -5605,21 +5680,21 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                   /* @__PURE__ */ r(
                     "nav",
                     {
-                      ref: O,
+                      ref: U,
                       style: {
                         display: "flex",
                         alignItems: "center",
                         gap: "20px"
                       },
                       className: "eg-desktop-nav",
-                      children: T.map((A) => {
-                        const D = E(A), V = A.children && A.children.length > 0, _ = H === A.label;
-                        return V ? /* @__PURE__ */ c("div", { style: { position: "relative" }, children: [
+                      children: T.map((k) => {
+                        const D = N(k), O = k.children && k.children.length > 0, M = H === k.label;
+                        return O ? /* @__PURE__ */ c("div", { style: { position: "relative" }, children: [
                           /* @__PURE__ */ c(
                             "button",
                             {
                               type: "button",
-                              onClick: () => $(_ ? null : A.label),
+                              onClick: () => $(M ? null : k.label),
                               style: {
                                 display: "flex",
                                 alignItems: "center",
@@ -5635,13 +5710,13 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                 letterSpacing: "0.5px"
                               },
                               children: [
-                                A.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: A.icon }),
-                                /* @__PURE__ */ r("span", { children: A.label }),
-                                /* @__PURE__ */ r("span", { style: { fontSize: "10px", transform: _ ? "rotate(180deg)" : "none", transition: "transform 0.15s ease" }, children: "▼" })
+                                k.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: k.icon }),
+                                /* @__PURE__ */ r("span", { children: k.label }),
+                                /* @__PURE__ */ r("span", { style: { fontSize: "10px", transform: M ? "rotate(180deg)" : "none", transition: "transform 0.15s ease" }, children: "▼" })
                               ]
                             }
                           ),
-                          _ && /* @__PURE__ */ r(
+                          M && /* @__PURE__ */ r(
                             "div",
                             {
                               style: {
@@ -5659,23 +5734,23 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                 flexDirection: "column",
                                 gap: "2px"
                               },
-                              children: A.children.map((P) => {
-                                const U = E(P);
+                              children: k.children.map((P) => {
+                                const V = N(P);
                                 return /* @__PURE__ */ c(
                                   "a",
                                   {
-                                    href: ie(P.href),
+                                    href: ne(P.href),
                                     target: P.external ? "_blank" : void 0,
                                     rel: P.external ? "noopener noreferrer" : void 0,
-                                    onClick: (G) => k(G, P.href, P.external),
+                                    onClick: (G) => S(G, P.href, P.external),
                                     style: {
                                       padding: "8px 12px",
                                       borderRadius: "6px",
                                       textDecoration: "none",
                                       fontSize: "13px",
-                                      fontWeight: U ? 700 : 500,
-                                      color: U ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-primary, #0f172a)",
-                                      background: U ? "rgba(16, 185, 129, 0.12)" : "transparent",
+                                      fontWeight: V ? 700 : 500,
+                                      color: V ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-primary, #0f172a)",
+                                      background: V ? "rgba(16, 185, 129, 0.12)" : "transparent",
                                       display: "flex",
                                       alignItems: "center",
                                       justifyContent: "space-between",
@@ -5683,10 +5758,10 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                       transition: "all 0.15s ease"
                                     },
                                     onMouseEnter: (G) => {
-                                      U || (G.currentTarget.style.background = "var(--eg-bg-subtle, rgba(0, 0, 0, 0.05))");
+                                      V || (G.currentTarget.style.background = "var(--eg-bg-subtle, rgba(0, 0, 0, 0.05))");
                                     },
                                     onMouseLeave: (G) => {
-                                      U || (G.currentTarget.style.background = "transparent");
+                                      V || (G.currentTarget.style.background = "transparent");
                                     },
                                     children: [
                                       /* @__PURE__ */ c("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
@@ -5701,14 +5776,14 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                               })
                             }
                           )
-                        ] }, A.label) : /* @__PURE__ */ c(
+                        ] }, k.label) : /* @__PURE__ */ c(
                           "a",
                           {
-                            href: ie(A.href),
-                            target: A.external ? "_blank" : void 0,
-                            rel: A.external ? "noopener noreferrer" : void 0,
-                            onClick: (P) => k(P, A.href, A.external),
-                            style: A.highlight ? {
+                            href: ne(k.href),
+                            target: k.external ? "_blank" : void 0,
+                            rel: k.external ? "noopener noreferrer" : void 0,
+                            onClick: (P) => S(P, k.href, k.external),
+                            style: k.highlight ? {
                               display: "inline-flex",
                               alignItems: "center",
                               gap: "6px",
@@ -5737,11 +5812,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                               letterSpacing: "0.5px"
                             },
                             children: [
-                              A.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: A.icon }),
-                              /* @__PURE__ */ r("span", { children: A.label })
+                              k.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: k.icon }),
+                              /* @__PURE__ */ r("span", { children: k.label })
                             ]
                           },
-                          A.href
+                          k.href
                         );
                       })
                     }
@@ -5762,8 +5837,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                         b && /* @__PURE__ */ r(
                           Bn,
                           {
-                            onNavigate: B,
-                            fetchUrl: S,
+                            onNavigate: R,
+                            fetchUrl: C,
                             storageKey: v
                           }
                         ),
@@ -5799,7 +5874,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                           "button",
                           {
                             type: "button",
-                            onClick: () => j(!I),
+                            onClick: () => E(!I),
                             className: "eg-mobile-toggle",
                             "aria-label": "Toggle navigation menu",
                             "aria-expanded": I,
@@ -5912,23 +5987,23 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
               gap: "8px"
             },
             children: [
-              T.map((A) => {
-                const D = E(A);
-                return A.children && A.children.length > 0 ? /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: "4px" }, children: [
+              T.map((k) => {
+                const D = N(k);
+                return k.children && k.children.length > 0 ? /* @__PURE__ */ c("div", { style: { display: "flex", flexDirection: "column", gap: "4px" }, children: [
                   /* @__PURE__ */ c("div", { style: { display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", fontWeight: 700, color: "var(--eg-text-muted, #94a3b8)", padding: "6px 0" }, children: [
-                    A.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: A.icon }),
-                    /* @__PURE__ */ r("span", { children: A.label })
+                    k.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: k.icon }),
+                    /* @__PURE__ */ r("span", { children: k.label })
                   ] }),
-                  A.children.map((_) => /* @__PURE__ */ c(
+                  k.children.map((M) => /* @__PURE__ */ c(
                     "a",
                     {
-                      href: ie(_.href),
-                      onClick: (P) => k(P, _.href, _.external),
+                      href: ne(M.href),
+                      onClick: (P) => S(P, M.href, M.external),
                       style: {
                         padding: "8px 12px",
                         borderRadius: "6px",
                         textDecoration: "none",
-                        color: E(_) ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-primary, #0f172a)",
+                        color: N(M) ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-primary, #0f172a)",
                         fontWeight: 600,
                         fontSize: "14px",
                         display: "flex",
@@ -5936,18 +6011,18 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                         gap: "8px"
                       },
                       children: [
-                        _.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: _.icon }),
-                        /* @__PURE__ */ r("span", { children: _.label })
+                        M.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: M.icon }),
+                        /* @__PURE__ */ r("span", { children: M.label })
                       ]
                     },
-                    _.label
+                    M.label
                   ))
-                ] }, A.label) : /* @__PURE__ */ c(
+                ] }, k.label) : /* @__PURE__ */ c(
                   "a",
                   {
-                    href: ie(A.href),
-                    onClick: (_) => k(_, A.href, A.external),
-                    style: A.highlight ? {
+                    href: ne(k.href),
+                    onClick: (M) => S(M, k.href, k.external),
+                    style: k.highlight ? {
                       padding: "10px 14px",
                       borderRadius: "8px",
                       textDecoration: "none",
@@ -5972,11 +6047,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                       gap: "8px"
                     },
                     children: [
-                      A.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: A.icon }),
-                      /* @__PURE__ */ r("span", { children: A.label })
+                      k.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: k.icon }),
+                      /* @__PURE__ */ r("span", { children: k.label })
                     ]
                   },
-                  A.href
+                  k.href
                 );
               }),
               /* @__PURE__ */ c(
@@ -5995,7 +6070,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                     d && /* @__PURE__ */ c(
                       "a",
                       {
-                        href: ie(d),
+                        href: ne(d),
                         target: "_blank",
                         rel: "noopener noreferrer",
                         style: {
@@ -6039,42 +6114,42 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   contactLabel: x = "Contact",
   contactButtonText: f = "Send Message",
   contactUrl: b = "contact",
-  sections: S,
+  sections: C,
   copyrightText: v,
   privacyPolicyUrl: m = "privacypolicy",
   developedByText: y,
   developedByUrl: w,
   developedByPrefix: L,
   showBackToTop: z = !1,
-  containerMaxWidth: C = "var(--eg-container-max, min(1536px, 94%))",
-  containerPadding: B = "0 clamp(16px, 2.5vw, 32px)",
-  onNavigate: R,
-  className: N = "",
+  containerMaxWidth: A = "var(--eg-container-max, min(1536px, 94%))",
+  containerPadding: R = "0 clamp(16px, 2.5vw, 32px)",
+  onNavigate: B,
+  className: j = "",
   style: I = {}
 }) => {
-  const [j, H] = W(s || "");
-  Z(() => {
+  const [E, H] = W(s || "");
+  Y(() => {
     if (s) return;
     let T = !0;
-    return me.getPageContent("about").then((k) => {
-      if (!T || !k) return;
-      const E = (D) => {
+    return we.getPageContent("about").then((S) => {
+      if (!T || !S) return;
+      const N = (D) => {
         if (!D) return "";
         try {
           if (typeof document < "u") {
-            const V = document.createElement("div");
-            return V.innerHTML = D, V.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((P) => P.remove()), (V.textContent || V.innerText || "").replace(/\s+/g, " ").replace(/^ABOUT\s*[^:\n-]+\s*[:-]?\s*/i, "").trim();
+            const O = document.createElement("div");
+            return O.innerHTML = D, O.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((P) => P.remove()), (O.textContent || O.innerText || "").replace(/\s+/g, " ").replace(/^ABOUT\s*[^:\n-]+\s*[:-]?\s*/i, "").trim();
           }
         } catch {
         }
         return D.replace(/<h[1-6][^>]*>[\s\S]*?<\/h[1-6]>/gi, "").replace(/<[^>]*>?/gm, " ").replace(/\s+/g, " ").replace(/^ABOUT\s*[^:\n-]+\s*[:-]?\s*/i, "").trim();
       };
-      let A = E(k.title || "");
-      if (!A && k.content && (A = E(k.content)), A) {
-        let D = A;
-        if (A.length > 135) {
-          const V = A.slice(0, 135), _ = V.lastIndexOf(" ");
-          D = (_ > 0 ? V.slice(0, _) : V).trim() + "...";
+      let k = N(S.title || "");
+      if (!k && S.content && (k = N(S.content)), k) {
+        let D = k;
+        if (k.length > 135) {
+          const O = k.slice(0, 135), M = O.lastIndexOf(" ");
+          D = (M > 0 ? O.slice(0, M) : O).trim() + "...";
         }
         H(D);
       }
@@ -6082,13 +6157,13 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       T = !1;
     };
   }, [s, t]);
-  const $ = (T, k, E) => {
-    E || k.startsWith("http://") || k.startsWith("https://") || R && (T.preventDefault(), R(k));
-  }, O = S || [], M = (/* @__PURE__ */ new Date()).getFullYear();
+  const $ = (T, S, N) => {
+    N || S.startsWith("http://") || S.startsWith("https://") || B && (T.preventDefault(), B(S));
+  }, U = C || [], _ = (/* @__PURE__ */ new Date()).getFullYear();
   return /* @__PURE__ */ c(
     "footer",
     {
-      className: `eg-footer ${N}`,
+      className: `eg-footer ${j}`,
       style: {
         background: "var(--eg-bg-footer, #1e2229)",
         color: "var(--eg-text-footer, #cbd5e1)",
@@ -6102,9 +6177,9 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           "div",
           {
             style: {
-              maxWidth: C,
+              maxWidth: A,
               margin: "0 auto",
-              padding: B
+              padding: R
             },
             children: [
               /* @__PURE__ */ c(
@@ -6133,7 +6208,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                             textJustify: "inter-word"
                           },
                           children: [
-                            /* @__PURE__ */ r("span", { children: j }),
+                            /* @__PURE__ */ r("span", { children: E }),
                             p && /* @__PURE__ */ c(se, { children: [
                               " ",
                               /* @__PURE__ */ r(
@@ -6159,7 +6234,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                         }
                       )
                     ] }),
-                    d && !S ? /* @__PURE__ */ c(se, { children: [
+                    d && !C ? /* @__PURE__ */ c(se, { children: [
                       /* @__PURE__ */ c(
                         "div",
                         {
@@ -6200,7 +6275,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                 children: (d || []).map((T) => /* @__PURE__ */ r(
                                   "a",
                                   {
-                                    href: ie(T.url),
+                                    href: ne(T.url),
                                     target: "_blank",
                                     rel: "noopener noreferrer",
                                     title: T.name,
@@ -6218,11 +6293,11 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                       textDecoration: "none",
                                       transition: "all 0.15s ease"
                                     },
-                                    onMouseEnter: (k) => {
-                                      k.currentTarget.style.color = "#10b981", k.currentTarget.style.borderColor = "#10b981", k.currentTarget.style.background = "rgba(16, 185, 129, 0.15)";
+                                    onMouseEnter: (S) => {
+                                      S.currentTarget.style.color = "#10b981", S.currentTarget.style.borderColor = "#10b981", S.currentTarget.style.background = "rgba(16, 185, 129, 0.15)";
                                     },
-                                    onMouseLeave: (k) => {
-                                      k.currentTarget.style.color = "var(--eg-text-footer, #cbd5e1)", k.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.12)", k.currentTarget.style.background = "rgba(255, 255, 255, 0.06)";
+                                    onMouseLeave: (S) => {
+                                      S.currentTarget.style.color = "var(--eg-text-footer, #cbd5e1)", S.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.12)", S.currentTarget.style.background = "rgba(255, 255, 255, 0.06)";
                                     },
                                     children: T.icon || /* @__PURE__ */ r(Or, { name: T.name, size: 18 })
                                   },
@@ -6294,7 +6369,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                           ]
                         }
                       )
-                    ] }) : O.map((T) => /* @__PURE__ */ c("div", { className: "eg-footer-col", children: [
+                    ] }) : U.map((T) => /* @__PURE__ */ c("div", { className: "eg-footer-col", children: [
                       /* @__PURE__ */ r(
                         "h4",
                         {
@@ -6309,13 +6384,13 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                           children: T.title
                         }
                       ),
-                      T.customContent ? T.customContent : T.links ? /* @__PURE__ */ r("ul", { style: { listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }, children: T.links.map((k) => /* @__PURE__ */ r("li", { children: /* @__PURE__ */ c(
+                      T.customContent ? T.customContent : T.links ? /* @__PURE__ */ r("ul", { style: { listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }, children: T.links.map((S) => /* @__PURE__ */ r("li", { children: /* @__PURE__ */ c(
                         "a",
                         {
-                          href: ie(k.href),
-                          target: k.external ? "_blank" : void 0,
-                          rel: k.external ? "noopener noreferrer" : void 0,
-                          onClick: (E) => $(E, k.href, k.external),
+                          href: ne(S.href),
+                          target: S.external ? "_blank" : void 0,
+                          rel: S.external ? "noopener noreferrer" : void 0,
+                          onClick: (N) => $(N, S.href, S.external),
                           style: {
                             color: "var(--eg-text-footer, #cbd5e1)",
                             textDecoration: "none",
@@ -6325,19 +6400,19 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                             gap: "8px",
                             transition: "color 0.15s ease"
                           },
-                          onMouseEnter: (E) => {
-                            E.currentTarget.style.color = "var(--eg-color-primary, #10b981)";
+                          onMouseEnter: (N) => {
+                            N.currentTarget.style.color = "var(--eg-color-primary, #10b981)";
                           },
-                          onMouseLeave: (E) => {
-                            E.currentTarget.style.color = "var(--eg-text-footer, #cbd5e1)";
+                          onMouseLeave: (N) => {
+                            N.currentTarget.style.color = "var(--eg-text-footer, #cbd5e1)";
                           },
                           children: [
-                            k.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: k.icon }),
-                            /* @__PURE__ */ r("span", { children: k.label }),
-                            k.external && "↗"
+                            S.icon && /* @__PURE__ */ r("span", { style: { display: "inline-flex", alignItems: "center" }, children: S.icon }),
+                            /* @__PURE__ */ r("span", { children: S.label }),
+                            S.external && "↗"
                           ]
                         }
-                      ) }, k.label)) }) : null
+                      ) }, S.label)) }) : null
                     ] }, T.title))
                   ]
                 }
@@ -6358,7 +6433,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                     color: "var(--eg-text-footer-muted, #94a3b8)"
                   },
                   children: [
-                    /* @__PURE__ */ r("div", { children: v || `© ${M} ${a || "Application"}. All rights reserved.` }),
+                    /* @__PURE__ */ r("div", { children: v || `© ${_} ${a || "Application"}. All rights reserved.` }),
                     /* @__PURE__ */ c("div", { style: { display: "flex", gap: "14px", alignItems: "center" }, children: [
                       /* @__PURE__ */ r(
                         "a",
@@ -6386,7 +6461,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                         ] })
                       ] })
                     ] }),
-                    z && /* @__PURE__ */ r(Ii, { variant: t === "mchess" ? "accent" : "primary" })
+                    z && /* @__PURE__ */ r(Li, { variant: t === "mchess" ? "accent" : "primary" })
                   ]
                 }
               )
@@ -6396,7 +6471,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         /* @__PURE__ */ r("style", { children: `
         .eg-footer-grid {
           display: grid;
-          grid-template-columns: ${d && !S ? "minmax(280px, 1.3fr) 1fr 1fr" : "repeat(auto-fit, minmax(220px, 1fr))"};
+          grid-template-columns: ${d && !C ? "minmax(280px, 1.3fr) 1fr 1fr" : "repeat(auto-fit, minmax(220px, 1fr))"};
         }
         @media (max-width: 768px) {
           .eg-footer-grid {
@@ -6466,7 +6541,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       crystalThemeIndex: 3
     }
   ], [s, p] = W(0);
-  Z(() => {
+  Y(() => {
     if (!n || l.length <= 1) return;
     const u = setInterval(() => {
       p((h) => (h + 1) % l.length);
@@ -6548,7 +6623,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           d.buttonLabel && /* @__PURE__ */ c(
             "a",
             {
-              href: ie(d.buttonHref),
+              href: ne(d.buttonHref),
               onClick: (u) => {
                 o && (u.preventDefault(), o(d));
               },
@@ -6721,8 +6796,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       )
     ]
   }
-), ar = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231e293b'/><text x='50%' y='63%' font-family='sans-serif' font-weight='bold' font-size='38' fill='%2338bdf8' text-anchor='middle'>APP</text></svg>", Ca = ({ product: t, onSelect: e }) => {
-  const [n, i] = W(!1), o = me.resolveProductVersion(t), a = (u) => {
+), ar = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231e293b'/><text x='50%' y='63%' font-family='sans-serif' font-weight='bold' font-size='38' fill='%2338bdf8' text-anchor='middle'>APP</text></svg>", Aa = ({ product: t, onSelect: e }) => {
+  const [n, i] = W(!1), o = we.resolveProductVersion(t), a = (u) => {
     if (!u || typeof u != "string" || !u.trim()) return ar;
     let h = u.trim();
     return h.startsWith("./img/") ? h = "./assets/" + h.slice(2) : h.startsWith("img/") && (h = "assets/" + h), h;
@@ -6746,17 +6821,17 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       v.icon && typeof v.icon == "string" && (b = v.icon);
     }
     if (!f || f === "#") return null;
-    const S = f.startsWith("http://") || f.startsWith("https://");
+    const C = f.startsWith("http://") || f.startsWith("https://");
     return {
       label: x,
-      url: ie(f),
-      isExternal: S,
+      url: ne(f),
+      isExternal: C,
       icon: b
     };
   }, s = l(
     t.button1,
     t.product_type === "WebApp" ? "Launch" : "View Details"
-  ) || (t.webapp_link ? { label: "Launch", url: ie(t.webapp_link), isExternal: !0 } : null), p = l(
+  ) || (t.webapp_link ? { label: "Launch", url: ne(t.webapp_link), isExternal: !0 } : null), p = l(
     t.button2,
     t.attach_upload_file_1 ? "Download" : "Source Code"
   ), d = s && (s.label.toUpperCase().includes("DETAIL") || s.url.includes("title=") || s.url.includes("id=") || !s.isExternal);
@@ -6849,8 +6924,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                           }
                         ),
                         /* @__PURE__ */ c("div", { style: { display: "flex", gap: "6px", flexWrap: "wrap", flexShrink: 0 }, children: [
-                          t.category && /* @__PURE__ */ r(ue, { variant: "neutral", size: "sm", children: t.category }),
-                          /* @__PURE__ */ c(ue, { variant: "primary", size: "sm", children: [
+                          t.category && /* @__PURE__ */ r(ye, { variant: "neutral", size: "sm", children: t.category }),
+                          /* @__PURE__ */ c(ye, { variant: "primary", size: "sm", children: [
                             "v",
                             o
                           ] })
@@ -6995,7 +7070,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           }
         ),
         /* @__PURE__ */ r(
-          Ut,
+          Gt,
           {
             isOpen: n,
             onClose: () => i(!1),
@@ -7017,7 +7092,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       width: "100%",
       boxSizing: "border-box"
     },
-    children: t.map((n) => /* @__PURE__ */ r(Ca, { product: n, onSelect: e }, n.id))
+    children: t.map((n) => /* @__PURE__ */ r(Aa, { product: n, onSelect: e }, n.id))
   }
 ), lr = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231e293b'/><text x='50%' y='63%' font-family='sans-serif' font-weight='bold' font-size='38' fill='%2338bdf8' text-anchor='middle'>APP</text></svg>", is = ({
   product: t,
@@ -7027,7 +7102,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   className: o = "",
   style: a
 }) => {
-  const [l, s] = W(!1), p = me.resolveProductVersion(t), d = (f) => {
+  const [l, s] = W(!1), p = we.resolveProductVersion(t), d = (f) => {
     if (!f || typeof f != "string" || !f.trim()) return lr;
     let b = f.trim();
     return b.startsWith("./img/") ? b = "./assets/" + b.slice(2) : b.startsWith("img/") && (b = "assets/" + b), b;
@@ -7038,42 +7113,42 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       if (typeof m == "string")
         L = m;
       else if (typeof m == "object" && m !== null) {
-        const R = m;
-        if (R.label && R.url)
-          w = String(R.label), L = String(R.url);
+        const B = m;
+        if (B.label && B.url)
+          w = String(B.label), L = String(B.url);
         else {
-          const N = ["sametab", "target", "icon", "class", "btnclass", "rel"];
-          for (const [I, j] of Object.entries(R))
-            if (!N.includes(I.toLowerCase()) && typeof j == "string") {
-              w = I, L = j;
+          const j = ["sametab", "target", "icon", "class", "btnclass", "rel"];
+          for (const [I, E] of Object.entries(B))
+            if (!j.includes(I.toLowerCase()) && typeof E == "string") {
+              w = I, L = E;
               break;
             }
         }
-        R.icon && typeof R.icon == "string" && (z = R.icon);
+        B.icon && typeof B.icon == "string" && (z = B.icon);
       }
       if (!L || L === "#") return null;
-      const C = w.toUpperCase().trim();
-      if (C === "VIEW DETAILS" || C === "DETAILS" || C === "VIEW APP" || L.includes(`title=${t.slug}`) || L.includes(`id=${t.id}`))
+      const A = w.toUpperCase().trim();
+      if (A === "VIEW DETAILS" || A === "DETAILS" || A === "VIEW APP" || L.includes(`title=${t.slug}`) || L.includes(`id=${t.id}`))
         return null;
-      const B = L.startsWith("http://") || L.startsWith("https://");
+      const R = L.startsWith("http://") || L.startsWith("https://");
       return {
         label: w,
-        url: ie(L),
-        isExternal: B,
+        url: ne(L),
+        isExternal: R,
         icon: z
       };
-    }, S = b(
+    }, C = b(
       t.button1,
       t.product_type === "WebApp" ? "Launch WebApp" : "Open Website"
     );
-    S && f.push(S);
+    C && f.push(C);
     const v = b(t.button2, "Download");
     return v && f.push(v), f.length === 0 && t.webapp_link && f.push({
       label: "Launch Application",
-      url: ie(t.webapp_link),
+      url: ne(t.webapp_link),
       isExternal: !0
     }), f;
-  })(), h = t.full_description || t.description || t.short_description || "No detailed description available.", x = ke(
+  })(), h = t.full_description || t.description || t.short_description || "No detailed description available.", x = Ae(
     h.includes("<") ? h : `<p>${h.replace(/\n\n+/g, "</p><p>")}</p>`
   );
   return /* @__PURE__ */ c(
@@ -7141,9 +7216,9 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                     }
                   ),
                   /* @__PURE__ */ c("div", { style: { display: "flex", gap: "6px", flexWrap: "wrap" }, children: [
-                    t.category && /* @__PURE__ */ r(ue, { variant: "neutral", size: "sm", children: t.category }),
-                    t.product_type && /* @__PURE__ */ r(ue, { variant: "neutral", size: "sm", children: t.product_type }),
-                    /* @__PURE__ */ c(ue, { variant: "primary", size: "sm", children: [
+                    t.category && /* @__PURE__ */ r(ye, { variant: "neutral", size: "sm", children: t.category }),
+                    t.product_type && /* @__PURE__ */ r(ye, { variant: "neutral", size: "sm", children: t.product_type }),
+                    /* @__PURE__ */ c(ye, { variant: "primary", size: "sm", children: [
                       "v",
                       p
                     ] })
@@ -7369,31 +7444,32 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
           }
         ),
         /* @__PURE__ */ r(
-          Ut,
+          Gt,
           {
             isOpen: l,
             onClose: () => s(!1),
             title: t.title || t.name || "Application",
-            description: t.description || t.short_description
+            description: t.description || t.short_description,
+            imageUrl: t.imageUrl || t.iconUrl || void 0
           }
         )
       ]
     }
   );
 };
-function Ie() {
+function We() {
   if (!(typeof window > "u"))
     return window.mermaid;
 }
-function Ee() {
+function Pe() {
   if (!(typeof window > "u"))
     return window.Prism;
 }
-let et = null, tt = null;
-function Aa(t) {
+let rt = null, nt = null;
+function Ia(t) {
   return t.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
 }
-function we(t) {
+function Ce(t) {
   return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 function sr() {
@@ -7401,37 +7477,37 @@ function sr() {
   const t = document.documentElement.getAttribute("data-theme") || "";
   return t.includes("dark") || t.includes("crystal") || t === "clamui-dark";
 }
-function Ia() {
+function La() {
   if (typeof window > "u") return Promise.resolve(null);
-  const t = Ie();
-  return t ? Promise.resolve(t) : et || (et = new Promise((e) => {
+  const t = We();
+  return t ? Promise.resolve(t) : rt || (rt = new Promise((e) => {
     const n = document.querySelector("script[data-mermaid-script]");
     if (n) {
       n.addEventListener("load", () => {
-        rt(), e(Ie() || null);
+        it(), e(We() || null);
       }), n.addEventListener("error", () => e(null));
       return;
     }
     const i = document.createElement("script");
     i.src = "/vendor/mermaid.min.js", i.async = !0, i.setAttribute("data-mermaid-script", "true"), i.onload = () => {
-      rt(), e(Ie() || null);
+      it(), e(We() || null);
     }, i.onerror = () => {
       const o = document.createElement("script");
       o.src = "vendor/mermaid.min.js", o.async = !0, o.onload = () => {
-        rt(), e(Ie() || null);
+        it(), e(We() || null);
       }, o.onerror = () => {
         const a = document.createElement("script");
         a.src = "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js", a.async = !0, a.onload = () => {
-          rt(), e(Ie() || null);
+          it(), e(We() || null);
         }, a.onerror = () => {
           console.warn("Unable to load Mermaid script."), e(null);
         }, document.head.appendChild(a);
       }, document.head.appendChild(o);
     }, document.head.appendChild(i);
-  }), et);
+  }), rt);
 }
-function rt() {
-  const t = Ie();
+function it() {
+  const t = We();
   if (t)
     try {
       t.initialize({
@@ -7454,16 +7530,16 @@ function rt() {
       console.warn("Mermaid initialization warning:", e);
     }
 }
-function La() {
+function Ta() {
   if (typeof window > "u") return Promise.resolve(null);
-  const t = Ee();
-  return t ? Promise.resolve(t) : tt || (tt = new Promise((e) => {
+  const t = Pe();
+  return t ? Promise.resolve(t) : nt || (nt = new Promise((e) => {
     const n = document.createElement("script");
-    n.src = "/vendor/prism.bundle.js", n.async = !0, n.onload = () => e(Ee() || null), n.onerror = () => {
+    n.src = "/vendor/prism.bundle.js", n.async = !0, n.onload = () => e(Pe() || null), n.onerror = () => {
       const i = document.createElement("script");
-      i.src = "vendor/prism.bundle.js", i.async = !0, i.onload = () => e(Ee() || null), i.onerror = () => e(null), document.head.appendChild(i);
+      i.src = "vendor/prism.bundle.js", i.async = !0, i.onload = () => e(Pe() || null), i.onerror = () => e(null), document.head.appendChild(i);
     }, document.head.appendChild(n);
-  }), tt);
+  }), nt);
 }
 const cr = {
   NOTE: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
@@ -7472,7 +7548,7 @@ const cr = {
   WARNING: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
   CAUTION: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>'
 };
-function Ta(t) {
+function Wa(t) {
   return t.replace(
     /<blockquote>\s*<p>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>)?([\s\S]*?)<\/p>\s*<\/blockquote>/gi,
     (e, n, i) => {
@@ -7529,7 +7605,7 @@ function fn(t, e) {
   var m;
   const n = (e || "").toLowerCase().trim();
   if (typeof window < "u") {
-    const y = Ee();
+    const y = Pe();
     if (y) {
       un(y);
       const w = n === "ts" || n === "typescript" ? "typescript" : n === "tsx" ? "tsx" : n === "jsx" ? "jsx" : n === "js" ? "javascript" : n === "py" ? "python" : n === "sh" || n === "shell" ? "bash" : n, L = (m = y.languages) == null ? void 0 : m[w];
@@ -7546,7 +7622,7 @@ function fn(t, e) {
     const L = `eghigh_${g++}`;
     return d.push({
       placeholder: L,
-      html: `<span class="${y}">${we(w)}</span>`
+      html: `<span class="${y}">${Ce(w)}</span>`
     }), L;
   };
   let h = t;
@@ -7557,17 +7633,17 @@ function fn(t, e) {
     /(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g,
     (y) => u("hljs-string token string", y)
   ), p && (h = h.replace(/(<\/)([a-zA-Z0-9_.-]+)(>)/g, (y, w, L, z) => u("hljs-punctuation token punctuation", w) + u("hljs-tag token tag", L) + u("hljs-punctuation token punctuation", z)), h = h.replace(/(<[A-Za-z0-9_.-]+)([^>]*?)(\/?>)/g, (y, w, L, z) => {
-    const C = w.slice(1), B = u("hljs-punctuation token punctuation", "<") + u("hljs-tag token tag", C), R = L.replace(
+    const A = w.slice(1), R = u("hljs-punctuation token punctuation", "<") + u("hljs-tag token tag", A), B = L.replace(
       /\b([a-zA-Z_:][a-zA-Z0-9_.-]*)(?=\s*=)/g,
       (I) => u("hljs-attr token attr-name", I)
-    ), N = u("hljs-punctuation token punctuation", z);
-    return B + R + N;
+    ), j = u("hljs-punctuation token punctuation", z);
+    return R + B + j;
   })), h = h.replace(
     /\b(0x[0-9a-fA-F]+|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g,
     (y) => u("hljs-number token number", y)
   );
-  const x = /\b(async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|false|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|readonly|return|set|static|super|switch|this|throw|true|try|type|typeof|var|void|while|with|yield|declare|namespace|module|abstract|keyof|is)\b/g, f = /\b(and|as|assert|async|await|break|class|continue|def|del|elif|else|except|False|finally|for|from|global|if|import|in|is|lambda|None|nonlocal|not|or|pass|raise|return|True|try|while|with|yield|self|cls)\b/g, b = /\b(alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|public|register|reinterpret_cast|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|while)\b/g, S = /\b(if|then|else|elif|fi|case|esac|for|select|while|until|do|done|in|function|time|return|exit|echo|export|source|local|sudo|npm|npx|git|cd|mkdir|rm|cp|mv)\b/g;
-  p ? h = h.replace(x, (y) => u("hljs-keyword token keyword", y)) : i ? h = h.replace(f, (y) => u("hljs-keyword token keyword", y)) : o ? h = h.replace(b, (y) => u("hljs-keyword token keyword", y)) : a && (h = h.replace(S, (y) => u("hljs-keyword token keyword", y))), h = h.replace(
+  const x = /\b(async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|false|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|readonly|return|set|static|super|switch|this|throw|true|try|type|typeof|var|void|while|with|yield|declare|namespace|module|abstract|keyof|is)\b/g, f = /\b(and|as|assert|async|await|break|class|continue|def|del|elif|else|except|False|finally|for|from|global|if|import|in|is|lambda|None|nonlocal|not|or|pass|raise|return|True|try|while|with|yield|self|cls)\b/g, b = /\b(alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|public|register|reinterpret_cast|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|while)\b/g, C = /\b(if|then|else|elif|fi|case|esac|for|select|while|until|do|done|in|function|time|return|exit|echo|export|source|local|sudo|npm|npx|git|cd|mkdir|rm|cp|mv)\b/g;
+  p ? h = h.replace(x, (y) => u("hljs-keyword token keyword", y)) : i ? h = h.replace(f, (y) => u("hljs-keyword token keyword", y)) : o ? h = h.replace(b, (y) => u("hljs-keyword token keyword", y)) : a && (h = h.replace(C, (y) => u("hljs-keyword token keyword", y))), h = h.replace(
     /\b(?!(?:eghigh|return|if|for|while|switch|catch|void|typeof|delete|await|yield)\b)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/g,
     (y, w) => u("hljs-title function_ token function", w)
   ), p && (h = h.replace(/\b([A-Z][a-zA-Z0-9_$]*)\b/g, (y) => u("hljs-type token class-name", y)), h = h.replace(
@@ -7577,13 +7653,13 @@ function fn(t, e) {
     /(=>|===|!==|==|!=|<=|>=|&&|\|\||\?\?)/g,
     (y) => u("hljs-operator token operator", y)
   )), s && (h = h.replace(/"([^"]+)"\s*(?=:)/g, (y, w) => `"${u("hljs-attr token property", w)}"`));
-  let v = we(h);
+  let v = Ce(h);
   for (let y = d.length - 1; y >= 0; y--)
     v = v.replace(d[y].placeholder, d[y].html);
   return v;
 }
-function Wa() {
-  const t = new K.Renderer();
+function za() {
+  const t = new Z.Renderer();
   return t.heading = function(e, n) {
     let i = 1, o = "";
     if (typeof e == "object" && e !== null && "tokens" in e) {
@@ -7591,7 +7667,7 @@ function Wa() {
       i = s.depth || 1, o = this.parser ? this.parser.parseInline(s.tokens) : s.text || "";
     } else
       o = String(e || ""), i = Number(n || 1);
-    const a = o.replace(/<[^>]*>/g, "").trim(), l = Aa(a);
+    const a = o.replace(/<[^>]*>/g, "").trim(), l = Ia(a);
     return `<h${i} id="${l}"><span>${o}</span><a href="#${l}" class="header-anchor" aria-label="Permalink to ${a}">#</a></h${i}>
 `;
   }, t.code = function(e, n) {
@@ -7602,7 +7678,7 @@ function Wa() {
     } else
       i = String(e || ""), o = String(n || "").trim().toLowerCase();
     if (o === "mermaid" || i.startsWith("graph ") || i.startsWith("sequenceDiagram") || i.startsWith("flowchart ") || i.startsWith("classDiagram") || i.startsWith("stateDiagram") || i.startsWith("erDiagram") || i.startsWith("gantt") || i.startsWith("pie")) {
-      const s = we(i);
+      const s = Ce(i);
       return `
         <div class="mermaid-wrapper">
           <div class="mermaid-header">
@@ -7666,11 +7742,11 @@ function Wa() {
       o = g.href || "", a = g.title || "", l = g.text || "";
     } else
       o = String(e || ""), a = String(n || ""), l = String(i || "");
-    const s = ie(o), p = l ? ` alt="${we(l)}"` : "", d = a ? ` title="${we(a)}"` : "";
+    const s = ne(o), p = l ? ` alt="${Ce(l)}"` : "", d = a ? ` title="${Ce(a)}"` : "";
     return `
       <figure class="docs-image-figure">
         <img src="${s}"${p}${d} class="docs-image" loading="lazy" />
-        ${a ? `<figcaption class="docs-image-caption">${we(a)}</figcaption>` : ""}
+        ${a ? `<figcaption class="docs-image-caption">${Ce(a)}</figcaption>` : ""}
       </figure>
     `;
   }, t.table = function(e, n) {
@@ -7713,24 +7789,24 @@ function Wa() {
     if (!o) return l;
     if (o.startsWith("#"))
       return `<a href="${o}" class="docs-internal-anchor">${l}</a>`;
-    const s = ie(o), p = a ? ` title="${we(a)}"` : "", g = /^https?:\/\//i.test(s) ? ' target="_blank" rel="noopener noreferrer"' : "";
+    const s = ne(o), p = a ? ` title="${Ce(a)}"` : "", g = /^https?:\/\//i.test(s) ? ' target="_blank" rel="noopener noreferrer"' : "";
     return `<a href="${s}"${g}${p}>${l}</a>`;
   }, t;
 }
 function xn(t) {
   if (!t || !t.trim()) return "";
-  const e = Wa();
+  const e = za();
   let n = "";
   try {
-    n = K.parse(t, { renderer: e, gfm: !0 });
+    n = Z.parse(t, { renderer: e, gfm: !0 });
   } catch (o) {
-    console.warn("Marked parsing error:", o), n = K.parse(t);
+    console.warn("Marked parsing error:", o), n = Z.parse(t);
   }
-  const i = Ta(n);
-  return ke(i);
+  const i = Wa(n);
+  return Ae(i);
 }
-let pe = 1, Me = 0, $e = 0, At = !1, dr = 0, pr = 0;
-function za() {
+let he = 1, Ee = 0, je = 0, It = !1, dr = 0, pr = 0;
+function Ra() {
   let t = document.getElementById("egMermaidGlobalModal");
   if (t) return t;
   t = document.createElement("div"), t.id = "egMermaidGlobalModal", t.className = "mermaid-modal-overlay", t.innerHTML = `
@@ -7764,7 +7840,7 @@ function za() {
   `, document.body.appendChild(t);
   const e = t.querySelector("#egMermaidModalClose"), n = t.querySelector("#egMermaidCloseBtn2"), i = t.querySelector("#egMermaidZoomIn"), o = t.querySelector("#egMermaidZoomOut"), a = t.querySelector("#egMermaidZoomReset"), l = t.querySelector("#egMermaidModalBody"), s = () => {
     const d = t == null ? void 0 : t.querySelector("#egMermaidViewport"), g = t == null ? void 0 : t.querySelector("#egMermaidZoomBadge");
-    d && (d.style.transform = `translate(${Me}px, ${$e}px) scale(${pe})`), g && (g.textContent = `${Math.round(pe * 100)}%`);
+    d && (d.style.transform = `translate(${Ee}px, ${je}px) scale(${he})`), g && (g.textContent = `${Math.round(he * 100)}%`);
   }, p = () => {
     if (!t) return;
     t.classList.remove("open"), document.body.style.overflow = "";
@@ -7774,36 +7850,36 @@ function za() {
   return e == null || e.addEventListener("click", p), n == null || n.addEventListener("click", p), t.addEventListener("click", (d) => {
     d.target === t && p();
   }), i == null || i.addEventListener("click", () => {
-    pe = Math.min(6, Number((pe + 0.25).toFixed(2))), s();
+    he = Math.min(6, Number((he + 0.25).toFixed(2))), s();
   }), o == null || o.addEventListener("click", () => {
-    pe = Math.max(0.2, Number((pe - 0.25).toFixed(2))), s();
+    he = Math.max(0.2, Number((he - 0.25).toFixed(2))), s();
   }), a == null || a.addEventListener("click", () => {
-    pe = 1, Me = 0, $e = 0, s();
+    he = 1, Ee = 0, je = 0, s();
   }), l && (l.addEventListener(
     "wheel",
     (d) => {
       const g = d;
       g.preventDefault();
       const u = g.deltaY < 0 ? 0.15 : -0.15;
-      pe = Math.max(0.15, Math.min(6, Number((pe + u).toFixed(2)))), s();
+      he = Math.max(0.15, Math.min(6, Number((he + u).toFixed(2)))), s();
     },
     { passive: !1 }
   ), l.addEventListener("mousedown", (d) => {
     const g = d;
-    At = !0, dr = g.clientX - Me, pr = g.clientY - $e;
+    It = !0, dr = g.clientX - Ee, pr = g.clientY - je;
   }), window.addEventListener("mouseup", () => {
-    At = !1;
+    It = !1;
   }), l.addEventListener("mousemove", (d) => {
-    if (!At) return;
+    if (!It) return;
     const g = d;
-    g.preventDefault(), Me = g.clientX - dr, $e = g.clientY - pr, s();
+    g.preventDefault(), Ee = g.clientX - dr, je = g.clientY - pr, s();
   })), document.addEventListener("keydown", (d) => {
     d.key === "Escape" && (t != null && t.classList.contains("open")) && p();
   }), t;
 }
-function nt(t, e = "Architecture & Flow Diagram") {
+function ot(t, e = "Architecture & Flow Diagram") {
   var y;
-  const n = za(), i = n.querySelector("#egMermaidModalTitle"), o = n.querySelector("#egMermaidViewport"), a = n.querySelector("#egMermaidModalBody");
+  const n = Ra(), i = n.querySelector("#egMermaidModalTitle"), o = n.querySelector("#egMermaidViewport"), a = n.querySelector("#egMermaidModalBody");
   if (!o || !t) return;
   const l = t.closest(".mermaid-wrapper");
   if (l) {
@@ -7822,16 +7898,16 @@ function nt(t, e = "Architecture & Flow Diagram") {
   }
   const u = t.getAttribute("viewBox");
   u ? s.setAttribute("viewBox", u) : s.setAttribute("viewBox", `0 0 ${p} ${d}`), s.setAttribute("width", `${p}`), s.setAttribute("height", `${d}`), s.style.width = `${p}px`, s.style.height = `${d}px`, s.style.minWidth = `${p}px`, s.style.maxWidth = "none", s.style.display = "block", n.classList.add("open"), document.body.style.overflow = "hidden", o.appendChild(s);
-  const h = a ? a.getBoundingClientRect() : null, x = h && h.width > 0 ? h.width - 80 : 1100, f = h && h.height > 0 ? h.height - 80 : 700, b = x / p, S = f / d, v = Math.min(b, S, 1.2);
-  pe = Number(Math.max(0.3, v).toFixed(2)), Me = 0, $e = 0, o.style.transform = `translate(0px, 0px) scale(${pe})`;
+  const h = a ? a.getBoundingClientRect() : null, x = h && h.width > 0 ? h.width - 80 : 1100, f = h && h.height > 0 ? h.height - 80 : 700, b = x / p, C = f / d, v = Math.min(b, C, 1.2);
+  he = Number(Math.max(0.3, v).toFixed(2)), Ee = 0, je = 0, o.style.transform = `translate(0px, 0px) scale(${he})`;
   const m = n.querySelector("#egMermaidZoomBadge");
-  m && (m.textContent = `${Math.round(pe * 100)}%`);
+  m && (m.textContent = `${Math.round(he * 100)}%`);
 }
-let it = null;
-function Ra() {
+let at = null;
+function Ba() {
   if (typeof document > "u") return {};
-  if (it && document.body.contains(it))
-    return it;
+  if (at && document.body.contains(at))
+    return at;
   const t = document.createElement("div");
   t.className = "mermaid-modal-overlay docs-image-modal-overlay", t.id = "egImageLightboxOverlay", t.setAttribute("role", "dialog"), t.setAttribute("aria-modal", "true"), t.setAttribute("aria-label", "Image Lightbox Preview"), t.innerHTML = `
     <div class="mermaid-modal-box docs-image-modal-box" style="max-width: 1000px; height: auto; max-height: 90vh;">
@@ -7858,14 +7934,14 @@ function Ra() {
     i.target === t && n();
   }), window.addEventListener("keydown", (i) => {
     i.key === "Escape" && t.classList.contains("open") && n();
-  }), it = t, t;
+  }), at = t, t;
 }
-function Ba(t, e) {
+function _a(t, e) {
   if (typeof document > "u") return;
-  const n = Ra(), i = n.querySelector("#egImageModalTitle"), o = n.querySelector("#egImageModalImg");
+  const n = Ba(), i = n.querySelector("#egImageModalTitle"), o = n.querySelector("#egImageModalImg");
   i && (i.textContent = e || "Image Preview"), o && (o.src = t), n.classList.add("open"), document.body.style.overflow = "hidden";
 }
-function _a(t) {
+function Ma(t) {
   if (t.dataset.dragEnabled) return;
   t.dataset.dragEnabled = "1";
   let e = !1, n = 0, i = 0;
@@ -7884,13 +7960,13 @@ function _a(t) {
 }
 function mn(t, e) {
   if (!t || typeof window > "u") return;
-  t.querySelectorAll(".mermaid").length > 0 ? Ia().then((a) => {
+  t.querySelectorAll(".mermaid").length > 0 ? La().then((a) => {
     if (!a) return;
     const l = t.querySelectorAll(".mermaid");
-    l.length !== 0 && (typeof a.run == "function" ? a.run({ nodes: l }).then(() => ot(t, e)).catch(() => ot(t, e)) : typeof a.init == "function" && (a.init(void 0, l), ot(t, e)));
+    l.length !== 0 && (typeof a.run == "function" ? a.run({ nodes: l }).then(() => lt(t, e)).catch(() => lt(t, e)) : typeof a.init == "function" && (a.init(void 0, l), lt(t, e)));
   }).catch((a) => {
     console.warn("Mermaid enhancement notice:", a);
-  }) : t.querySelectorAll(".mermaid-wrapper").length > 0 && ot(t, e), t.querySelectorAll(".code-copy-btn").forEach((a) => {
+  }) : t.querySelectorAll(".mermaid-wrapper").length > 0 && lt(t, e), t.querySelectorAll(".code-copy-btn").forEach((a) => {
     a.dataset.bound || (a.dataset.bound = "1", a.addEventListener("click", async (l) => {
       var d;
       l.preventDefault();
@@ -7926,29 +8002,29 @@ function mn(t, e) {
       const p = (l.className || "").match(/language-([a-zA-Z0-9_-]+)/), d = p ? p[1] : "", g = l.textContent || "";
       g && (l.innerHTML = fn(g, d));
     });
-  }, o = Ee();
-  o ? i(o) : La().then((a) => {
+  }, o = Pe();
+  o ? i(o) : Ta().then((a) => {
     i(a);
   }), t.querySelectorAll(".docs-image").forEach((a) => {
     a.dataset.lightboxBound || (a.dataset.lightboxBound = "1", a.style.cursor = "zoom-in", a.addEventListener("click", () => {
-      Ba(a.src, a.alt || a.title || "Documentation Image Preview");
+      _a(a.src, a.alt || a.title || "Documentation Image Preview");
     }));
   });
 }
-function ot(t, e) {
+function lt(t, e) {
   t.dataset.mermaidDelegated || (t.dataset.mermaidDelegated = "1", t.addEventListener("click", (n) => {
     const i = n.target, o = i == null ? void 0 : i.closest(".mermaid-expand-btn");
     if (o) {
       n.preventDefault(), n.stopPropagation();
       const a = o.closest(".mermaid-wrapper"), l = a == null ? void 0 : a.querySelector(".mermaid-container svg");
-      l && (e ? e(l, "Architecture & Flow Diagram") : nt(l, "Architecture & Flow Diagram"));
+      l && (e ? e(l, "Architecture & Flow Diagram") : ot(l, "Architecture & Flow Diagram"));
     }
   }), t.addEventListener("dblclick", (n) => {
     const i = n.target, o = i == null ? void 0 : i.closest(".mermaid-container");
     if (o) {
       n.preventDefault();
       const a = o.querySelector("svg");
-      a && (e ? e(a, "Architecture & Flow Diagram") : nt(a, "Architecture & Flow Diagram"));
+      a && (e ? e(a, "Architecture & Flow Diagram") : ot(a, "Architecture & Flow Diagram"));
     }
   })), t.querySelectorAll(".mermaid-wrapper").forEach((n) => {
     var g;
@@ -7959,15 +8035,15 @@ function ot(t, e) {
       const u = (g = o.viewBox) == null ? void 0 : g.baseVal;
       u && u.width > 600 && (o.style.minWidth = `${Math.max(u.width, 800)}px`);
     }
-    _a(i);
+    Ma(i);
     const a = n.querySelector(".mermaid-expand-btn");
     a && !a.dataset.bound && (a.dataset.bound = "1", a.addEventListener("click", (u) => {
       u.preventDefault(), u.stopPropagation();
       const h = i.querySelector("svg");
-      h && (e ? e(h, "Architecture & Flow Diagram") : nt(h, "Architecture & Flow Diagram"));
+      h && (e ? e(h, "Architecture & Flow Diagram") : ot(h, "Architecture & Flow Diagram"));
     })), i.dataset.dblBound || (i.dataset.dblBound = "1", i.addEventListener("dblclick", () => {
       const u = i.querySelector("svg");
-      u && (e ? e(u, "Architecture & Flow Diagram") : nt(u, "Architecture & Flow Diagram"));
+      u && (e ? e(u, "Architecture & Flow Diagram") : ot(u, "Architecture & Flow Diagram"));
     }));
     const l = n.querySelector(".mermaid-source-btn"), s = n.querySelector(".mermaid-source-pane");
     l && s && !l.dataset.bound && (l.dataset.bound = "1", l.addEventListener("click", (u) => {
@@ -7988,7 +8064,7 @@ function ot(t, e) {
     }));
   });
 }
-function Ma(t) {
+function $a(t) {
   if (!t) return { meta: {}, body: "" };
   const e = t.match(/^---\s*[\r\n]+([\s\S]*?)[\r\n]+---\s*[\r\n]*([\s\S]*)$/);
   if (!e) return { meta: {}, body: t };
@@ -8023,7 +8099,7 @@ function gr(t) {
   })), a)).join(`
 `);
 }
-const Yt = ({
+const Qt = ({
   content: t,
   url: e,
   metadata: n = {},
@@ -8040,59 +8116,75 @@ const Yt = ({
   onBack: x,
   backLabel: f = "Back",
   showShare: b = !0,
-  showRaw: S = !0,
-  showToc: v = !1,
-  headerExtra: m,
-  footerExtra: y,
-  className: w = "",
-  style: L
+  shareUrl: C,
+  showRaw: v = !0,
+  showToc: m = !1,
+  headerExtra: y,
+  footerExtra: w,
+  className: L = "",
+  style: z
 }) => {
-  const [z, C] = W(""), [B, R] = W(!!(e && !t)), [N, I] = W(null), [j, H] = W(!1), [$, O] = W(!1), [M, T] = W(!1), k = he(null);
-  Z(() => {
+  const [A, R] = W(""), [B, j] = W(!!(e && !t)), [I, E] = W(null), [H, $] = W(!1), [U, _] = W(!1), [T, S] = W(!1), N = me(null);
+  Y(() => {
     if (!e || t) return;
-    let Y = !0;
-    return R(!0), I(null), fetch(e).then((X) => {
-      if (!X.ok) throw new Error(`Failed to load markdown: HTTP ${X.status}`);
-      return X.text();
-    }).then((X) => {
-      Y && (C(X), R(!1));
-    }).catch((X) => {
-      Y && (I(X instanceof Error ? X.message : String(X)), R(!1));
+    let K = !0;
+    return j(!0), E(null), fetch(e).then((re) => {
+      if (!re.ok) throw new Error(`Failed to load markdown: HTTP ${re.status}`);
+      return re.text();
+    }).then((re) => {
+      K && (R(re), j(!1));
+    }).catch((re) => {
+      K && (E(re instanceof Error ? re.message : String(re)), j(!1));
     }), () => {
-      Y = !1;
+      K = !1;
     };
   }, [e, t]);
-  const { parsedMeta: E, markdownBody: A } = re(() => {
-    const Y = t !== void 0 ? t : z, { meta: X, body: ce } = Ma(Y);
-    return { parsedMeta: X, markdownBody: ce };
-  }, [t, z]), D = i || n.title || n.heading || E.title || E.heading || "", V = o || n.author || E.author || "", _ = a || n.date || E.date || E.createdAt || "", P = l || n.category || E.category || (Array.isArray(E.tags) && E.tags.length > 0 ? E.tags[0] : "") || "", U = re(() => s && s.length > 0 ? s : n.tags && n.tags.length > 0 ? n.tags : Array.isArray(E.tags) ? E.tags : typeof E.tags == "string" ? [E.tags] : [], [s, n.tags, E.tags]), G = d || n.output_image || n.imageUrl || E.output_image || E.imageUrl || "", ee = g || u || n.short_description || n.description || (typeof E.short_description == "string" ? E.short_description : void 0) || (typeof E.description == "string" ? E.description : void 0) || "", F = re(() => gr(A), [A]), oe = re(() => {
-    if (!ee.trim()) return "";
+  const { parsedMeta: k, markdownBody: D } = ee(() => {
+    const K = t !== void 0 ? t : A, { meta: re, body: ge } = $a(K);
+    return { parsedMeta: re, markdownBody: ge };
+  }, [t, A]), O = i || n.title || n.heading || k.title || k.heading || "", M = o || n.author || k.author || "", P = a || n.date || k.date || k.createdAt || "", V = l || n.category || k.category || (Array.isArray(k.tags) && k.tags.length > 0 ? k.tags[0] : "") || "", G = ee(() => s && s.length > 0 ? s : n.tags && n.tags.length > 0 ? n.tags : Array.isArray(k.tags) ? k.tags : typeof k.tags == "string" ? [k.tags] : [], [s, n.tags, k.tags]), Q = d || n.output_image || n.imageUrl || k.output_image || k.imageUrl || "", F = g || u || n.short_description || n.description || (typeof k.short_description == "string" ? k.short_description : void 0) || (typeof k.description == "string" ? k.description : void 0) || "", oe = C || (typeof window < "u" ? window.location.href : ""), ie = ee(() => Q ? Q.startsWith("http://") || Q.startsWith("https://") ? Q : typeof window < "u" ? `${window.location.origin}/${Q.replace(/^\//, "")}` : Q : "", [Q]), ae = async () => {
+    const K = F && F.trim() && F.trim() !== O.trim() ? `${O} - ${F.trim()}` : O;
+    if (typeof navigator < "u" && typeof navigator.share == "function")
+      try {
+        await navigator.share({
+          title: O,
+          text: K,
+          url: oe
+        });
+        return;
+      } catch (re) {
+        if (re && re.name === "AbortError")
+          return;
+      }
+    $(!0);
+  }, de = ee(() => gr(D), [D]), Be = ee(() => {
+    if (!F.trim()) return "";
     try {
-      const Y = K.parseInline(gr(ee));
-      return ke(Y);
+      const K = Z.parseInline(gr(F));
+      return Ae(K);
     } catch {
-      return ke(ee);
+      return Ae(F);
     }
-  }, [ee]), ne = re(() => {
+  }, [F]), pe = ee(() => {
     if (p) return p;
     if (n.readingTime) return n.readingTime;
-    if (E.readingTime) return E.readingTime;
-    const Y = (F || "").split(/\s+/).filter(Boolean).length;
-    return `${Math.max(1, Math.round(Y / 200))} min read`;
-  }, [p, n.readingTime, E.readingTime, F]), ae = re(() => F.trim() ? xn(F) : "", [F]), Qe = re(() => {
-    if (!v || !F) return [];
-    const Y = F.split(`
-`), X = [];
-    return Y.forEach((ce) => {
-      if (ce.startsWith("## ") || ce.startsWith("### ")) {
-        const Ct = ce.startsWith("## ") ? 2 : 3, We = ce.replace(/^#{2,3}\s+/, "").trim(), Xe = We.toLowerCase().replace(/[^\w]+/g, "-");
-        X.push({ level: Ct, text: We, id: Xe });
+    if (k.readingTime) return k.readingTime;
+    const K = (de || "").split(/\s+/).filter(Boolean).length;
+    return `${Math.max(1, Math.round(K / 200))} min read`;
+  }, [p, n.readingTime, k.readingTime, de]), Se = ee(() => de.trim() ? xn(de) : "", [de]), et = ee(() => {
+    if (!m || !de) return [];
+    const K = de.split(`
+`), re = [];
+    return K.forEach((ge) => {
+      if (ge.startsWith("## ") || ge.startsWith("### ")) {
+        const J = ge.startsWith("## ") ? 2 : 3, ue = ge.replace(/^#{2,3}\s+/, "").trim(), fe = ue.toLowerCase().replace(/[^\w]+/g, "-");
+        re.push({ level: J, text: ue, id: fe });
       }
-    }), X;
-  }, [v, F]);
-  return Z(() => {
-    k.current && mn(k.current);
-  }, [ae]), B ? /* @__PURE__ */ r("div", { style: { textAlign: "center", padding: "60px 20px", color: "var(--eg-text-muted, #94a3b8)" }, children: /* @__PURE__ */ r("p", { style: { fontSize: "15px", fontWeight: 600 }, children: "Loading document..." }) }) : N ? /* @__PURE__ */ c(
+    }), re;
+  }, [m, de]);
+  return Y(() => {
+    N.current && mn(N.current);
+  }, [Se]), B ? /* @__PURE__ */ r("div", { style: { textAlign: "center", padding: "60px 20px", color: "var(--eg-text-muted, #94a3b8)" }, children: /* @__PURE__ */ r("p", { style: { fontSize: "15px", fontWeight: 600 }, children: "Loading document..." }) }) : I ? /* @__PURE__ */ c(
     "div",
     {
       style: {
@@ -8105,7 +8197,7 @@ const Yt = ({
       },
       children: [
         /* @__PURE__ */ r("p", { style: { fontWeight: 700, margin: "0 0 6px" }, children: "Failed to load Markdown document" }),
-        /* @__PURE__ */ r("p", { style: { fontSize: "13.5px", margin: 0 }, children: N }),
+        /* @__PURE__ */ r("p", { style: { fontSize: "13.5px", margin: 0 }, children: I }),
         x && /* @__PURE__ */ c(
           "button",
           {
@@ -8131,7 +8223,7 @@ const Yt = ({
   ) : /* @__PURE__ */ c(
     "article",
     {
-      className: `eg-markdown-viewer ${w}`,
+      className: `eg-markdown-viewer ${L}`,
       style: {
         background: "var(--eg-bg-surface, #ffffff)",
         border: "1px solid var(--eg-border-default, rgba(0, 0, 0, 0.1))",
@@ -8141,7 +8233,7 @@ const Yt = ({
         boxSizing: "border-box",
         maxWidth: "100%",
         overflow: "hidden",
-        ...L
+        ...z
       },
       children: [
         /* @__PURE__ */ c(
@@ -8184,7 +8276,7 @@ const Yt = ({
                   "button",
                   {
                     type: "button",
-                    onClick: () => H(!0),
+                    onClick: ae,
                     style: {
                       background: "transparent",
                       border: "1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.12))",
@@ -8210,11 +8302,11 @@ const Yt = ({
                     ]
                   }
                 ),
-                S && /* @__PURE__ */ c(
+                v && /* @__PURE__ */ c(
                   "button",
                   {
                     type: "button",
-                    onClick: () => O(!0),
+                    onClick: () => _(!0),
                     style: {
                       background: "transparent",
                       border: "1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.12))",
@@ -8242,7 +8334,7 @@ const Yt = ({
             ]
           }
         ),
-        (D || P || V || _) && /* @__PURE__ */ c(
+        (O || V || M || P) && /* @__PURE__ */ c(
           "header",
           {
             style: {
@@ -8251,14 +8343,14 @@ const Yt = ({
               paddingBottom: "20px"
             },
             children: [
-              (P || U.length > 0) && /* @__PURE__ */ c("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "14px" }, children: [
-                P && /* @__PURE__ */ r(ue, { variant: "neutral", size: "sm", children: P }),
-                U.filter((Y) => Y.toLowerCase() !== P.toLowerCase()).map((Y) => /* @__PURE__ */ c(ue, { variant: "neutral", size: "sm", children: [
+              (V || G.length > 0) && /* @__PURE__ */ c("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "14px" }, children: [
+                V && /* @__PURE__ */ r(ye, { variant: "neutral", size: "sm", children: V }),
+                G.filter((K) => K.toLowerCase() !== V.toLowerCase()).map((K) => /* @__PURE__ */ c(ye, { variant: "neutral", size: "sm", children: [
                   "#",
-                  Y
-                ] }, Y))
+                  K
+                ] }, K))
               ] }),
-              D && /* @__PURE__ */ r(
+              O && /* @__PURE__ */ r(
                 "h1",
                 {
                   style: {
@@ -8269,7 +8361,7 @@ const Yt = ({
                     margin: "0 0 14px",
                     wordBreak: "break-word"
                   },
-                  children: D
+                  children: O
                 }
               ),
               /* @__PURE__ */ c(
@@ -8284,15 +8376,15 @@ const Yt = ({
                     fontSize: "13.5px"
                   },
                   children: [
-                    V && /* @__PURE__ */ c("span", { children: [
+                    M && /* @__PURE__ */ c("span", { children: [
                       "By ",
-                      /* @__PURE__ */ r("strong", { children: V })
+                      /* @__PURE__ */ r("strong", { children: M })
                     ] }),
-                    V && _ && /* @__PURE__ */ r("span", { children: "•" }),
-                    _ && /* @__PURE__ */ r("span", { children: _ }),
-                    ne && /* @__PURE__ */ c(se, { children: [
+                    M && P && /* @__PURE__ */ r("span", { children: "•" }),
+                    P && /* @__PURE__ */ r("span", { children: P }),
+                    pe && /* @__PURE__ */ c(se, { children: [
                       /* @__PURE__ */ r("span", { children: "•" }),
-                      /* @__PURE__ */ r("span", { children: ne })
+                      /* @__PURE__ */ r("span", { children: pe })
                     ] })
                   ]
                 }
@@ -8300,7 +8392,7 @@ const Yt = ({
             ]
           }
         ),
-        G && /* @__PURE__ */ r(
+        Q && /* @__PURE__ */ r(
           "div",
           {
             style: {
@@ -8313,17 +8405,17 @@ const Yt = ({
             children: /* @__PURE__ */ r(
               "img",
               {
-                src: G,
-                alt: D || "Featured",
+                src: Q,
+                alt: O || "Featured",
                 style: { width: "100%", height: "auto", display: "block", objectFit: "contain" },
-                onError: (Y) => {
-                  Y.currentTarget.parentElement.style.display = "none";
+                onError: (K) => {
+                  K.currentTarget.parentElement.style.display = "none";
                 }
               }
             )
           }
         ),
-        oe && /* @__PURE__ */ r(
+        Be && /* @__PURE__ */ r(
           "div",
           {
             className: "blog-description eg-article-description",
@@ -8338,10 +8430,10 @@ const Yt = ({
               textAlign: h,
               textJustify: "inter-word"
             },
-            dangerouslySetInnerHTML: { __html: oe }
+            dangerouslySetInnerHTML: { __html: Be }
           }
         ),
-        Qe.length > 0 && /* @__PURE__ */ c(
+        et.length > 0 && /* @__PURE__ */ c(
           "nav",
           {
             style: {
@@ -8366,34 +8458,34 @@ const Yt = ({
                   children: "Table of Contents"
                 }
               ),
-              /* @__PURE__ */ r("ul", { style: { margin: 0, paddingLeft: "18px", listStyleType: "disc" }, children: Qe.map((Y) => /* @__PURE__ */ r(
+              /* @__PURE__ */ r("ul", { style: { margin: 0, paddingLeft: "18px", listStyleType: "disc" }, children: et.map((K) => /* @__PURE__ */ r(
                 "li",
                 {
                   style: {
-                    marginLeft: Y.level === 3 ? "16px" : "0",
+                    marginLeft: K.level === 3 ? "16px" : "0",
                     marginBottom: "4px",
                     fontSize: "13.5px"
                   },
                   children: /* @__PURE__ */ r(
                     "a",
                     {
-                      href: `#${Y.id}`,
-                      onClick: (X) => {
-                        X.preventDefault();
-                        const ce = document.getElementById(Y.id);
-                        ce && (ce.scrollIntoView({ behavior: "smooth", block: "start" }), typeof window < "u" && window.history.replaceState && window.history.replaceState(null, "", `#${Y.id}`));
+                      href: `#${K.id}`,
+                      onClick: (re) => {
+                        re.preventDefault();
+                        const ge = document.getElementById(K.id);
+                        ge && (ge.scrollIntoView({ behavior: "smooth", block: "start" }), typeof window < "u" && window.history.replaceState && window.history.replaceState(null, "", `#${K.id}`));
                       },
                       style: { color: "var(--eg-color-primary, #b8860b)", textDecoration: "none" },
-                      children: Y.text
+                      children: K.text
                     }
                   )
                 },
-                Y.id
+                K.id
               )) })
             ]
           }
         ),
-        m,
+        y,
         /* @__PURE__ */ r("style", { children: `
         .eg-article-markdown-body {
           word-break: break-word;
@@ -8556,12 +8648,12 @@ const Yt = ({
         /* @__PURE__ */ r(
           "div",
           {
-            ref: k,
+            ref: N,
             className: "eg-article-markdown-body",
-            dangerouslySetInnerHTML: { __html: ae }
+            dangerouslySetInnerHTML: { __html: Se }
           }
         ),
-        y,
+        w,
         x && /* @__PURE__ */ r("div", { style: { marginTop: "36px", paddingTop: "20px", borderTop: "1px solid var(--eg-border-subtle, rgba(0,0,0,0.08))" }, children: /* @__PURE__ */ c(
           "button",
           {
@@ -8586,16 +8678,17 @@ const Yt = ({
           }
         ) }),
         b && /* @__PURE__ */ r(
-          Ut,
+          Gt,
           {
-            isOpen: j,
-            onClose: () => H(!1),
-            title: D,
-            url: typeof window < "u" ? window.location.href : "",
-            description: D
+            isOpen: H,
+            onClose: () => $(!1),
+            title: O,
+            url: oe,
+            description: F,
+            imageUrl: ie
           }
         ),
-        S && $ && /* @__PURE__ */ r(
+        v && U && /* @__PURE__ */ r(
           "div",
           {
             style: {
@@ -8609,7 +8702,7 @@ const Yt = ({
               justifyContent: "center",
               padding: "16px"
             },
-            onClick: () => O(!1),
+            onClick: () => _(!1),
             children: /* @__PURE__ */ c(
               "div",
               {
@@ -8625,7 +8718,7 @@ const Yt = ({
                   flexDirection: "column",
                   overflow: "hidden"
                 },
-                onClick: (Y) => Y.stopPropagation(),
+                onClick: (K) => K.stopPropagation(),
                 children: [
                   /* @__PURE__ */ c(
                     "div",
@@ -8643,14 +8736,14 @@ const Yt = ({
                       children: [
                         /* @__PURE__ */ c("span", { children: [
                           "Raw Markdown Source (",
-                          D || "Document",
+                          O || "Document",
                           ")"
                         ] }),
                         /* @__PURE__ */ r(
                           "button",
                           {
                             type: "button",
-                            onClick: () => O(!1),
+                            onClick: () => _(!1),
                             style: {
                               background: "transparent",
                               border: "none",
@@ -8682,7 +8775,7 @@ const Yt = ({
                         boxSizing: "border-box"
                       },
                       readOnly: !0,
-                      value: F
+                      value: de
                     }
                   ) }),
                   /* @__PURE__ */ c(
@@ -8701,7 +8794,7 @@ const Yt = ({
                           "button",
                           {
                             type: "button",
-                            onClick: () => O(!1),
+                            onClick: () => _(!1),
                             style: {
                               padding: "6px 14px",
                               borderRadius: "6px",
@@ -8719,7 +8812,7 @@ const Yt = ({
                             type: "button",
                             onClick: async () => {
                               try {
-                                await navigator.clipboard.writeText(F), T(!0), setTimeout(() => T(!1), 2e3);
+                                await navigator.clipboard.writeText(de), S(!0), setTimeout(() => S(!1), 2e3);
                               } catch {
                               }
                             },
@@ -8733,7 +8826,7 @@ const Yt = ({
                               cursor: "pointer",
                               fontSize: "13px"
                             },
-                            children: M ? "Copied!" : "Copy Markdown"
+                            children: T ? "Copied!" : "Copy Markdown"
                           }
                         )
                       ]
@@ -8747,7 +8840,7 @@ const Yt = ({
       ]
     }
   );
-}, os = Yt, hr = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120' fill='none'><rect width='200' height='120' fill='%231e293b'/><path d='M60 40h80M60 60h60M60 80h40' stroke='%2394a3b8' stroke-width='4' stroke-linecap='round'/><circle cx='155' cy='75' r='12' fill='%2338bdf8' opacity='0.7'/></svg>", $a = ({
+}, os = Qt, hr = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120' fill='none'><rect width='200' height='120' fill='%231e293b'/><path d='M60 40h80M60 60h60M60 80h40' stroke='%2394a3b8' stroke-width='4' stroke-linecap='round'/><circle cx='155' cy='75' r='12' fill='%2338bdf8' opacity='0.7'/></svg>", Da = ({
   post: t,
   onSelect: e,
   showExcerpt: n = !1,
@@ -8802,7 +8895,7 @@ const Yt = ({
           ) }),
           /* @__PURE__ */ c("div", { style: { padding: "20px 20px 16px" }, children: [
             /* @__PURE__ */ c("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", marginBottom: "10px" }, children: [
-              /* @__PURE__ */ r(ue, { variant: "neutral", size: "sm", children: s }),
+              /* @__PURE__ */ r(ye, { variant: "neutral", size: "sm", children: s }),
               /* @__PURE__ */ r("span", { style: { fontSize: "12px", color: "var(--eg-text-muted, #94a3b8)", fontWeight: 500 }, children: t.date })
             ] }),
             /* @__PURE__ */ r(
@@ -8878,35 +8971,42 @@ const Yt = ({
   textAlign: n = "justify",
   showToc: i = !0,
   showShare: o = !0,
-  className: a = "",
-  style: l
-}) => /* @__PURE__ */ r(
-  Yt,
-  {
-    content: t.content || t.full_description,
-    url: !t.content && !t.full_description ? `data/blog/id${t.id}.md` : void 0,
-    description: t.short_description || t.description,
-    textAlign: n,
-    showToc: i,
-    showShare: o,
-    metadata: {
-      id: t.id,
-      title: t.title || t.heading,
-      author: t.author,
-      date: t.date,
-      category: t.category,
-      tags: t.tags,
-      readingTime: t.readingTime,
-      imageUrl: t.output_image || t.imageUrl,
-      short_description: t.short_description || t.description,
-      description: t.description || t.short_description
-    },
-    onBack: e,
-    backLabel: "Back to Blog Articles",
-    className: a,
-    style: l
-  }
-), ls = ({
+  shareUrl: a,
+  className: l = "",
+  style: s
+}) => {
+  const p = xi(t), d = a || (typeof window < "u" ? `${window.location.origin}${window.location.pathname.endsWith(".html") ? "/blog.html" : "/blog"}?title=${p}` : ""), g = t.output_image || t.imageUrl || `assets/img/blog/id${t.id}.webp`;
+  return /* @__PURE__ */ r(
+    Qt,
+    {
+      content: t.content || t.full_description,
+      url: !t.content && !t.full_description ? `data/blog/id${t.id}.md` : void 0,
+      description: t.short_description || t.description,
+      textAlign: n,
+      showToc: i,
+      showShare: o,
+      shareUrl: d,
+      imageUrl: g,
+      metadata: {
+        id: t.id,
+        title: t.title || t.heading,
+        author: t.author,
+        date: t.date,
+        category: t.category,
+        tags: t.tags,
+        readingTime: t.readingTime,
+        imageUrl: g,
+        output_image: g,
+        short_description: t.short_description || t.description,
+        description: t.description || t.short_description
+      },
+      onBack: e,
+      backLabel: "Back to Blog Articles",
+      className: l,
+      style: s
+    }
+  );
+}, ls = ({
   categories: t,
   recentPosts: e,
   selectedCategory: n,
@@ -9130,12 +9230,12 @@ const Yt = ({
   const [s, p] = W(1), d = n !== void 0 ? n : s, g = Math.max(1, Math.ceil(t.length / e)), u = (f) => {
     const b = Math.max(1, Math.min(g, f));
     a ? a(b) : p(b);
-  }, h = re(() => {
+  }, h = ee(() => {
     const f = (d - 1) * e;
     return t.slice(f, f + e);
-  }, [t, d, e]), x = re(() => {
+  }, [t, d, e]), x = ee(() => {
     if (g <= 5)
-      return Array.from({ length: g }, (b, S) => S + 1);
+      return Array.from({ length: g }, (b, C) => C + 1);
     const f = [];
     return d <= 3 ? f.push(1, 2, 3, "...", g) : d >= g - 2 ? f.push(1, "...", g - 2, g - 1, g) : f.push(1, "...", d, "...", g), f;
   }, [g, d]);
@@ -9149,7 +9249,7 @@ const Yt = ({
           gap: "clamp(16px, 2.5vw, 24px)"
         },
         children: h.map((f) => /* @__PURE__ */ r(
-          $a,
+          Da,
           {
             post: f,
             showExcerpt: i,
@@ -9212,12 +9312,12 @@ const Yt = ({
                 },
                 `ellipsis-${b}`
               );
-            const S = Number(f), v = S === d;
+            const C = Number(f), v = C === d;
             return /* @__PURE__ */ r(
               "button",
               {
                 type: "button",
-                onClick: () => u(S),
+                onClick: () => u(C),
                 style: {
                   minWidth: "34px",
                   height: "34px",
@@ -9230,9 +9330,9 @@ const Yt = ({
                   fontWeight: 600,
                   cursor: "pointer"
                 },
-                children: S
+                children: C
               },
-              S
+              C
             );
           }),
           /* @__PURE__ */ r(
@@ -9260,12 +9360,12 @@ const Yt = ({
     )
   ] });
 };
-function Da(t) {
+function Ea(t) {
   if (t == null || isNaN(t) || t <= 0) return "";
   const e = ["B", "KB", "MB", "GB"], n = Math.floor(Math.log(t) / Math.log(1024));
   return `${(t / Math.pow(1024, n)).toFixed(n === 0 ? 0 : 1)} ${e[n] || "MB"}`;
 }
-function Ea(t) {
+function ja(t) {
   if (!t) return "Recent";
   try {
     const e = new Date(t);
@@ -9278,11 +9378,11 @@ function Ea(t) {
     return t;
   }
 }
-function ja(t) {
+function Na(t) {
   const e = t.toLowerCase();
   return e.endsWith(".exe") || e.endsWith(".msi") || e.endsWith(".zip") && (e.includes("win") || e.includes("windows")) ? "windows" : e.endsWith(".appimage") || e.endsWith(".tar.gz") || e.endsWith(".deb") || e.endsWith(".rpm") ? "linux" : e.endsWith(".dmg") || e.endsWith(".zip") && (e.includes("mac") || e.includes("darwin")) ? "macos" : e.includes("checksum") || e.includes("sha256") || e.endsWith(".txt") || e.endsWith(".asc") ? "checksum" : e.endsWith(".zip") ? "windows" : "other";
 }
-function Na(t) {
+function Pa(t) {
   if (!t) return [];
   const e = t.split(/\r?\n/), n = [];
   for (const i of e) {
@@ -9295,7 +9395,7 @@ function Na(t) {
   }
   return n;
 }
-function Pa(t) {
+function Ha(t) {
   const e = (t || "").trim().toUpperCase();
   return e.includes("ENHANC") ? "ENHANCEMENT" : e.includes("OPT") ? "OPTIMIZATION" : e.includes("FEAT") ? "FEATURE" : e.includes("BUG") || e.includes("FIX") || e.includes("REPAIR") ? "BUG-FIX" : e.includes("SEC") ? "SECURITY" : e.includes("APP") ? "APP" : e.includes("MAINT") ? "MAINTENANCE" : "ENHANCEMENT";
 }
@@ -9331,8 +9431,8 @@ async function ur(t, e = {}) {
       const d = await p.json();
       if (Array.isArray(d)) {
         const u = (e.filterPrereleases ? d.filter((h) => !h.prerelease) : d).map((h, x) => {
-          const f = h.tag_name || "", b = f.replace(/^v/, ""), S = Na(h.body), v = Array.isArray(h.assets) ? h.assets.map((w) => {
-            const L = ja(w.name), z = w.name.toLowerCase().endsWith(".exe") || w.name.toLowerCase().endsWith(".msi") || w.name.toLowerCase().endsWith(".dmg") || w.name.toLowerCase().endsWith(".appimage"), C = w.name.toLowerCase().endsWith(".zip") || w.name.toLowerCase().endsWith(".tar.gz");
+          const f = h.tag_name || "", b = f.replace(/^v/, ""), C = Pa(h.body), v = Array.isArray(h.assets) ? h.assets.map((w) => {
+            const L = Na(w.name), z = w.name.toLowerCase().endsWith(".exe") || w.name.toLowerCase().endsWith(".msi") || w.name.toLowerCase().endsWith(".dmg") || w.name.toLowerCase().endsWith(".appimage"), A = w.name.toLowerCase().endsWith(".zip") || w.name.toLowerCase().endsWith(".tar.gz");
             return {
               name: w.name,
               size: w.size,
@@ -9340,20 +9440,20 @@ async function ur(t, e = {}) {
               contentType: w.content_type,
               platform: L,
               isInstaller: z,
-              isArchive: C
+              isArchive: A
             };
           }) : [], m = n.split("/")[1] || n, y = (h.body || "").replace(/<!--[\s\S]*?-->/g, "").trim();
           return {
             id: String(h.id || f),
             version: b,
             title: h.name || `${m} ${f}`,
-            date: Ea(h.published_at || h.created_at),
+            date: ja(h.published_at || h.created_at),
             timestamp: h.published_at ? new Date(h.published_at).getTime() : Date.now(),
             type: "release",
             category: x === 0 ? "FEATURE" : "ENHANCEMENT",
             badge: x === 0 ? "Latest Release" : "Release",
             description: y ? y.slice(0, 260) + (y.length > 260 ? "..." : "") : `Official GitHub release for ${m} ${f}.`,
-            highlights: S,
+            highlights: C,
             link: h.html_url,
             linkText: "View on GitHub →",
             rawBody: y,
@@ -9396,7 +9496,7 @@ async function fr(t, e = {}) {
       throw new Error(`Failed to fetch updates JSON: HTTP ${i.status}`);
     const o = await i.json();
     return (Array.isArray(o) ? o : o && Array.isArray(o.updates) ? o.updates : []).map((l, s) => {
-      const p = String(l.id || `update-${s}`), d = (l.type || "website").toLowerCase(), g = Pa(l.category || l.badge), u = typeof l.link == "string" && l.link.startsWith("http");
+      const p = String(l.id || `update-${s}`), d = (l.type || "website").toLowerCase(), g = Ha(l.category || l.badge), u = typeof l.link == "string" && l.link.startsWith("http");
       let h = "Release Notes →";
       return d === "app" ? h = u ? "Open Application ↗" : "Open Application →" : d === "website" && (h = "Release Notes →"), {
         id: p,
@@ -9420,7 +9520,7 @@ async function fr(t, e = {}) {
     return console.warn(`[updatesService] Failed to load updates JSON from ${t}:`, n), [];
   }
 }
-async function Ha(t) {
+async function Fa(t) {
   const { updatesUrl: e, githubRepo: n, preferGitHub: i = !1, cacheTtlMs: o, forceRefresh: a } = t;
   if (i && n) {
     const l = await ur(n, { cacheTtlMs: o, forceRefresh: a });
@@ -9432,7 +9532,7 @@ async function Ha(t) {
   }
   return n ? ur(n, { cacheTtlMs: o, forceRefresh: a }) : [];
 }
-function Fa(t, e) {
+function Oa(t, e) {
   const n = (t || e || "").toLowerCase();
   return n.includes("enhanc") || n.includes("spark") ? /* @__PURE__ */ c("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ r("path", { d: "M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" }),
@@ -9454,7 +9554,7 @@ function Fa(t, e) {
     /* @__PURE__ */ r("line", { x1: "12", y1: "8", x2: "12.01", y2: "8" })
   ] });
 }
-function Oa(t) {
+function Va(t) {
   const e = (t || "").toUpperCase();
   return e.includes("ENHANC") ? { color: "#0284c7", bg: "rgba(2, 132, 199, 0.12)", border: "rgba(2, 132, 199, 0.28)" } : e.includes("OPT") ? { color: "#2563eb", bg: "rgba(37, 99, 235, 0.12)", border: "rgba(37, 99, 235, 0.28)" } : e.includes("FEAT") ? { color: "#d97706", bg: "rgba(217, 119, 6, 0.12)", border: "rgba(217, 119, 6, 0.28)" } : e.includes("BUG") || e.includes("FIX") ? { color: "#059669", bg: "rgba(5, 150, 105, 0.12)", border: "rgba(5, 150, 105, 0.28)" } : e.includes("SEC") ? { color: "#dc2626", bg: "rgba(220, 38, 38, 0.12)", border: "rgba(220, 38, 38, 0.28)" } : e.includes("APP") ? { color: "#7c3aed", bg: "rgba(124, 58, 237, 0.12)", border: "rgba(124, 58, 237, 0.28)" } : { color: "#64748b", bg: "rgba(100, 116, 139, 0.12)", border: "rgba(100, 116, 139, 0.28)" };
 }
@@ -9475,39 +9575,39 @@ const cs = ({
   className: x = "",
   style: f = {}
 }) => {
-  const [b, S] = W(o), [v, m] = W(""), y = re(() => {
+  const [b, C] = W(o), [v, m] = W(""), y = ee(() => {
     if (i && i.length > 0) return i;
-    const C = t.some((R) => (R.type || "").toLowerCase() === "website"), B = t.some((R) => (R.type || "").toLowerCase() === "app");
-    return C || B ? [
+    const A = t.some((B) => (B.type || "").toLowerCase() === "website"), R = t.some((B) => (B.type || "").toLowerCase() === "app");
+    return A || R ? [
       { id: "all", label: "All Updates", filter: () => !0 },
-      { id: "website", label: "Website", filter: (R) => (R.type || "").toLowerCase() === "website" },
-      { id: "app", label: "Apps", filter: (R) => (R.type || "").toLowerCase() === "app" }
+      { id: "website", label: "Website", filter: (B) => (B.type || "").toLowerCase() === "website" },
+      { id: "app", label: "Apps", filter: (B) => (B.type || "").toLowerCase() === "app" }
     ] : [{ id: "all", label: "All Updates", filter: () => !0 }];
-  }, [i, t]), w = re(() => {
-    const C = {};
-    return y.forEach((B) => {
-      B.id === "all" ? C[B.id] = t.length : B.filter ? C[B.id] = t.filter(B.filter).length : C[B.id] = t.filter((R) => (R.type || R.category || "").toLowerCase() === B.id.toLowerCase()).length;
-    }), C;
-  }, [y, t]), L = re(() => {
-    let C = t;
-    const B = y.find((R) => R.id === b);
-    if (B && B.id !== "all" && (B.filter ? C = C.filter(B.filter) : C = C.filter((R) => (R.type || R.category || "").toLowerCase() === B.id.toLowerCase())), v.trim()) {
-      const R = v.toLowerCase();
-      C = C.filter(
-        (N) => N.title.toLowerCase().includes(R) || N.version && N.version.toLowerCase().includes(R) || N.description && N.description.toLowerCase().includes(R) || N.category && N.category.toLowerCase().includes(R) || Array.isArray(N.highlights) && N.highlights.some((I) => I.toLowerCase().includes(R))
+  }, [i, t]), w = ee(() => {
+    const A = {};
+    return y.forEach((R) => {
+      R.id === "all" ? A[R.id] = t.length : R.filter ? A[R.id] = t.filter(R.filter).length : A[R.id] = t.filter((B) => (B.type || B.category || "").toLowerCase() === R.id.toLowerCase()).length;
+    }), A;
+  }, [y, t]), L = ee(() => {
+    let A = t;
+    const R = y.find((B) => B.id === b);
+    if (R && R.id !== "all" && (R.filter ? A = A.filter(R.filter) : A = A.filter((B) => (B.type || B.category || "").toLowerCase() === R.id.toLowerCase())), v.trim()) {
+      const B = v.toLowerCase();
+      A = A.filter(
+        (j) => j.title.toLowerCase().includes(B) || j.version && j.version.toLowerCase().includes(B) || j.description && j.description.toLowerCase().includes(B) || j.category && j.category.toLowerCase().includes(B) || Array.isArray(j.highlights) && j.highlights.some((I) => I.toLowerCase().includes(B))
       );
     }
-    return C;
+    return A;
   }, [t, y, b, v]), z = te(
-    (C, B) => {
-      if (d && d(B), typeof window < "u" && B.id)
+    (A, R) => {
+      if (d && d(R), typeof window < "u" && R.id)
         try {
-          const N = localStorage.getItem(g), I = N ? JSON.parse(N) : [];
-          I.includes(B.id) || (I.push(B.id), localStorage.setItem(g, JSON.stringify(I)));
+          const j = localStorage.getItem(g), I = j ? JSON.parse(j) : [];
+          I.includes(R.id) || (I.push(R.id), localStorage.setItem(g, JSON.stringify(I)));
         } catch {
         }
-      const R = B.link;
-      R && !R.startsWith("http://") && !R.startsWith("https://") && p && (C.preventDefault(), p(R));
+      const B = R.link;
+      B && !B.startsWith("http://") && !B.startsWith("https://") && p && (A.preventDefault(), p(B));
     },
     [p, d, g]
   );
@@ -9567,50 +9667,50 @@ const cs = ({
               boxShadow: "var(--eg-shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.04))"
             },
             children: [
-              /* @__PURE__ */ r("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" }, role: "tablist", children: y.map((C) => {
-                const B = b === C.id, R = w[C.id];
+              /* @__PURE__ */ r("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" }, role: "tablist", children: y.map((A) => {
+                const R = b === A.id, B = w[A.id];
                 return /* @__PURE__ */ c(
                   "button",
                   {
                     type: "button",
                     role: "tab",
-                    "aria-selected": B,
-                    onClick: () => S(C.id),
+                    "aria-selected": R,
+                    onClick: () => C(A.id),
                     style: {
                       padding: "7px 15px",
                       borderRadius: "9999px",
                       fontSize: "13.5px",
-                      fontWeight: B ? 700 : 600,
-                      border: B ? "1px solid var(--eg-color-primary, #10b981)" : "1px solid var(--eg-border-default, rgba(0, 0, 0, 0.1))",
-                      background: B ? "var(--eg-color-primary, #10b981)" : "transparent",
-                      color: B ? "#ffffff" : "var(--eg-text-secondary, #475569)",
+                      fontWeight: R ? 700 : 600,
+                      border: R ? "1px solid var(--eg-color-primary, #10b981)" : "1px solid var(--eg-border-default, rgba(0, 0, 0, 0.1))",
+                      background: R ? "var(--eg-color-primary, #10b981)" : "transparent",
+                      color: R ? "#ffffff" : "var(--eg-text-secondary, #475569)",
                       cursor: "pointer",
                       display: "inline-flex",
                       alignItems: "center",
                       gap: "6px",
                       transition: "all 0.18s ease",
-                      boxShadow: B ? "0 2px 8px rgba(16, 185, 129, 0.28)" : "none"
+                      boxShadow: R ? "0 2px 8px rgba(16, 185, 129, 0.28)" : "none"
                     },
                     children: [
-                      /* @__PURE__ */ r("span", { children: C.label }),
-                      a && R !== void 0 && /* @__PURE__ */ c(
+                      /* @__PURE__ */ r("span", { children: A.label }),
+                      a && B !== void 0 && /* @__PURE__ */ c(
                         "span",
                         {
                           style: {
                             fontSize: "11.5px",
-                            opacity: B ? 0.92 : 0.65,
+                            opacity: R ? 0.92 : 0.65,
                             fontWeight: 600
                           },
                           children: [
                             "(",
-                            R,
+                            B,
                             ")"
                           ]
                         }
                       )
                     ]
                   },
-                  C.id
+                  A.id
                 );
               }) }),
               l && /* @__PURE__ */ c("div", { style: { position: "relative", minWidth: "220px", flex: "1 1 220px", maxWidth: "320px" }, children: [
@@ -9637,7 +9737,7 @@ const cs = ({
                   {
                     type: "text",
                     value: v,
-                    onChange: (C) => m(C.target.value),
+                    onChange: (A) => m(A.target.value),
                     placeholder: s,
                     style: {
                       width: "100%",
@@ -9692,19 +9792,19 @@ const cs = ({
               }
             }
           ),
-          L.map((C, B) => {
-            const R = Oa(C.category || C.badge), N = Fa(C.category, C.icon), I = !!(C.link && C.link.startsWith("http"));
-            let j = C.linkText;
+          L.map((A, R) => {
+            const B = Va(A.category || A.badge), j = Oa(A.category, A.icon), I = !!(A.link && A.link.startsWith("http"));
+            let E = A.linkText;
             if (h)
-              j = h(C);
-            else if (!j) {
-              const H = (C.type || "").toLowerCase();
-              H === "app" ? j = I ? "Open Application ↗" : "Open Application →" : H === "website" ? j = "Release Notes →" : j = I ? "View on GitHub →" : "View Details →";
+              E = h(A);
+            else if (!E) {
+              const H = (A.type || "").toLowerCase();
+              H === "app" ? E = I ? "Open Application ↗" : "Open Application →" : H === "website" ? E = "Release Notes →" : E = I ? "View on GitHub →" : "View Details →";
             }
             return /* @__PURE__ */ c(
               "article",
               {
-                id: C.version ? `v-${C.version}` : void 0,
+                id: A.version ? `v-${A.version}` : void 0,
                 style: {
                   position: "relative",
                   marginBottom: "36px",
@@ -9721,16 +9821,16 @@ const cs = ({
                         width: "26px",
                         height: "26px",
                         borderRadius: "50%",
-                        background: R.bg,
-                        color: R.color,
-                        border: `2px solid ${R.color}`,
+                        background: B.bg,
+                        color: B.color,
+                        border: `2px solid ${B.color}`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         boxShadow: "0 0 0 4px var(--eg-bg-canvas, #f8fafc)",
                         zIndex: 2
                       },
-                      children: /* @__PURE__ */ r("div", { style: { transform: "scale(0.65)" }, children: N })
+                      children: /* @__PURE__ */ r("div", { style: { transform: "scale(0.65)" }, children: j })
                     }
                   ),
                   /* @__PURE__ */ c(
@@ -9738,10 +9838,10 @@ const cs = ({
                     {
                       style: {
                         background: "var(--eg-bg-surface, #ffffff)",
-                        border: C.isLatest ? "1.5px solid var(--eg-color-primary, #10b981)" : "1px solid var(--eg-border-default, rgba(0, 0, 0, 0.08))",
+                        border: A.isLatest ? "1.5px solid var(--eg-color-primary, #10b981)" : "1px solid var(--eg-border-default, rgba(0, 0, 0, 0.08))",
                         borderRadius: "var(--eg-radius-xl, 16px)",
                         padding: "24px 28px",
-                        boxShadow: C.isLatest ? "0 6px 20px rgba(16, 185, 129, 0.08)" : "var(--eg-shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.03))",
+                        boxShadow: A.isLatest ? "0 6px 20px rgba(16, 185, 129, 0.08)" : "var(--eg-shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.03))",
                         transition: "transform 0.2s ease, box-shadow 0.2s ease"
                       },
                       children: [
@@ -9770,14 +9870,14 @@ const cs = ({
                                       fontWeight: 700,
                                       textTransform: "uppercase",
                                       letterSpacing: "0.6px",
-                                      color: R.color,
-                                      background: R.bg,
-                                      border: `1px solid ${R.border}`
+                                      color: B.color,
+                                      background: B.bg,
+                                      border: `1px solid ${B.border}`
                                     },
-                                    children: C.category || "UPDATE"
+                                    children: A.category || "UPDATE"
                                   }
                                 ),
-                                C.version && /* @__PURE__ */ c(
+                                A.version && /* @__PURE__ */ c(
                                   "span",
                                   {
                                     style: {
@@ -9788,12 +9888,12 @@ const cs = ({
                                     },
                                     children: [
                                       "v",
-                                      C.version
+                                      A.version
                                     ]
                                   }
                                 ),
-                                C.isLatest && /* @__PURE__ */ r(ue, { variant: "success", size: "sm", children: "Latest Release" }),
-                                C.type && /* @__PURE__ */ c(
+                                A.isLatest && /* @__PURE__ */ r(ye, { variant: "success", size: "sm", children: "Latest Release" }),
+                                A.type && /* @__PURE__ */ c(
                                   "span",
                                   {
                                     style: {
@@ -9804,7 +9904,7 @@ const cs = ({
                                     },
                                     children: [
                                       "• ",
-                                      C.type === "website" ? "Core Website" : C.type === "app" ? "Application" : C.type
+                                      A.type === "website" ? "Core Website" : A.type === "app" ? "Application" : A.type
                                     ]
                                   }
                                 )
@@ -9827,7 +9927,7 @@ const cs = ({
                                       /* @__PURE__ */ r("line", { x1: "8", y1: "2", x2: "8", y2: "6" }),
                                       /* @__PURE__ */ r("line", { x1: "3", y1: "10", x2: "21", y2: "10" })
                                     ] }),
-                                    C.date
+                                    A.date
                                   ]
                                 }
                               )
@@ -9844,10 +9944,10 @@ const cs = ({
                               margin: "0 0 10px",
                               lineHeight: 1.4
                             },
-                            children: C.title
+                            children: A.title
                           }
                         ),
-                        C.description && /* @__PURE__ */ r(
+                        A.description && /* @__PURE__ */ r(
                           "p",
                           {
                             style: {
@@ -9856,10 +9956,10 @@ const cs = ({
                               lineHeight: 1.65,
                               margin: "0 0 16px"
                             },
-                            children: C.description
+                            children: A.description
                           }
                         ),
-                        Array.isArray(C.highlights) && C.highlights.length > 0 && /* @__PURE__ */ r(
+                        Array.isArray(A.highlights) && A.highlights.length > 0 && /* @__PURE__ */ r(
                           "div",
                           {
                             style: {
@@ -9882,12 +9982,12 @@ const cs = ({
                                   flexDirection: "column",
                                   gap: "4px"
                                 },
-                                children: C.highlights.map((H, $) => /* @__PURE__ */ r("li", { children: H }, $))
+                                children: A.highlights.map((H, $) => /* @__PURE__ */ r("li", { children: H }, $))
                               }
                             )
                           }
                         ),
-                        Array.isArray(C.assets) && C.assets.length > 0 && /* @__PURE__ */ c(
+                        Array.isArray(A.assets) && A.assets.length > 0 && /* @__PURE__ */ c(
                           "div",
                           {
                             style: {
@@ -9905,19 +10005,19 @@ const cs = ({
                             children: [
                               /* @__PURE__ */ c("span", { style: { fontSize: "12px", fontWeight: 700, color: "var(--eg-text-muted, #94a3b8)" }, children: [
                                 "Download Binaries (",
-                                C.version ? `v${C.version}` : "Release",
+                                A.version ? `v${A.version}` : "Release",
                                 "):"
                               ] }),
-                              /* @__PURE__ */ r("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" }, children: C.assets.map((H) => {
-                                const $ = Da(H.size), M = H.platform === "windows" ? "primary" : H.platform === "checksum" ? "neutral" : "info";
+                              /* @__PURE__ */ r("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" }, children: A.assets.map((H) => {
+                                const $ = Ea(H.size), _ = H.platform === "windows" ? "primary" : H.platform === "checksum" ? "neutral" : "info";
                                 return /* @__PURE__ */ r(
                                   "a",
                                   {
-                                    href: ie(H.browser_download_url),
+                                    href: ne(H.browser_download_url),
                                     target: "_blank",
                                     rel: "noopener noreferrer",
                                     style: { textDecoration: "none" },
-                                    children: /* @__PURE__ */ c(ue, { variant: M, size: "sm", children: [
+                                    children: /* @__PURE__ */ c(ye, { variant: _, size: "sm", children: [
                                       /* @__PURE__ */ r("span", { children: H.name }),
                                       $ && /* @__PURE__ */ c("span", { style: { opacity: 0.75, fontSize: "10.5px" }, children: [
                                         "(",
@@ -9932,15 +10032,15 @@ const cs = ({
                             ]
                           }
                         ),
-                        C.link && /* @__PURE__ */ r("div", { style: { display: "flex", justifyContent: "flex-start", marginTop: "12px" }, children: /* @__PURE__ */ r(
+                        A.link && /* @__PURE__ */ r("div", { style: { display: "flex", justifyContent: "flex-start", marginTop: "12px" }, children: /* @__PURE__ */ r(
                           "a",
                           {
-                            href: ie(C.link),
+                            href: ne(A.link),
                             target: I ? "_blank" : void 0,
                             rel: I ? "noopener noreferrer" : void 0,
-                            onClick: (H) => z(H, C),
+                            onClick: (H) => z(H, A),
                             style: { textDecoration: "none" },
-                            children: /* @__PURE__ */ r(Tt, { variant: "secondary", size: "sm", children: j })
+                            children: /* @__PURE__ */ r(Wt, { variant: "secondary", size: "sm", children: E })
                           }
                         ) })
                       ]
@@ -9948,7 +10048,7 @@ const cs = ({
                   )
                 ]
               },
-              C.id || B
+              A.id || R
             );
           })
         ] })
@@ -9961,64 +10061,64 @@ const cs = ({
   className: n = "",
   style: i = {}
 }) => {
-  var O;
-  const [o, a] = W(e || ((O = t[0]) == null ? void 0 : O.id) || ""), [l, s] = W(""), [p, d] = W({}), [g, u] = W(!1), [h, x] = W(!1), [f, b] = W(!1), [S, v] = W(null), m = he(null), y = (M) => {
-    v(M), setTimeout(() => v(null), 2500);
+  var U;
+  const [o, a] = W(e || ((U = t[0]) == null ? void 0 : U.id) || ""), [l, s] = W(""), [p, d] = W({}), [g, u] = W(!1), [h, x] = W(!1), [f, b] = W(!1), [C, v] = W(null), m = me(null), y = (_) => {
+    v(_), setTimeout(() => v(null), 2500);
   };
-  Z(() => {
-    const M = () => {
+  Y(() => {
+    const _ = () => {
       window.innerWidth > 900 && b(!1);
     };
-    return window.addEventListener("resize", M), () => window.removeEventListener("resize", M);
-  }, []), Z(() => {
-    const M = (T) => {
+    return window.addEventListener("resize", _), () => window.removeEventListener("resize", _);
+  }, []), Y(() => {
+    const _ = (T) => {
       T.key === "Escape" && (b(!1), x(!1));
     };
-    return window.addEventListener("keydown", M), () => window.removeEventListener("keydown", M);
-  }, []), Z(() => {
+    return window.addEventListener("keydown", _), () => window.removeEventListener("keydown", _);
+  }, []), Y(() => {
     if (f) {
-      const M = document.body.style.overflow;
+      const _ = document.body.style.overflow;
       return document.body.style.overflow = "hidden", () => {
-        document.body.style.overflow = M;
+        document.body.style.overflow = _;
       };
     }
   }, [f]);
-  const w = re(() => {
-    const M = {};
+  const w = ee(() => {
+    const _ = {};
     return t.forEach((T) => {
-      const k = T.category || "General";
-      M[k] || (M[k] = []), M[k].push(T);
-    }), M;
-  }, [t]), L = t.findIndex((M) => M.id === o), z = t[L] || t[0], C = L > 0 ? t[L - 1] : null, B = L < t.length - 1 ? t[L + 1] : null, R = re(() => {
+      const S = T.category || "General";
+      _[S] || (_[S] = []), _[S].push(T);
+    }), _;
+  }, [t]), L = t.findIndex((_) => _.id === o), z = t[L] || t[0], A = L > 0 ? t[L - 1] : null, R = L < t.length - 1 ? t[L + 1] : null, B = ee(() => {
     if (!(z != null && z.content)) return [];
-    const M = z.content.split(`
+    const _ = z.content.split(`
 `), T = [];
-    return M.forEach((k) => {
-      if (k.startsWith("## ") || k.startsWith("### ")) {
-        const E = k.startsWith("## ") ? 2 : 3, A = k.replace(/^#{2,3}\s+/, "").trim(), D = A.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
-        T.push({ level: E, text: A, id: D });
+    return _.forEach((S) => {
+      if (S.startsWith("## ") || S.startsWith("### ")) {
+        const N = S.startsWith("## ") ? 2 : 3, k = S.replace(/^#{2,3}\s+/, "").trim(), D = k.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+        T.push({ level: N, text: k, id: D });
       }
     }), T;
-  }, [z]), N = re(() => z != null && z.content ? ke(xn(z.content)) : "", [z]);
-  Z(() => {
+  }, [z]), j = ee(() => z != null && z.content ? Ae(xn(z.content)) : "", [z]);
+  Y(() => {
     mn(m.current);
-  }, [N, o]);
+  }, [j, o]);
   const I = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href), y("Documentation link copied to clipboard!");
     } catch {
       y("Failed to copy link.");
     }
-  }, j = async () => {
+  }, E = async () => {
     if (z)
       try {
         await navigator.clipboard.writeText(z.content), u(!0), y("Raw markdown copied to clipboard!"), setTimeout(() => u(!1), 2e3);
       } catch {
         y("Failed to copy raw markdown.");
       }
-  }, H = (M) => {
-    d((T) => ({ ...T, [M]: !T[M] }));
-  }, $ = (M) => /* @__PURE__ */ c(se, { children: [
+  }, H = (_) => {
+    d((T) => ({ ...T, [_]: !T[_] }));
+  }, $ = (_) => /* @__PURE__ */ c(se, { children: [
     /* @__PURE__ */ r("div", { style: { marginBottom: "16px" }, children: /* @__PURE__ */ r(
       "input",
       {
@@ -10039,12 +10139,12 @@ const cs = ({
         }
       }
     ) }),
-    /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: Object.entries(w).map(([T, k]) => {
-      const E = k.filter(
-        (D) => D.title.toLowerCase().includes(l.toLowerCase()) || D.category.toLowerCase().includes(l.toLowerCase()) || D.tags && D.tags.some((V) => V.toLowerCase().includes(l.toLowerCase()))
+    /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: Object.entries(w).map(([T, S]) => {
+      const N = S.filter(
+        (D) => D.title.toLowerCase().includes(l.toLowerCase()) || D.category.toLowerCase().includes(l.toLowerCase()) || D.tags && D.tags.some((O) => O.toLowerCase().includes(l.toLowerCase()))
       );
-      if (E.length === 0) return null;
-      const A = p[T];
+      if (N.length === 0) return null;
+      const k = p[T];
       return /* @__PURE__ */ c("div", { children: [
         /* @__PURE__ */ c(
           "button",
@@ -10069,18 +10169,18 @@ const cs = ({
             },
             children: [
               /* @__PURE__ */ r("span", { children: T }),
-              /* @__PURE__ */ r("span", { style: { fontSize: "10px" }, children: A ? "▶" : "▼" })
+              /* @__PURE__ */ r("span", { style: { fontSize: "10px" }, children: k ? "▶" : "▼" })
             ]
           }
         ),
-        !A && /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "3px", marginTop: "6px" }, children: E.map((D) => {
-          const V = D.id === o;
+        !k && /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "3px", marginTop: "6px" }, children: N.map((D) => {
+          const O = D.id === o;
           return /* @__PURE__ */ c(
             "button",
             {
               type: "button",
               onClick: () => {
-                a(D.id), M && b(!1), window.scrollTo({ top: 0, behavior: "smooth" });
+                a(D.id), _ && b(!1), window.scrollTo({ top: 0, behavior: "smooth" });
               },
               style: {
                 display: "flex",
@@ -10089,9 +10189,9 @@ const cs = ({
                 padding: "8px 12px",
                 borderRadius: "6px",
                 border: "1px solid transparent",
-                background: V ? "rgba(16, 185, 129, 0.12)" : "transparent",
-                color: V ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-secondary, #475569)",
-                fontWeight: V ? 600 : 500,
+                background: O ? "rgba(16, 185, 129, 0.12)" : "transparent",
+                color: O ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-secondary, #475569)",
+                fontWeight: O ? 600 : 500,
                 fontSize: "13px",
                 cursor: "pointer",
                 textAlign: "left",
@@ -10272,7 +10372,7 @@ const cs = ({
               ),
               /* @__PURE__ */ c("div", { style: { flex: 1, overflowY: "auto", padding: "16px 18px", boxSizing: "border-box" }, children: [
                 $(!0),
-                R.length > 0 && /* @__PURE__ */ c("div", { style: { marginTop: "24px", paddingTop: "16px", borderTop: "1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.08))" }, children: [
+                B.length > 0 && /* @__PURE__ */ c("div", { style: { marginTop: "24px", paddingTop: "16px", borderTop: "1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.08))" }, children: [
                   /* @__PURE__ */ r(
                     "h5",
                     {
@@ -10287,21 +10387,21 @@ const cs = ({
                       children: "On This Page"
                     }
                   ),
-                  /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "6px" }, children: R.map((M, T) => /* @__PURE__ */ r(
+                  /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "6px" }, children: B.map((_, T) => /* @__PURE__ */ r(
                     "a",
                     {
-                      href: `#${M.id}`,
+                      href: `#${_.id}`,
                       onClick: () => b(!1),
                       style: {
-                        fontSize: M.level === 2 ? "12.5px" : "11.5px",
+                        fontSize: _.level === 2 ? "12.5px" : "11.5px",
                         padding: "4px 8px",
-                        paddingLeft: M.level === 2 ? "8px" : "18px",
+                        paddingLeft: _.level === 2 ? "8px" : "18px",
                         color: "var(--eg-text-secondary, #64748b)",
                         textDecoration: "none",
                         lineHeight: 1.4,
                         borderRadius: "4px"
                       },
-                      children: M.text
+                      children: _.text
                     },
                     T
                   )) })
@@ -10483,7 +10583,7 @@ const cs = ({
                 {
                   ref: m,
                   className: "eg-markdown-content",
-                  dangerouslySetInnerHTML: { __html: N },
+                  dangerouslySetInnerHTML: { __html: j },
                   style: {
                     fontSize: "15.5px",
                     lineHeight: 1.75,
@@ -10503,12 +10603,12 @@ const cs = ({
                     gap: "16px"
                   },
                   children: [
-                    C ? /* @__PURE__ */ c(
+                    A ? /* @__PURE__ */ c(
                       "button",
                       {
                         type: "button",
                         onClick: () => {
-                          a(C.id), window.scrollTo({ top: 0, behavior: "smooth" });
+                          a(A.id), window.scrollTo({ top: 0, behavior: "smooth" });
                         },
                         style: {
                           padding: "12px 18px",
@@ -10520,16 +10620,16 @@ const cs = ({
                         },
                         children: [
                           /* @__PURE__ */ r("div", { style: { fontSize: "11px", color: "#94a3b8", textTransform: "uppercase" }, children: "← Previous" }),
-                          /* @__PURE__ */ r("div", { style: { fontSize: "13.5px", fontWeight: 700, color: "var(--eg-color-primary, #10b981)" }, children: C.title })
+                          /* @__PURE__ */ r("div", { style: { fontSize: "13.5px", fontWeight: 700, color: "var(--eg-color-primary, #10b981)" }, children: A.title })
                         ]
                       }
                     ) : /* @__PURE__ */ r("div", {}),
-                    B ? /* @__PURE__ */ c(
+                    R ? /* @__PURE__ */ c(
                       "button",
                       {
                         type: "button",
                         onClick: () => {
-                          a(B.id), window.scrollTo({ top: 0, behavior: "smooth" });
+                          a(R.id), window.scrollTo({ top: 0, behavior: "smooth" });
                         },
                         style: {
                           padding: "12px 18px",
@@ -10541,7 +10641,7 @@ const cs = ({
                         },
                         children: [
                           /* @__PURE__ */ r("div", { style: { fontSize: "11px", color: "#94a3b8", textTransform: "uppercase" }, children: "Next →" }),
-                          /* @__PURE__ */ r("div", { style: { fontSize: "13.5px", fontWeight: 700, color: "var(--eg-color-primary, #10b981)" }, children: B.title })
+                          /* @__PURE__ */ r("div", { style: { fontSize: "13.5px", fontWeight: 700, color: "var(--eg-color-primary, #10b981)" }, children: R.title })
                         ]
                       }
                     ) : /* @__PURE__ */ r("div", {})
@@ -10577,21 +10677,21 @@ const cs = ({
                   children: "On This Page"
                 }
               ),
-              R.length === 0 ? /* @__PURE__ */ r("span", { style: { fontSize: "12px", color: "#94a3b8" }, children: "Overview" }) : /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "6px" }, children: R.map((M, T) => /* @__PURE__ */ r(
+              B.length === 0 ? /* @__PURE__ */ r("span", { style: { fontSize: "12px", color: "#94a3b8" }, children: "Overview" }) : /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "6px" }, children: B.map((_, T) => /* @__PURE__ */ r(
                 "a",
                 {
-                  href: `#${M.id}`,
+                  href: `#${_.id}`,
                   style: {
-                    fontSize: M.level === 2 ? "12.5px" : "11.5px",
-                    paddingLeft: M.level === 2 ? "0px" : "12px",
+                    fontSize: _.level === 2 ? "12.5px" : "11.5px",
+                    paddingLeft: _.level === 2 ? "0px" : "12px",
                     color: "var(--eg-text-secondary, #64748b)",
                     textDecoration: "none",
                     lineHeight: 1.4,
                     transition: "color 0.15s ease"
                   },
-                  onMouseEnter: (k) => k.currentTarget.style.color = "var(--eg-color-primary, #10b981)",
-                  onMouseLeave: (k) => k.currentTarget.style.color = "var(--eg-text-secondary, #64748b)",
-                  children: M.text
+                  onMouseEnter: (S) => S.currentTarget.style.color = "var(--eg-color-primary, #10b981)",
+                  onMouseLeave: (S) => S.currentTarget.style.color = "var(--eg-text-secondary, #64748b)",
+                  children: _.text
                 },
                 T
               )) })
@@ -10628,7 +10728,7 @@ const cs = ({
                   flexDirection: "column",
                   overflow: "hidden"
                 },
-                onClick: (M) => M.stopPropagation(),
+                onClick: (_) => _.stopPropagation(),
                 children: [
                   /* @__PURE__ */ c(
                     "div",
@@ -10720,7 +10820,7 @@ const cs = ({
                           "button",
                           {
                             type: "button",
-                            onClick: j,
+                            onClick: E,
                             style: {
                               padding: "6px 14px",
                               borderRadius: "6px",
@@ -10759,7 +10859,7 @@ const cs = ({
             ]
           }
         ),
-        S && /* @__PURE__ */ r(
+        C && /* @__PURE__ */ r(
           "div",
           {
             style: {
@@ -10776,13 +10876,13 @@ const cs = ({
               fontWeight: 600,
               zIndex: 999999
             },
-            children: S
+            children: C
           }
         )
       ]
     }
   );
-}, Va = [
+}, Ua = [
   {
     id: "q-1",
     fileName: "invoice_march_2026.pdf.exe",
@@ -10813,7 +10913,7 @@ const cs = ({
   className: n = "",
   style: i = {}
 }) => {
-  const [o, a] = W("dashboard"), [l, s] = W("protected"), [p, d] = W(!1), [g, u] = W("Quick Scan"), [h, x] = W(0), [f, b] = W(""), [S, v] = W(14820), [m, y] = W(0), [w, L] = W(!1), [z, C] = W(Va), [B, R] = W(null), [N, I] = W("Guest88419203"), [j, H] = W(!1), $ = [
+  const [o, a] = W("dashboard"), [l, s] = W("protected"), [p, d] = W(!1), [g, u] = W("Quick Scan"), [h, x] = W(0), [f, b] = W(""), [C, v] = W(14820), [m, y] = W(0), [w, L] = W(!1), [z, A] = W(Ua), [R, B] = W(null), [j, I] = W("Guest88419203"), [E, H] = W(!1), $ = [
     "/usr/bin/python3.11",
     "/lib/x86_64-linux-gnu/libc.so.6",
     "/etc/ssl/certs/ca-certificates.crt",
@@ -10826,28 +10926,28 @@ const cs = ({
     "/home/user/Documents/project_plan.docx",
     "/usr/lib/systemd/systemd"
   ];
-  Z(() => {
-    let A;
-    return p && (A = setInterval(() => {
+  Y(() => {
+    let k;
+    return p && (k = setInterval(() => {
       y((D) => D + 1), x((D) => {
         if (D >= 100)
           return d(!1), 100;
-        const V = D + 4;
-        return v((_) => _ + Math.floor(Math.random() * 28) + 12), b($[Math.floor(Math.random() * $.length)]), V;
+        const O = D + 4;
+        return v((M) => M + Math.floor(Math.random() * 28) + 12), b($[Math.floor(Math.random() * $.length)]), O;
       });
-    }, 250)), () => clearInterval(A);
+    }, 250)), () => clearInterval(k);
   }, [p]);
-  const O = (A = "Quick Scan") => {
-    u(A), x(0), y(0), d(!0), L(!0);
-  }, M = () => {
+  const U = (k = "Quick Scan") => {
+    u(k), x(0), y(0), d(!0), L(!0);
+  }, _ = () => {
     d(!1), L(!1);
   }, T = () => {
-    B && (C((A) => A.filter((D) => D.id !== B)), R(null));
-  }, k = () => {
-    B && (C((A) => A.filter((D) => D.id !== B)), R(null));
-  }, E = () => {
-    const A = Math.floor(1e7 + Math.random() * 9e7);
-    I(`Guest${A}`), H(!0);
+    R && (A((k) => k.filter((D) => D.id !== R)), B(null));
+  }, S = () => {
+    R && (A((k) => k.filter((D) => D.id !== R)), B(null));
+  }, N = () => {
+    const k = Math.floor(1e7 + Math.random() * 9e7);
+    I(`Guest${k}`), H(!0);
   };
   return /* @__PURE__ */ c(
     "div",
@@ -10890,24 +10990,24 @@ const cs = ({
                 e,
                 " — System Security Suite (Qt6 / ClamAV®)"
               ] }),
-              /* @__PURE__ */ r("div", { style: { display: "flex", gap: "4px" }, children: ["protected", "warning", "danger"].map((A) => /* @__PURE__ */ r(
+              /* @__PURE__ */ r("div", { style: { display: "flex", gap: "4px" }, children: ["protected", "warning", "danger"].map((k) => /* @__PURE__ */ r(
                 "button",
                 {
                   type: "button",
-                  onClick: () => s(A),
+                  onClick: () => s(k),
                   style: {
                     fontSize: "11px",
                     padding: "2px 8px",
                     borderRadius: "4px",
                     border: "none",
-                    background: l === A ? A === "protected" ? "#00dc82" : A === "warning" ? "#f59e0b" : "#ef4444" : "rgba(255, 255, 255, 0.08)",
-                    color: l === A ? "#000" : "#888",
+                    background: l === k ? k === "protected" ? "#00dc82" : k === "warning" ? "#f59e0b" : "#ef4444" : "rgba(255, 255, 255, 0.08)",
+                    color: l === k ? "#000" : "#888",
                     fontWeight: 700,
                     cursor: "pointer"
                   },
-                  children: A
+                  children: k
                 },
-                A
+                k
               )) })
             ]
           }
@@ -10931,13 +11031,13 @@ const cs = ({
                   { id: "quarantine", label: "Quarantine", icon: "☣️" },
                   { id: "logs", label: "Scan Logs", icon: "📜" },
                   { id: "settings", label: "Settings", icon: "⚙️" }
-                ].map((A) => {
-                  const D = o === A.id;
+                ].map((k) => {
+                  const D = o === k.id;
                   return /* @__PURE__ */ c(
                     "button",
                     {
                       type: "button",
-                      onClick: () => a(A.id),
+                      onClick: () => a(k.id),
                       style: {
                         display: "flex",
                         alignItems: "center",
@@ -10954,11 +11054,11 @@ const cs = ({
                         transition: "all 0.15s ease"
                       },
                       children: [
-                        /* @__PURE__ */ r("span", { style: { fontSize: "16px" }, children: A.icon }),
-                        /* @__PURE__ */ r("span", { children: A.label })
+                        /* @__PURE__ */ r("span", { style: { fontSize: "16px" }, children: k.icon }),
+                        /* @__PURE__ */ r("span", { children: k.label })
                       ]
                     },
-                    A.id
+                    k.id
                   );
                 }) }),
                 /* @__PURE__ */ c(
@@ -11025,7 +11125,7 @@ const cs = ({
                       "button",
                       {
                         type: "button",
-                        onClick: () => O("Quick Scan"),
+                        onClick: () => U("Quick Scan"),
                         style: {
                           background: l === "danger" ? "#ef4444" : "#00dc82",
                           color: "#0b0b0e",
@@ -11051,7 +11151,7 @@ const cs = ({
                 /* @__PURE__ */ c("div", { style: { background: "#1b1b24", padding: "16px", borderRadius: "8px" }, children: [
                   /* @__PURE__ */ r("span", { style: { fontSize: "11px", color: "#6e6e7c", textTransform: "uppercase", fontWeight: 700 }, children: "Last Scanned Items" }),
                   /* @__PURE__ */ c("p", { style: { margin: "6px 0 0", fontSize: "18px", fontWeight: 800, color: "#f4f4f6" }, children: [
-                    S.toLocaleString(),
+                    C.toLocaleString(),
                     " files"
                   ] })
                 ] }),
@@ -11069,7 +11169,7 @@ const cs = ({
                   {
                     type: "button",
                     onClick: () => {
-                      a("scan"), O("Full System Scan");
+                      a("scan"), U("Full System Scan");
                     },
                     style: {
                       background: "#00dc82",
@@ -11115,7 +11215,7 @@ const cs = ({
                 { title: "Full System Scan", desc: "Entire root filesystem, all attached drives & storage", icon: "💽" },
                 { title: "Memory Scan", desc: "Running process spaces & active shared libraries", icon: "🧠" },
                 { title: "Custom Path Scan", desc: "Inspect user-selected files, directories, or archives", icon: "📂" }
-              ].map((A) => /* @__PURE__ */ c(
+              ].map((k) => /* @__PURE__ */ c(
                 "div",
                 {
                   style: {
@@ -11131,16 +11231,16 @@ const cs = ({
                   children: [
                     /* @__PURE__ */ c("div", { children: [
                       /* @__PURE__ */ c("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }, children: [
-                        /* @__PURE__ */ r("span", { style: { fontSize: "20px" }, children: A.icon }),
-                        /* @__PURE__ */ r("h4", { style: { margin: 0, fontSize: "15px", fontWeight: 700 }, children: A.title })
+                        /* @__PURE__ */ r("span", { style: { fontSize: "20px" }, children: k.icon }),
+                        /* @__PURE__ */ r("h4", { style: { margin: 0, fontSize: "15px", fontWeight: 700 }, children: k.title })
                       ] }),
-                      /* @__PURE__ */ r("p", { style: { margin: 0, fontSize: "12.5px", color: "#a0a0ab" }, children: A.desc })
+                      /* @__PURE__ */ r("p", { style: { margin: 0, fontSize: "12.5px", color: "#a0a0ab" }, children: k.desc })
                     ] }),
                     /* @__PURE__ */ r(
                       "button",
                       {
                         type: "button",
-                        onClick: () => O(A.title),
+                        onClick: () => U(k.title),
                         disabled: p,
                         style: {
                           background: "rgba(0, 220, 130, 0.15)",
@@ -11158,7 +11258,7 @@ const cs = ({
                     )
                   ]
                 },
-                A.title
+                k.title
               )) })
             ] }),
             o === "quarantine" && /* @__PURE__ */ c("div", { children: [
@@ -11170,7 +11270,7 @@ const cs = ({
                     {
                       type: "button",
                       onClick: T,
-                      disabled: !B,
+                      disabled: !R,
                       style: {
                         background: "rgba(59, 130, 246, 0.2)",
                         border: "1px solid #3b82f6",
@@ -11179,8 +11279,8 @@ const cs = ({
                         padding: "6px 12px",
                         borderRadius: "6px",
                         fontWeight: 600,
-                        cursor: B ? "pointer" : "not-allowed",
-                        opacity: B ? 1 : 0.4
+                        cursor: R ? "pointer" : "not-allowed",
+                        opacity: R ? 1 : 0.4
                       },
                       children: "Restore File"
                     }
@@ -11189,8 +11289,8 @@ const cs = ({
                     "button",
                     {
                       type: "button",
-                      onClick: k,
-                      disabled: !B,
+                      onClick: S,
+                      disabled: !R,
                       style: {
                         background: "rgba(239, 68, 68, 0.2)",
                         border: "1px solid #ef4444",
@@ -11199,8 +11299,8 @@ const cs = ({
                         padding: "6px 12px",
                         borderRadius: "6px",
                         fontWeight: 600,
-                        cursor: B ? "pointer" : "not-allowed",
-                        opacity: B ? 1 : 0.4
+                        cursor: R ? "pointer" : "not-allowed",
+                        opacity: R ? 1 : 0.4
                       },
                       children: "Delete Permanently"
                     }
@@ -11214,25 +11314,25 @@ const cs = ({
                   /* @__PURE__ */ r("th", { style: { padding: "10px 14px" }, children: "Quarantined Date" }),
                   /* @__PURE__ */ r("th", { style: { padding: "10px 14px" }, children: "Size" })
                 ] }) }),
-                /* @__PURE__ */ r("tbody", { children: z.length === 0 ? /* @__PURE__ */ r("tr", { children: /* @__PURE__ */ r("td", { colSpan: 4, style: { padding: "24px", textAlign: "center", color: "#6e6e7c" }, children: "Quarantine vault is empty. No active threats detected." }) }) : z.map((A) => {
-                  const D = A.id === B;
+                /* @__PURE__ */ r("tbody", { children: z.length === 0 ? /* @__PURE__ */ r("tr", { children: /* @__PURE__ */ r("td", { colSpan: 4, style: { padding: "24px", textAlign: "center", color: "#6e6e7c" }, children: "Quarantine vault is empty. No active threats detected." }) }) : z.map((k) => {
+                  const D = k.id === R;
                   return /* @__PURE__ */ c(
                     "tr",
                     {
-                      onClick: () => R(A.id),
+                      onClick: () => B(k.id),
                       style: {
                         background: D ? "rgba(0, 220, 130, 0.12)" : "transparent",
                         cursor: "pointer",
                         borderBottom: "1px solid rgba(255, 255, 255, 0.04)"
                       },
                       children: [
-                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", fontWeight: 600, color: "#f4f4f6" }, children: A.fileName }),
-                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", color: "#ef4444", fontWeight: 600 }, children: A.threatName }),
-                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", color: "#a0a0ab" }, children: A.quarantinedAt }),
-                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", color: "#6e6e7c" }, children: A.size })
+                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", fontWeight: 600, color: "#f4f4f6" }, children: k.fileName }),
+                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", color: "#ef4444", fontWeight: 600 }, children: k.threatName }),
+                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", color: "#a0a0ab" }, children: k.quarantinedAt }),
+                        /* @__PURE__ */ r("td", { style: { padding: "10px 14px", color: "#6e6e7c" }, children: k.size })
                       ]
                     },
-                    A.id
+                    k.id
                   );
                 }) })
               ] }) })
@@ -11318,7 +11418,7 @@ const cs = ({
                       "input",
                       {
                         type: "text",
-                        value: N,
+                        value: j,
                         readOnly: !0,
                         style: {
                           padding: "8px 12px",
@@ -11336,18 +11436,18 @@ const cs = ({
                       "button",
                       {
                         type: "button",
-                        onClick: E,
-                        disabled: j,
+                        onClick: N,
+                        disabled: E,
                         style: {
                           padding: "8px 14px",
                           borderRadius: "6px",
                           border: "none",
-                          background: j ? "#334155" : "rgba(255, 255, 255, 0.1)",
+                          background: E ? "#334155" : "rgba(255, 255, 255, 0.1)",
                           color: "#fff",
                           fontSize: "12.5px",
-                          cursor: j ? "not-allowed" : "pointer"
+                          cursor: E ? "not-allowed" : "pointer"
                         },
-                        children: j ? "Guest ID Generated" : "Generate New ID"
+                        children: E ? "Guest ID Generated" : "Generate New ID"
                       }
                     )
                   ] })
@@ -11409,7 +11509,7 @@ const cs = ({
                     ] }),
                     /* @__PURE__ */ c("span", { children: [
                       "Scanned Files: ",
-                      S.toLocaleString()
+                      C.toLocaleString()
                     ] })
                   ] }),
                   p && /* @__PURE__ */ c(
@@ -11434,7 +11534,7 @@ const cs = ({
                     "button",
                     {
                       type: "button",
-                      onClick: M,
+                      onClick: _,
                       style: {
                         padding: "8px 16px",
                         borderRadius: "6px",
@@ -11474,7 +11574,7 @@ const cs = ({
     }
   );
 };
-function Ua() {
+function Ga() {
   const t = ["+", "-", "*"], e = t[Math.floor(Math.random() * t.length)];
   let n = Math.floor(Math.random() * 9) + 1, i = Math.floor(Math.random() * 9) + 1;
   if (e === "-" && n < i) {
@@ -11490,13 +11590,13 @@ function Ua() {
     prompt: `What is ${n} ${{ "+": "+", "-": "−", "*": "×" }[e]} ${i}?`
   };
 }
-function Te(t) {
+function Re(t) {
   let e = 2166136261;
   for (let n = 0; n < t.length; n++)
     e ^= t.charCodeAt(n), e = Math.imul(e, 16777619);
   return (e >>> 0).toString(16);
 }
-function Ke() {
+function Qe() {
   if (typeof window > "u") return "unknown_machine";
   try {
     let t = "";
@@ -11513,24 +11613,24 @@ function Ke() {
       navigator.hardwareConcurrency || "",
       t
     ].join("###");
-    return Te(i);
+    return Re(i);
   } catch {
     return "fallback_machine";
   }
 }
-function Ga(t) {
+function qa(t) {
   return t ? t.replace(/^angle\s*\([^,]*,\s*/i, "").replace(/,\s*opengl\s*[\d.]*\s*\)$/i, "").replace(/\b(direct3d\d*|opengl|vs_\d_\d|ps_\d_\d|d3d\d*|\/pcie\/sse\d*)\b/gi, "").replace(/\([rR]\)|\([tT][mM]\)|[®™]/g, "").replace(/[(),]/g, " ").replace(/\s+/g, " ").trim().toLowerCase() : "";
 }
-function Ze() {
+function Xe() {
   if (typeof window > "u") return "unknown_core_hardware";
   try {
     const t = window.screen ? `${window.screen.width}x${window.screen.height}x${window.screen.colorDepth || 24}` : "", e = typeof Intl < "u" && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : "", n = (/* @__PURE__ */ new Date()).getTimezoneOffset(), i = typeof navigator < "u" ? (navigator.platform || "").replace(/\s+/g, "").toLowerCase() : "", o = typeof navigator < "u" && navigator.hardwareConcurrency || 0, a = typeof navigator < "u" && navigator.maxTouchPoints || 0, l = [t, e, n, i, o, a].join("###");
-    return Te(l);
+    return Re(l);
   } catch {
     return "fallback_core_hardware";
   }
 }
-function Ye() {
+function Je() {
   if (typeof window > "u") return "unknown_hardware";
   try {
     const t = window.screen ? `${window.screen.width}x${window.screen.height}x${window.screen.colorDepth || 24}` : "", e = typeof Intl < "u" && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : "", n = (/* @__PURE__ */ new Date()).getTimezoneOffset(), i = typeof navigator < "u" ? (navigator.platform || "").replace(/\s+/g, "").toLowerCase() : "", o = typeof navigator < "u" && navigator.hardwareConcurrency || 0, a = typeof navigator < "u" && navigator.maxTouchPoints || 0;
@@ -11542,95 +11642,95 @@ function Ye() {
           const g = d.getExtension("WEBGL_debug_renderer_info");
           if (g) {
             const u = String(d.getParameter(g.UNMASKED_RENDERER_WEBGL) || "");
-            l = Ga(u);
+            l = qa(u);
           }
         }
       }
     } catch {
     }
     const s = [t, e, n, i, o, a, l].join("###");
-    return Te(s);
+    return Re(s);
   } catch {
     return "fallback_hardware";
   }
 }
-function St(t, e, n) {
+function At(t, e, n) {
   const i = (e || "").trim().toLowerCase(), o = (n || "").replace(/\D/g, ""), a = (t || "").trim().toLowerCase();
   return {
-    emailHash: i ? Te(i) : "",
-    phoneHash: o ? Te(o) : "",
-    nameHash: a ? Te(a) : ""
+    emailHash: i ? Re(i) : "",
+    phoneHash: o ? Re(o) : "",
+    nameHash: a ? Re(a) : ""
   };
 }
-const pt = "eg_contact_submissions_v2", Ne = "eg_rl_dev_", Pe = "eg_rl_hw_", He = "eg_rl_hwcore_", Fe = "eg_rl_em_", Oe = "eg_rl_ph_", gt = "c_rl_hw_", ht = "c_rl_hwcore_", ut = "c_rl_dev_", Bt = "c_rl_em_", _t = "c_rl_ph_";
+const ht = "eg_contact_submissions_v2", Fe = "eg_rl_dev_", Oe = "eg_rl_hw_", Ve = "eg_rl_hwcore_", Ue = "eg_rl_em_", Ge = "eg_rl_ph_", ut = "c_rl_hw_", ft = "c_rl_hwcore_", xt = "c_rl_dev_", _t = "c_rl_em_", Mt = "c_rl_ph_";
 function yn(t = "lastMessageTime", e = 24, n = !1) {
   if (typeof window > "u") return { allowed: !0 };
   const i = typeof t == "string" ? { rateLimitKey: t, rateLimitHours: e } : t, o = i.rateLimitHours ?? 24;
   if (o <= 0) return { allowed: !0 };
-  const a = Date.now(), l = o * 60 * 60 * 1e3, s = i.rateLimitKey || "lastMessageTime", p = Ke(), d = Ye(), g = Ze(), { emailHash: u, phoneHash: h } = St(i.name, i.email, i.contact);
+  const a = Date.now(), l = o * 60 * 60 * 1e3, s = i.rateLimitKey || "lastMessageTime", p = Qe(), d = Je(), g = Xe(), { emailHash: u, phoneHash: h } = At(i.name, i.email, i.contact);
   let x = 0, f = "general";
   try {
     const b = localStorage.getItem(s) || sessionStorage.getItem(s);
     if (b) {
-      const S = parseInt(b, 10);
-      !isNaN(S) && a - S < l && S > x && (x = S, f = "general");
+      const C = parseInt(b, 10);
+      !isNaN(C) && a - C < l && C > x && (x = C, f = "general");
     }
   } catch {
   }
   try {
-    const b = `${Ne}${p}`, S = localStorage.getItem(b) || sessionStorage.getItem(b);
-    if (S) {
-      const v = parseInt(S, 10);
+    const b = `${Fe}${p}`, C = localStorage.getItem(b) || sessionStorage.getItem(b);
+    if (C) {
+      const v = parseInt(C, 10);
       !isNaN(v) && a - v < l && v > x && (x = v, f = "machine");
     }
   } catch {
   }
   try {
-    const b = `${Pe}${d}`, S = localStorage.getItem(b) || sessionStorage.getItem(b);
-    if (S) {
-      const v = parseInt(S, 10);
+    const b = `${Oe}${d}`, C = localStorage.getItem(b) || sessionStorage.getItem(b);
+    if (C) {
+      const v = parseInt(C, 10);
       !isNaN(v) && a - v < l && v > x && (x = v, f = "machine");
     }
   } catch {
   }
   try {
-    const b = `${He}${g}`, S = localStorage.getItem(b) || sessionStorage.getItem(b);
-    if (S) {
-      const v = parseInt(S, 10);
+    const b = `${Ve}${g}`, C = localStorage.getItem(b) || sessionStorage.getItem(b);
+    if (C) {
+      const v = parseInt(C, 10);
       !isNaN(v) && a - v < l && v > x && (x = v, f = "machine");
     }
   } catch {
   }
   if (u)
     try {
-      const b = `${Fe}${u}`, S = localStorage.getItem(b) || sessionStorage.getItem(b);
-      if (S) {
-        const v = parseInt(S, 10);
+      const b = `${Ue}${u}`, C = localStorage.getItem(b) || sessionStorage.getItem(b);
+      if (C) {
+        const v = parseInt(C, 10);
         !isNaN(v) && a - v < l && v > x && (x = v, f = "email");
       }
     } catch {
     }
   if (h)
     try {
-      const b = `${Oe}${h}`, S = localStorage.getItem(b) || sessionStorage.getItem(b);
-      if (S) {
-        const v = parseInt(S, 10);
+      const b = `${Ge}${h}`, C = localStorage.getItem(b) || sessionStorage.getItem(b);
+      if (C) {
+        const v = parseInt(C, 10);
         !isNaN(v) && a - v < l && v > x && (x = v, f = "contact");
       }
     } catch {
     }
   try {
-    const b = localStorage.getItem(pt);
+    const b = localStorage.getItem(ht);
     if (b) {
-      const S = JSON.parse(b);
-      if (Array.isArray(S))
-        for (const v of S)
+      const C = JSON.parse(b);
+      if (Array.isArray(C))
+        for (const v of C)
           !v.timestamp || a - v.timestamp >= l || ((v.machineHash && v.machineHash === p || v.hardwareHash && v.hardwareHash === d || v.hardwareCoreHash && v.hardwareCoreHash === g) && v.timestamp > x && (x = v.timestamp, f = "machine"), u && v.emailHash && v.emailHash === u && v.timestamp > x && (x = v.timestamp, f = "email"), h && v.phoneHash && v.phoneHash === h && v.timestamp > x && (x = v.timestamp, f = "contact"));
     }
   } catch {
   }
   if (x > 0) {
-    const b = a - x, S = l - b, v = Math.max(1, Math.ceil(S / (60 * 60 * 1e3))), m = Math.max(1, Math.ceil(S / (60 * 1e3)));
+    const b = a - x, C = l - b, v = Math.max(1, Math.ceil(C / (60 * 60 * 1e3))), m = Math.max(1, Math.ceil(C / (60 * 1e3)));
     let y = `You have already sent a message recently. To minimize spam, please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending again.`;
     return f === "email" ? y = `A message was already submitted using this email address recently. Please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending another message.` : f === "contact" ? y = `A message was already submitted using this contact number recently. Please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending another message.` : f === "machine" && (y = `A message was already sent from this device/browser recently. To minimize spam, please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending again.`), {
       allowed: !1,
@@ -11642,44 +11742,44 @@ function yn(t = "lastMessageTime", e = 24, n = !1) {
   }
   return { allowed: !0 };
 }
-async function qa(t, e = {}) {
+async function Ka(t, e = {}) {
   if (!t || typeof t.collection != "function")
     return { allowed: !0 };
   const n = e.rateLimitHours ?? 24;
   if (n <= 0) return { allowed: !0 };
-  const i = e.analyticsCollection || "visitor_analytics", o = Date.now(), a = n * 60 * 60 * 1e3, l = Ye(), s = Ze(), p = Ke(), { emailHash: d, phoneHash: g } = St(e.name, e.email, e.contact), u = t.collection(i), h = [
-    { key: `${gt}${l}`, reason: "machine", promise: u.doc(`${gt}${l}`).get().catch(() => null) },
-    { key: `${ht}${s}`, reason: "machine", promise: u.doc(`${ht}${s}`).get().catch(() => null) },
-    { key: `${ut}${p}`, reason: "machine", promise: u.doc(`${ut}${p}`).get().catch(() => null) }
+  const i = e.analyticsCollection || "visitor_analytics", o = Date.now(), a = n * 60 * 60 * 1e3, l = Je(), s = Xe(), p = Qe(), { emailHash: d, phoneHash: g } = At(e.name, e.email, e.contact), u = t.collection(i), h = [
+    { key: `${ut}${l}`, reason: "machine", promise: u.doc(`${ut}${l}`).get().catch(() => null) },
+    { key: `${ft}${s}`, reason: "machine", promise: u.doc(`${ft}${s}`).get().catch(() => null) },
+    { key: `${xt}${p}`, reason: "machine", promise: u.doc(`${xt}${p}`).get().catch(() => null) }
   ];
   d && h.push({
-    key: `${Bt}${d}`,
+    key: `${_t}${d}`,
     reason: "email",
-    promise: u.doc(`${Bt}${d}`).get().catch(() => null)
+    promise: u.doc(`${_t}${d}`).get().catch(() => null)
   }), g && h.push({
-    key: `${_t}${g}`,
+    key: `${Mt}${g}`,
     reason: "contact",
-    promise: u.doc(`${_t}${g}`).get().catch(() => null)
+    promise: u.doc(`${Mt}${g}`).get().catch(() => null)
   });
   let x = 0, f = "machine";
   try {
-    const b = await Promise.all(h.map((S) => S.promise));
-    for (let S = 0; S < b.length; S++) {
-      const v = b[S];
+    const b = await Promise.all(h.map((C) => C.promise));
+    for (let C = 0; C < b.length; C++) {
+      const v = b[C];
       if (v && (typeof v.exists == "function" ? v.exists() : v.exists)) {
         const m = v.data() || {}, y = typeof m.timestamp == "number" ? m.timestamp : 0;
-        y > 0 && o - y < a && y > x && (x = y, f = h[S].reason);
+        y > 0 && o - y < a && y > x && (x = y, f = h[C].reason);
       }
     }
   } catch {
     return { allowed: !0 };
   }
   if (x > 0) {
-    const b = o - x, S = a - b, v = Math.max(1, Math.ceil(S / (60 * 60 * 1e3))), m = Math.max(1, Math.ceil(S / (60 * 1e3)));
+    const b = o - x, C = a - b, v = Math.max(1, Math.ceil(C / (60 * 60 * 1e3))), m = Math.max(1, Math.ceil(C / (60 * 1e3)));
     let y = `You have already sent a message recently. To minimize spam, please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending again.`;
     f === "email" ? y = `A message was already submitted using this email address recently. Please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending another message.` : f === "contact" ? y = `A message was already submitted using this contact number recently. Please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending another message.` : f === "machine" && (y = `A message was already sent from this device/browser recently. To minimize spam, please wait approximately ${v} hour${v === 1 ? "" : "s"} before sending again.`);
     try {
-      Le({
+      ze({
         name: e.name,
         email: e.email,
         contact: e.contact
@@ -11696,35 +11796,35 @@ async function qa(t, e = {}) {
   }
   return { allowed: !0 };
 }
-async function Ka(t, e = {}) {
+async function Za(t, e = {}) {
   if (!t || typeof t.collection != "function") return;
-  const n = e.analyticsCollection || "visitor_analytics", i = Ye(), o = Ze(), a = Ke(), { emailHash: l, phoneHash: s } = St(e.name, e.email, e.contact), p = Date.now(), d = {
+  const n = e.analyticsCollection || "visitor_analytics", i = Je(), o = Xe(), a = Qe(), { emailHash: l, phoneHash: s } = At(e.name, e.email, e.contact), p = Date.now(), d = {
     timestamp: p,
     type: "contact_rate_limit",
     appName: e.appName || (typeof window < "u" ? window.location.hostname : "web-app"),
     createdAt: new Date(p).toISOString()
   }, g = t.collection(n), u = [
-    g.doc(`${gt}${i}`).set(d).catch(() => {
+    g.doc(`${ut}${i}`).set(d).catch(() => {
     }),
-    g.doc(`${ht}${o}`).set(d).catch(() => {
+    g.doc(`${ft}${o}`).set(d).catch(() => {
     }),
-    g.doc(`${ut}${a}`).set(d).catch(() => {
+    g.doc(`${xt}${a}`).set(d).catch(() => {
     })
   ];
-  l && u.push(g.doc(`${Bt}${l}`).set(d).catch(() => {
-  })), s && u.push(g.doc(`${_t}${s}`).set(d).catch(() => {
+  l && u.push(g.doc(`${_t}${l}`).set(d).catch(() => {
+  })), s && u.push(g.doc(`${Mt}${s}`).set(d).catch(() => {
   }));
   try {
     await Promise.allSettled(u);
   } catch {
   }
 }
-function Le(t = "lastMessageTime") {
+function ze(t = "lastMessageTime") {
   if (typeof window > "u") return;
-  const e = typeof t == "string" ? { rateLimitKey: t } : t || {}, n = e.rateLimitKey || "lastMessageTime", i = Date.now(), o = i.toString(), a = Ke(), l = Ye(), s = Ze(), { emailHash: p, phoneHash: d, nameHash: g } = St(e.name, e.email, e.contact);
+  const e = typeof t == "string" ? { rateLimitKey: t } : t || {}, n = e.rateLimitKey || "lastMessageTime", i = Date.now(), o = i.toString(), a = Qe(), l = Je(), s = Xe(), { emailHash: p, phoneHash: d, nameHash: g } = At(e.name, e.email, e.contact);
   try {
-    localStorage.setItem(n, o), sessionStorage.setItem(n, o), localStorage.setItem(`${Ne}${a}`, o), sessionStorage.setItem(`${Ne}${a}`, o), localStorage.setItem(`${Pe}${l}`, o), sessionStorage.setItem(`${Pe}${l}`, o), localStorage.setItem(`${He}${s}`, o), sessionStorage.setItem(`${He}${s}`, o), p && (localStorage.setItem(`${Fe}${p}`, o), sessionStorage.setItem(`${Fe}${p}`, o)), d && (localStorage.setItem(`${Oe}${d}`, o), sessionStorage.setItem(`${Oe}${d}`, o));
-    const u = localStorage.getItem(pt);
+    localStorage.setItem(n, o), sessionStorage.setItem(n, o), localStorage.setItem(`${Fe}${a}`, o), sessionStorage.setItem(`${Fe}${a}`, o), localStorage.setItem(`${Oe}${l}`, o), sessionStorage.setItem(`${Oe}${l}`, o), localStorage.setItem(`${Ve}${s}`, o), sessionStorage.setItem(`${Ve}${s}`, o), p && (localStorage.setItem(`${Ue}${p}`, o), sessionStorage.setItem(`${Ue}${p}`, o)), d && (localStorage.setItem(`${Ge}${d}`, o), sessionStorage.setItem(`${Ge}${d}`, o));
+    const u = localStorage.getItem(ht);
     let h = [];
     if (u)
       try {
@@ -11741,30 +11841,30 @@ function Le(t = "lastMessageTime") {
       emailHash: p || void 0,
       phoneHash: d || void 0,
       nameHash: g || void 0
-    }), localStorage.setItem(pt, JSON.stringify(h.slice(-30)));
+    }), localStorage.setItem(ht, JSON.stringify(h.slice(-30)));
   } catch {
   }
 }
 async function gs(t = "lastMessageTime", e, n = "visitor_analytics") {
   if (!(typeof window > "u"))
     try {
-      localStorage.removeItem(t), sessionStorage.removeItem(t), localStorage.removeItem(pt);
+      localStorage.removeItem(t), sessionStorage.removeItem(t), localStorage.removeItem(ht);
       for (let i = localStorage.length - 1; i >= 0; i--) {
         const o = localStorage.key(i);
-        o && (o.startsWith(Ne) || o.startsWith(Pe) || o.startsWith(He) || o.startsWith(Fe) || o.startsWith(Oe)) && localStorage.removeItem(o);
+        o && (o.startsWith(Fe) || o.startsWith(Oe) || o.startsWith(Ve) || o.startsWith(Ue) || o.startsWith(Ge)) && localStorage.removeItem(o);
       }
       for (let i = sessionStorage.length - 1; i >= 0; i--) {
         const o = sessionStorage.key(i);
-        o && (o.startsWith(Ne) || o.startsWith(Pe) || o.startsWith(He) || o.startsWith(Fe) || o.startsWith(Oe)) && sessionStorage.removeItem(o);
+        o && (o.startsWith(Fe) || o.startsWith(Oe) || o.startsWith(Ve) || o.startsWith(Ue) || o.startsWith(Ge)) && sessionStorage.removeItem(o);
       }
       if (e && typeof e.collection == "function") {
-        const i = Ye(), o = Ze(), a = Ke(), l = e.collection(n);
+        const i = Je(), o = Xe(), a = Qe(), l = e.collection(n);
         await Promise.allSettled([
-          l.doc(`${gt}${i}`).delete().catch(() => {
+          l.doc(`${ut}${i}`).delete().catch(() => {
           }),
-          l.doc(`${ht}${o}`).delete().catch(() => {
+          l.doc(`${ft}${o}`).delete().catch(() => {
           }),
-          l.doc(`${ut}${a}`).delete().catch(() => {
+          l.doc(`${xt}${a}`).delete().catch(() => {
           })
         ]);
       }
@@ -11816,7 +11916,7 @@ async function bn(t, e = "messages", n) {
     return 0;
   }
 }
-async function Za(t, e = {}) {
+async function Ya(t, e = {}) {
   var m, y, w, L, z;
   const n = e.collectionName || "messages", i = e.rateLimitKey || "lastMessageTime", o = e.rateLimitHours ?? 24, a = e.allowLocalhostBypass ?? !1, l = yn({
     name: t.name,
@@ -11846,7 +11946,7 @@ async function Za(t, e = {}) {
   const h = s.slice(0, 100), x = p.slice(0, 255), f = d.slice(0, 50), b = g.slice(0, 5e3);
   if (e.onSubmit)
     try {
-      const C = await e.onSubmit({
+      const A = await e.onSubmit({
         ...t,
         name: h,
         email: x,
@@ -11854,44 +11954,44 @@ async function Za(t, e = {}) {
         message: b,
         appName: e.appName || t.appName || (typeof window < "u" ? window.location.hostname : "web-app")
       });
-      return Le({
+      return ze({
         name: h,
         email: x,
         contact: f,
         rateLimitKey: i
-      }), C && typeof C == "object" && "success" in C ? C : {
+      }), A && typeof A == "object" && "success" in A ? A : {
         success: !0,
         message: "Thank you for reaching out! Your message has been received and we will get back to you shortly."
       };
-    } catch (C) {
+    } catch (A) {
       return {
         success: !1,
-        message: (C == null ? void 0 : C.message) || "Failed to submit inquiry via custom handler."
+        message: (A == null ? void 0 : A.message) || "Failed to submit inquiry via custom handler."
       };
     }
-  let S = e.db;
-  if (!S && e.firebaseConfig && e.firebaseConfig.apiKey)
+  let C = e.db;
+  if (!C && e.firebaseConfig && e.firebaseConfig.apiKey)
     try {
-      S = (await Ce(e.firebaseConfig, e.appName)).db;
-    } catch (C) {
-      console.warn("[contactService] Failed to initialize Firebase with provided config:", C);
+      C = (await Le(e.firebaseConfig, e.appName)).db;
+    } catch (A) {
+      console.warn("[contactService] Failed to initialize Firebase with provided config:", A);
     }
-  if (!S && typeof window < "u" && (S = window.db || ((y = (m = window.firebase) == null ? void 0 : m.firestore) == null ? void 0 : y.call(m)), !S && ((w = window.firebaseApp) != null && w.firestore) && (S = window.firebaseApp.firestore())), S && typeof S.collection == "function")
+  if (!C && typeof window < "u" && (C = window.db || ((y = (m = window.firebase) == null ? void 0 : m.firestore) == null ? void 0 : y.call(m)), !C && ((w = window.firebaseApp) != null && w.firestore) && (C = window.firebaseApp.firestore())), C && typeof C.collection == "function")
     try {
-      const C = typeof window < "u" ? window.firebase : null, B = (z = (L = C == null ? void 0 : C.firestore) == null ? void 0 : L.FieldValue) != null && z.serverTimestamp ? C.firestore.FieldValue.serverTimestamp() : /* @__PURE__ */ new Date(), R = {
+      const A = typeof window < "u" ? window.firebase : null, R = (z = (L = A == null ? void 0 : A.firestore) == null ? void 0 : L.FieldValue) != null && z.serverTimestamp ? A.firestore.FieldValue.serverTimestamp() : /* @__PURE__ */ new Date(), B = {
         name: h,
         email: x,
         contact: f,
         message: b,
         appName: e.appName || t.appName || (typeof window < "u" ? window.location.hostname : "web-app"),
-        createdAt: B
-      }, N = e.transformPayload ? e.transformPayload(R) : {
+        createdAt: R
+      }, j = e.transformPayload ? e.transformPayload(B) : {
         name: h,
         email: x,
         contact: f,
         message: b,
-        createdAt: B
-      }, I = await qa(S, {
+        createdAt: R
+      }, I = await Ka(C, {
         name: h,
         email: x,
         contact: f,
@@ -11904,27 +12004,27 @@ async function Za(t, e = {}) {
           rateLimited: !0,
           message: I.message || "You have sent a message recently. Please try again tomorrow."
         };
-      const j = await S.collection(n).add(N);
-      return Le({
+      const E = await C.collection(n).add(j);
+      return ze({
         name: h,
         email: x,
         contact: f,
         rateLimitKey: i
-      }), Ka(S, {
+      }), Za(C, {
         name: h,
         email: x,
         contact: f,
         appName: e.appName || t.appName,
         analyticsCollection: e.analyticsCollection || "visitor_analytics"
       }).catch(() => {
-      }), bn(S, n, e.transformPayload).catch(() => {
+      }), bn(C, n, e.transformPayload).catch(() => {
       }), {
         success: !0,
-        docId: (j == null ? void 0 : j.id) || "submitted",
+        docId: (E == null ? void 0 : E.id) || "submitted",
         message: "Thank you for reaching out! Your message has been received and we will get back to you shortly."
       };
-    } catch (C) {
-      return console.error("[contactService] Firestore write failed:", C), typeof navigator < "u" && !navigator.onLine ? (xr(t, h, x, f, b, e), Le({
+    } catch (A) {
+      return console.error("[contactService] Firestore write failed:", A), typeof navigator < "u" && !navigator.onLine ? (xr(t, h, x, f, b, e), ze({
         name: h,
         email: x,
         contact: f,
@@ -11935,10 +12035,10 @@ async function Za(t, e = {}) {
         message: "You appear to be offline. Your message has been saved and will be sent automatically once reconnected."
       }) : {
         success: !1,
-        message: C != null && C.message ? `Failed to deliver message: ${C.message}` : "Failed to deliver message to server. Please try again later."
+        message: A != null && A.message ? `Failed to deliver message: ${A.message}` : "Failed to deliver message to server. Please try again later."
       };
     }
-  return typeof navigator < "u" && !navigator.onLine ? (xr(t, h, x, f, b, e), Le({
+  return typeof navigator < "u" && !navigator.onLine ? (xr(t, h, x, f, b, e), ze({
     name: h,
     email: x,
     contact: f,
@@ -11969,111 +12069,111 @@ const hs = ({
   appName: x,
   allowLocalhostBypass: f = !1,
   transformPayload: b,
-  onSubmit: S,
+  onSubmit: C,
   channels: v,
   channelsTitle: m = "Connect on Other Platforms",
   channelsSubtitle: y,
   successTitle: w = "Thank You for Contacting Us!",
   successMessage: L = "Your message has been received. We will get back to you shortly.",
   className: z = "",
-  style: C
+  style: A
 }) => {
-  var We, Xe, Xt;
-  const B = bt(), R = u || B.db, N = h || ((We = B.config) != null && We.apiKey ? B.config : void 0), I = x || (B.appName !== "web-app" ? B.appName : "web-app"), j = d || ((Xe = B.collections) == null ? void 0 : Xe.messages) || "messages", H = g || ((Xt = B.collections) == null ? void 0 : Xt.analytics) || "visitor_analytics", [$, O] = W(""), [M, T] = W(""), [k, E] = W(""), [A, D] = W(""), [V, _] = W(""), [P, U] = W(null), [G, ee] = W(!a), [F, oe] = W(!1), [ne, ae] = W(null), [Qe, Y] = W(!1);
-  Z(() => {
+  var K, re, ge;
+  const R = wt(), B = u || R.db, j = h || ((K = R.config) != null && K.apiKey ? R.config : void 0), I = x || (R.appName !== "web-app" ? R.appName : "web-app"), E = d || ((re = R.collections) == null ? void 0 : re.messages) || "messages", H = g || ((ge = R.collections) == null ? void 0 : ge.analytics) || "visitor_analytics", [$, U] = W(""), [_, T] = W(""), [S, N] = W(""), [k, D] = W(""), [O, M] = W(""), [P, V] = W(null), [G, Q] = W(!a), [F, oe] = W(!1), [ie, ae] = W(null), [de, Be] = W(!1);
+  Y(() => {
     let J = !0;
-    async function ve() {
+    async function ue() {
       try {
-        let ye = R;
-        !ye && (N != null && N.apiKey) && (ye = (await Ce(N, I === "web-app" ? void 0 : I)).db), J && ye && await bn(ye, j, b);
+        let fe = B;
+        !fe && (j != null && j.apiKey) && (fe = (await Le(j, I === "web-app" ? void 0 : I)).db), J && fe && await bn(fe, E, b);
       } catch {
       }
     }
-    return ve(), () => {
+    return ue(), () => {
       J = !1;
     };
-  }, [R, N, I, j, b]);
-  const X = te(() => {
-    U(Ua()), _("");
-  }, []), ce = () => {
-    o && !G && (ee(!0), P || X());
+  }, [B, j, I, E, b]);
+  const pe = te(() => {
+    V(Ga()), M("");
+  }, []), Se = () => {
+    o && !G && (Q(!0), P || pe());
   };
-  Z(() => {
-    o && G && !P && X();
-  }, [o, G, P, X]);
-  const Ct = async (J) => {
+  Y(() => {
+    o && G && !P && pe();
+  }, [o, G, P, pe]);
+  const et = async (J) => {
     J.preventDefault(), ae(null);
-    const ve = yn({
+    const ue = yn({
       name: $.trim(),
-      email: M.trim(),
-      contact: k.trim(),
+      email: _.trim(),
+      contact: S.trim(),
       rateLimitKey: s,
       rateLimitHours: l,
       allowLocalhostBypass: f
     });
-    if (!ve.allowed) {
+    if (!ue.allowed) {
       ae({
         type: "error",
-        message: ve.message || "You have sent a message recently. Please try again tomorrow."
+        message: ue.message || "You have sent a message recently. Please try again tomorrow."
       });
       return;
     }
     if (o) {
       if (!P) {
-        X(), ae({ type: "error", message: "Please complete the anti-spam verification challenge." });
+        pe(), ae({ type: "error", message: "Please complete the anti-spam verification challenge." });
         return;
       }
-      const de = parseInt(V.trim(), 10);
-      if (isNaN(de) || de !== P.expected) {
-        ae({ type: "error", message: "Incorrect anti-spam verification answer. Please try again." }), X();
+      const ce = parseInt(O.trim(), 10);
+      if (isNaN(ce) || ce !== P.expected) {
+        ae({ type: "error", message: "Incorrect anti-spam verification answer. Please try again." }), pe();
         return;
       }
     }
-    if (!$.trim() || !M.trim() || !A.trim()) {
+    if (!$.trim() || !_.trim() || !k.trim()) {
       ae({ type: "error", message: "Please fill in all required fields (Name, Email, Message)." });
       return;
     }
-    if (i && !k.trim()) {
+    if (i && !S.trim()) {
       ae({ type: "error", message: "Please provide a valid contact phone number." });
       return;
     }
     oe(!0);
-    const ye = {
+    const fe = {
       name: $.trim(),
-      email: M.trim(),
-      contact: k.trim(),
-      message: A.trim(),
+      email: _.trim(),
+      contact: S.trim(),
+      message: k.trim(),
       appName: I
     };
     try {
-      let de;
-      S ? (de = await S(ye), de.success && Le({
+      let ce;
+      C ? (ce = await C(fe), ce.success && ze({
         name: $.trim(),
-        email: M.trim(),
-        contact: k.trim(),
+        email: _.trim(),
+        contact: S.trim(),
         rateLimitKey: s
-      })) : de = await Za(ye, {
-        collectionName: j,
+      })) : ce = await Ya(fe, {
+        collectionName: E,
         analyticsCollection: H,
         rateLimitKey: s,
         rateLimitHours: l,
-        db: R,
-        firebaseConfig: N,
+        db: B,
+        firebaseConfig: j,
         appName: I,
         allowLocalhostBypass: f,
         transformPayload: b
-      }), de.success ? (Y(!0), ae({
+      }), ce.success ? (Be(!0), ae({
         type: "success",
-        message: de.message || L
-      }), O(""), T(""), E(""), D(""), _(""), a && ee(!1)) : (ae({
+        message: ce.message || L
+      }), U(""), T(""), N(""), D(""), M(""), a && Q(!1)) : (ae({
         type: "error",
-        message: de.message || "Failed to submit inquiry. Please try again later."
-      }), o && X());
-    } catch (de) {
+        message: ce.message || "Failed to submit inquiry. Please try again later."
+      }), o && pe());
+    } catch (ce) {
       ae({
         type: "error",
-        message: (de == null ? void 0 : de.message) || "An unexpected error occurred. Please try again later."
-      }), o && X();
+        message: (ce == null ? void 0 : ce.message) || "An unexpected error occurred. Please try again later."
+      }), o && pe();
     } finally {
       oe(!1);
     }
@@ -12087,7 +12187,7 @@ const hs = ({
         gridTemplateColumns: v && v.length > 0 ? "minmax(0, 1.4fr) minmax(0, 1fr)" : "1fr",
         gap: "32px",
         alignItems: "start",
-        ...C
+        ...A
       },
       children: [
         /* @__PURE__ */ r("style", { children: `
@@ -12191,7 +12291,7 @@ const hs = ({
               children: e
             }
           ),
-          ne && /* @__PURE__ */ c(
+          ie && /* @__PURE__ */ c(
             "div",
             {
               style: {
@@ -12201,17 +12301,17 @@ const hs = ({
                 fontSize: "14px",
                 lineHeight: 1.5,
                 fontWeight: 500,
-                background: ne.type === "success" ? "rgba(34, 197, 94, 0.1)" : "rgba(239, 68, 68, 0.1)",
-                border: `1px solid ${ne.type === "success" ? "rgba(34, 197, 94, 0.3)" : "rgba(239, 68, 68, 0.3)"}`,
-                color: ne.type === "success" ? "var(--eg-color-success, #15803d)" : "var(--eg-color-danger, #b91c1c)"
+                background: ie.type === "success" ? "rgba(34, 197, 94, 0.1)" : "rgba(239, 68, 68, 0.1)",
+                border: `1px solid ${ie.type === "success" ? "rgba(34, 197, 94, 0.3)" : "rgba(239, 68, 68, 0.3)"}`,
+                color: ie.type === "success" ? "var(--eg-color-success, #15803d)" : "var(--eg-color-danger, #b91c1c)"
               },
               children: [
-                ne.type === "success" ? "✓ " : "⚠️ ",
-                ne.message
+                ie.type === "success" ? "✓ " : "⚠️ ",
+                ie.message
               ]
             }
           ),
-          Qe ? /* @__PURE__ */ c("div", { style: { textAlign: "center", padding: "24px 0" }, children: [
+          de ? /* @__PURE__ */ c("div", { style: { textAlign: "center", padding: "24px 0" }, children: [
             /* @__PURE__ */ r(
               "div",
               {
@@ -12233,17 +12333,17 @@ const hs = ({
             /* @__PURE__ */ r("h4", { style: { margin: "0 0 8px", fontSize: "19px", fontWeight: 700, color: "var(--eg-text-primary, #0f172a)" }, children: w }),
             /* @__PURE__ */ r("p", { style: { margin: "0 0 24px", color: "var(--eg-text-secondary, #475569)", fontSize: "14.5px", lineHeight: 1.6 }, children: L }),
             /* @__PURE__ */ r(
-              Tt,
+              Wt,
               {
                 variant: "outline",
                 size: "md",
                 onClick: () => {
-                  Y(!1), ae(null), o && X();
+                  Be(!1), ae(null), o && pe();
                 },
                 children: "Send Another Enquiry"
               }
             )
-          ] }) : /* @__PURE__ */ c("form", { id: "contactForm", onSubmit: Ct, children: [
+          ] }) : /* @__PURE__ */ c("form", { id: "contactForm", onSubmit: et, children: [
             /* @__PURE__ */ c("div", { className: "eg-contact-input-group", children: [
               /* @__PURE__ */ c("label", { htmlFor: "txtname", className: "eg-contact-input-label", children: [
                 "Name ",
@@ -12257,8 +12357,8 @@ const hs = ({
                   type: "text",
                   required: !0,
                   value: $,
-                  onFocus: ce,
-                  onChange: (J) => O(J.target.value),
+                  onFocus: Se,
+                  onChange: (J) => U(J.target.value),
                   placeholder: "Your full name",
                   className: "eg-contact-input"
                 }
@@ -12276,8 +12376,8 @@ const hs = ({
                   name: "email",
                   type: "email",
                   required: !0,
-                  value: M,
-                  onFocus: ce,
+                  value: _,
+                  onFocus: Se,
                   onChange: (J) => T(J.target.value),
                   placeholder: "name@example.com",
                   className: "eg-contact-input"
@@ -12298,9 +12398,9 @@ const hs = ({
                   required: i,
                   maxLength: 15,
                   pattern: "[0-9+ -]*",
-                  value: k,
-                  onFocus: ce,
-                  onChange: (J) => E(J.target.value),
+                  value: S,
+                  onFocus: Se,
+                  onChange: (J) => N(J.target.value),
                   placeholder: "Phone or mobile number",
                   className: "eg-contact-input"
                 }
@@ -12337,8 +12437,8 @@ const hs = ({
                     name: "botAnswer",
                     type: "number",
                     required: !0,
-                    value: V,
-                    onChange: (J) => _(J.target.value),
+                    value: O,
+                    onChange: (J) => M(J.target.value),
                     placeholder: "Answer",
                     style: {
                       width: "100px",
@@ -12357,7 +12457,7 @@ const hs = ({
                   "button",
                   {
                     type: "button",
-                    onClick: X,
+                    onClick: pe,
                     title: "Generate new arithmetic problem",
                     style: {
                       background: "transparent",
@@ -12382,7 +12482,7 @@ const hs = ({
                   /* @__PURE__ */ r("span", { style: { color: "var(--eg-color-danger, #ef4444)" }, children: "*" })
                 ] }),
                 p && /* @__PURE__ */ c("span", { style: { fontSize: "12px", color: "var(--eg-text-muted, #94a3b8)", fontWeight: 500 }, children: [
-                  A.length,
+                  k.length,
                   " / ",
                   p
                 ] })
@@ -12395,8 +12495,8 @@ const hs = ({
                   required: !0,
                   rows: 5,
                   maxLength: p,
-                  value: A,
-                  onFocus: ce,
+                  value: k,
+                  onFocus: Se,
                   onChange: (J) => D(J.target.value),
                   placeholder: "Write your comments, feedback, or feature request here...",
                   className: "eg-contact-input",
@@ -12405,7 +12505,7 @@ const hs = ({
               )
             ] }),
             /* @__PURE__ */ r("div", { style: { marginTop: "26px" }, children: /* @__PURE__ */ r(
-              Tt,
+              Wt,
               {
                 type: "submit",
                 id: "btnsend",
@@ -12445,7 +12545,7 @@ const hs = ({
             }
           ),
           /* @__PURE__ */ r("div", { style: { marginTop: "16px" }, children: v.map((J) => {
-            const ve = /* @__PURE__ */ c(se, { children: [
+            const ue = /* @__PURE__ */ c(se, { children: [
               J.icon && /* @__PURE__ */ r(
                 "div",
                 {
@@ -12486,21 +12586,21 @@ const hs = ({
             return J.href ? /* @__PURE__ */ r(
               "a",
               {
-                href: ie(J.href),
+                href: ne(J.href),
                 target: "_blank",
                 rel: "noopener noreferrer",
                 className: "eg-contact-channel-item",
-                children: ve
+                children: ue
               },
               J.id
-            ) : /* @__PURE__ */ r("div", { className: "eg-contact-channel-item", children: ve }, J.id);
+            ) : /* @__PURE__ */ r("div", { className: "eg-contact-channel-item", children: ue }, J.id);
           }) })
         ] })
       ]
     }
   );
 };
-function Ya(t, e, n = "string") {
+function Qa(t, e, n = "string") {
   if (t == null && e == null) return 0;
   if (t == null) return -1;
   if (e == null) return 1;
@@ -12549,41 +12649,41 @@ function vn({
   onRowClick: x,
   initialSortKey: f,
   initialSortDirection: b = null,
-  style: S,
+  style: C,
   className: v = ""
 }) {
-  const [m, y] = W(""), [w, L] = W(f || null), [z, C] = W(b), [B, R] = W(i), [N, I] = W(1), j = re(() => {
+  const [m, y] = W(""), [w, L] = W(f || null), [z, A] = W(b), [R, B] = W(i), [j, I] = W(1), E = ee(() => {
     if (!m.trim()) return t;
-    const _ = m.toLowerCase().trim();
-    return t.filter((P) => s && s.length > 0 ? s.some((U) => {
-      const G = e.find((F) => F.key === U), ee = G != null && G.getValue ? G.getValue(P) : P[U];
-      return ee != null && String(ee).toLowerCase().includes(_);
-    }) : e.some((U) => {
-      const G = U.getValue ? U.getValue(P) : P[U.key];
-      return G != null && String(G).toLowerCase().includes(_);
+    const M = m.toLowerCase().trim();
+    return t.filter((P) => s && s.length > 0 ? s.some((V) => {
+      const G = e.find((F) => F.key === V), Q = G != null && G.getValue ? G.getValue(P) : P[V];
+      return Q != null && String(Q).toLowerCase().includes(M);
+    }) : e.some((V) => {
+      const G = V.getValue ? V.getValue(P) : P[V.key];
+      return G != null && String(G).toLowerCase().includes(M);
     }));
-  }, [t, m, s, e]), H = re(() => {
-    if (!w || !z) return j;
-    const _ = e.find((G) => G.key === w), P = (_ == null ? void 0 : _.sortType) || "string";
-    return [...j].sort((G, ee) => {
-      const F = _ != null && _.getValue ? _.getValue(G) : G[w], oe = _ != null && _.getValue ? _.getValue(ee) : ee[w], ne = Ya(F, oe, P);
-      return z === "desc" ? -ne : ne;
+  }, [t, m, s, e]), H = ee(() => {
+    if (!w || !z) return E;
+    const M = e.find((G) => G.key === w), P = (M == null ? void 0 : M.sortType) || "string";
+    return [...E].sort((G, Q) => {
+      const F = M != null && M.getValue ? M.getValue(G) : G[w], oe = M != null && M.getValue ? M.getValue(Q) : Q[w], ie = Qa(F, oe, P);
+      return z === "desc" ? -ie : ie;
     });
-  }, [j, w, z, e]), $ = (_) => {
-    y(_.target.value), I(1);
-  }, O = (_) => {
-    w !== _ ? (L(_), C("asc")) : z === "asc" ? C("desc") : z === "desc" ? (C(null), L(null)) : C("asc"), I(1);
-  }, M = H.length, T = Math.max(1, Math.ceil(M / B)), k = Math.min(Math.max(1, N), T), E = re(() => {
-    const _ = (k - 1) * B;
-    return H.slice(_, _ + B);
-  }, [H, k, B]), A = M === 0 ? 0 : (k - 1) * B + 1, D = Math.min(k * B, M), V = te(() => {
+  }, [E, w, z, e]), $ = (M) => {
+    y(M.target.value), I(1);
+  }, U = (M) => {
+    w !== M ? (L(M), A("asc")) : z === "asc" ? A("desc") : z === "desc" ? (A(null), L(null)) : A("asc"), I(1);
+  }, _ = H.length, T = Math.max(1, Math.ceil(_ / R)), S = Math.min(Math.max(1, j), T), N = ee(() => {
+    const M = (S - 1) * R;
+    return H.slice(M, M + R);
+  }, [H, S, R]), k = _ === 0 ? 0 : (S - 1) * R + 1, D = Math.min(S * R, _), O = te(() => {
     if (H.length === 0) return;
-    const _ = e.map((oe) => mr(oe.label)).join(","), P = H.map((oe) => e.map((ne) => {
-      const ae = ne.getValue ? ne.getValue(oe) : oe[ne.key];
+    const M = e.map((oe) => mr(oe.label)).join(","), P = H.map((oe) => e.map((ie) => {
+      const ae = ie.getValue ? ie.getValue(oe) : oe[ie.key];
       return mr(ae);
-    }).join(",")), U = "\uFEFF" + [_, ...P].join(`\r
-`), G = new Blob([U], { type: "text/csv;charset=utf-8;" }), ee = URL.createObjectURL(G), F = document.createElement("a");
-    F.href = ee, F.setAttribute("download", d), document.body.appendChild(F), F.click(), document.body.removeChild(F), URL.revokeObjectURL(ee);
+    }).join(",")), V = "\uFEFF" + [M, ...P].join(`\r
+`), G = new Blob([V], { type: "text/csv;charset=utf-8;" }), Q = URL.createObjectURL(G), F = document.createElement("a");
+    F.href = Q, F.setAttribute("download", d), document.body.appendChild(F), F.click(), document.body.removeChild(F), URL.revokeObjectURL(Q);
   }, [H, e, d]);
   return /* @__PURE__ */ c(
     "div",
@@ -12598,7 +12698,7 @@ function vn({
         borderRadius: "var(--eg-radius-lg, 14px)",
         overflow: "hidden",
         boxShadow: "0 4px 20px -2px rgba(0, 0, 0, 0.25)",
-        ...S
+        ...C
       },
       children: [
         /* @__PURE__ */ c(
@@ -12666,9 +12766,9 @@ function vn({
                   /* @__PURE__ */ r(
                     "select",
                     {
-                      value: B,
-                      onChange: (_) => {
-                        R(Number(_.target.value)), I(1);
+                      value: R,
+                      onChange: (M) => {
+                        B(Number(M.target.value)), I(1);
                       },
                       style: {
                         background: "var(--eg-bg-primary, #030712)",
@@ -12680,7 +12780,7 @@ function vn({
                         cursor: "pointer",
                         outline: "none"
                       },
-                      children: o.map((_) => /* @__PURE__ */ r("option", { value: _, children: _ }, _))
+                      children: o.map((M) => /* @__PURE__ */ r("option", { value: M, children: M }, M))
                     }
                   )
                 ] }),
@@ -12688,7 +12788,7 @@ function vn({
                   "button",
                   {
                     type: "button",
-                    onClick: V,
+                    onClick: O,
                     disabled: H.length === 0,
                     style: {
                       display: "inline-flex",
@@ -12736,12 +12836,12 @@ function vn({
                     background: "var(--eg-bg-tertiary, #1a2234)",
                     borderBottom: "1px solid var(--eg-border, rgba(255, 255, 255, 0.08))"
                   },
-                  children: e.map((_) => {
-                    const P = w === _.key, U = _.sortable !== !1;
+                  children: e.map((M) => {
+                    const P = w === M.key, V = M.sortable !== !1;
                     return /* @__PURE__ */ r(
                       "th",
                       {
-                        onClick: () => U && O(_.key),
+                        onClick: () => V && U(M.key),
                         style: {
                           padding: "12px 16px",
                           color: P ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-secondary, #d1d5db)",
@@ -12749,11 +12849,11 @@ function vn({
                           fontSize: "var(--eg-text-xs, 0.8125rem)",
                           textTransform: "uppercase",
                           letterSpacing: "0.04em",
-                          cursor: U ? "pointer" : "default",
+                          cursor: V ? "pointer" : "default",
                           userSelect: "none",
                           whiteSpace: "nowrap",
-                          width: _.width,
-                          textAlign: _.align || "left",
+                          width: M.width,
+                          textAlign: M.align || "left",
                           transition: "color var(--eg-transition-fast, 150ms)"
                         },
                         children: /* @__PURE__ */ c(
@@ -12763,16 +12863,16 @@ function vn({
                               display: "inline-flex",
                               alignItems: "center",
                               gap: "6px",
-                              justifyContent: _.align === "right" ? "flex-end" : _.align === "center" ? "center" : "flex-start"
+                              justifyContent: M.align === "right" ? "flex-end" : M.align === "center" ? "center" : "flex-start"
                             },
                             children: [
-                              /* @__PURE__ */ r("span", { children: _.label }),
-                              U && /* @__PURE__ */ r("span", { style: { fontSize: "0.75rem", opacity: P ? 1 : 0.35 }, children: P && z === "asc" ? "▲" : P && z === "desc" ? "▼" : "⇅" })
+                              /* @__PURE__ */ r("span", { children: M.label }),
+                              V && /* @__PURE__ */ r("span", { style: { fontSize: "0.75rem", opacity: P ? 1 : 0.35 }, children: P && z === "asc" ? "▲" : P && z === "desc" ? "▼" : "⇅" })
                             ]
                           }
                         )
                       },
-                      _.key
+                      M.key
                     );
                   })
                 }
@@ -12804,7 +12904,7 @@ function vn({
                     /* @__PURE__ */ r("span", { children: "Loading data records..." })
                   ]
                 }
-              ) }) }) : E.length === 0 ? /* @__PURE__ */ r("tr", { children: /* @__PURE__ */ r(
+              ) }) }) : N.length === 0 ? /* @__PURE__ */ r("tr", { children: /* @__PURE__ */ r(
                 "td",
                 {
                   colSpan: e.length,
@@ -12815,12 +12915,12 @@ function vn({
                   },
                   children: u
                 }
-              ) }) : E.map((_, P) => {
-                const U = n ? n(_, P) : P;
+              ) }) : N.map((M, P) => {
+                const V = n ? n(M, P) : P;
                 return /* @__PURE__ */ r(
                   "tr",
                   {
-                    onClick: () => x && x(_, P),
+                    onClick: () => x && x(M, P),
                     style: {
                       borderBottom: "1px solid var(--eg-border, rgba(255, 255, 255, 0.04))",
                       cursor: x ? "pointer" : "default",
@@ -12828,7 +12928,7 @@ function vn({
                       background: P % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.015)"
                     },
                     children: e.map((G) => {
-                      const ee = G.getValue ? G.getValue(_) : _[G.key];
+                      const Q = G.getValue ? G.getValue(M) : M[G.key];
                       return /* @__PURE__ */ r(
                         "td",
                         {
@@ -12839,13 +12939,13 @@ function vn({
                             whiteSpace: "normal",
                             wordBreak: "break-word"
                           },
-                          children: G.render ? G.render(_, P) : ee != null ? String(ee) : "—"
+                          children: G.render ? G.render(M, P) : Q != null ? String(Q) : "—"
                         },
                         G.key
                       );
                     })
                   },
-                  U
+                  V
                 );
               }) })
             ]
@@ -12869,12 +12969,12 @@ function vn({
             children: [
               /* @__PURE__ */ c("div", { children: [
                 "Showing ",
-                /* @__PURE__ */ r("strong", { children: A }),
+                /* @__PURE__ */ r("strong", { children: k }),
                 " to ",
                 /* @__PURE__ */ r("strong", { children: D }),
                 " of",
                 " ",
-                /* @__PURE__ */ r("strong", { children: M }),
+                /* @__PURE__ */ r("strong", { children: _ }),
                 " entries",
                 m && ` (filtered from ${t.length} total)`
               ] }),
@@ -12884,15 +12984,15 @@ function vn({
                   {
                     type: "button",
                     onClick: () => I(1),
-                    disabled: k <= 1,
+                    disabled: S <= 1,
                     style: {
                       padding: "4px 8px",
                       background: "var(--eg-bg-tertiary, #1f2937)",
                       border: "1px solid var(--eg-border, rgba(255, 255, 255, 0.1))",
                       borderRadius: "var(--eg-radius-sm, 6px)",
                       color: "var(--eg-text-primary, #f9fafb)",
-                      cursor: k <= 1 ? "not-allowed" : "pointer",
-                      opacity: k <= 1 ? 0.4 : 1
+                      cursor: S <= 1 ? "not-allowed" : "pointer",
+                      opacity: S <= 1 ? 0.4 : 1
                     },
                     children: "« First"
                   }
@@ -12901,23 +13001,23 @@ function vn({
                   "button",
                   {
                     type: "button",
-                    onClick: () => I((_) => Math.max(1, _ - 1)),
-                    disabled: k <= 1,
+                    onClick: () => I((M) => Math.max(1, M - 1)),
+                    disabled: S <= 1,
                     style: {
                       padding: "4px 8px",
                       background: "var(--eg-bg-tertiary, #1f2937)",
                       border: "1px solid var(--eg-border, rgba(255, 255, 255, 0.1))",
                       borderRadius: "var(--eg-radius-sm, 6px)",
                       color: "var(--eg-text-primary, #f9fafb)",
-                      cursor: k <= 1 ? "not-allowed" : "pointer",
-                      opacity: k <= 1 ? 0.4 : 1
+                      cursor: S <= 1 ? "not-allowed" : "pointer",
+                      opacity: S <= 1 ? 0.4 : 1
                     },
                     children: "‹ Prev"
                   }
                 ),
                 /* @__PURE__ */ c("span", { style: { padding: "0 6px", fontWeight: 600, color: "var(--eg-text-primary, #f9fafb)" }, children: [
                   "Page ",
-                  k,
+                  S,
                   " of ",
                   T
                 ] }),
@@ -12925,16 +13025,16 @@ function vn({
                   "button",
                   {
                     type: "button",
-                    onClick: () => I((_) => Math.min(T, _ + 1)),
-                    disabled: k >= T,
+                    onClick: () => I((M) => Math.min(T, M + 1)),
+                    disabled: S >= T,
                     style: {
                       padding: "4px 8px",
                       background: "var(--eg-bg-tertiary, #1f2937)",
                       border: "1px solid var(--eg-border, rgba(255, 255, 255, 0.1))",
                       borderRadius: "var(--eg-radius-sm, 6px)",
                       color: "var(--eg-text-primary, #f9fafb)",
-                      cursor: k >= T ? "not-allowed" : "pointer",
-                      opacity: k >= T ? 0.4 : 1
+                      cursor: S >= T ? "not-allowed" : "pointer",
+                      opacity: S >= T ? 0.4 : 1
                     },
                     children: "Next ›"
                   }
@@ -12944,15 +13044,15 @@ function vn({
                   {
                     type: "button",
                     onClick: () => I(T),
-                    disabled: k >= T,
+                    disabled: S >= T,
                     style: {
                       padding: "4px 8px",
                       background: "var(--eg-bg-tertiary, #1f2937)",
                       border: "1px solid var(--eg-border, rgba(255, 255, 255, 0.1))",
                       borderRadius: "var(--eg-radius-sm, 6px)",
                       color: "var(--eg-text-primary, #f9fafb)",
-                      cursor: k >= T ? "not-allowed" : "pointer",
-                      opacity: k >= T ? 0.4 : 1
+                      cursor: S >= T ? "not-allowed" : "pointer",
+                      opacity: S >= T ? 0.4 : 1
                     },
                     children: "Last »"
                   }
@@ -12965,7 +13065,7 @@ function vn({
     }
   );
 }
-const je = ({
+const He = ({
   title: t,
   value: e,
   subtitle: n,
@@ -13098,8 +13198,8 @@ const je = ({
   style: u,
   className: h = ""
 }) => {
-  const [x, f] = W(!1), [b, S] = W(!1), v = (w) => {
-    w.onClick && w.onClick(), a && a(w.id), S(!1);
+  const [x, f] = W(!1), [b, C] = W(!1), v = (w) => {
+    w.onClick && w.onClick(), a && a(w.id), C(!1);
   }, m = i.find((w) => w.id === o), y = p || (m == null ? void 0 : m.label) || t;
   return /* @__PURE__ */ c(
     "div",
@@ -13118,7 +13218,7 @@ const je = ({
         b && /* @__PURE__ */ r(
           "div",
           {
-            onClick: () => S(!1),
+            onClick: () => C(!1),
             style: {
               position: "fixed",
               inset: 0,
@@ -13439,7 +13539,7 @@ const je = ({
                     "button",
                     {
                       type: "button",
-                      onClick: () => S(!0),
+                      onClick: () => C(!0),
                       style: {
                         display: "none",
                         background: "transparent",
@@ -13531,14 +13631,14 @@ const je = ({
       ]
     }
   );
-}, wn = "EG_ADMIN_SALT_2026", Qa = 3, Xa = 24 * 60 * 60 * 1e3, Qt = "eg_admin_pin_verified_uid", Ja = 18;
-async function el(t, e = wn) {
+}, wn = "EG_ADMIN_SALT_2026", Xa = 3, Ja = 24 * 60 * 60 * 1e3, Xt = "eg_admin_pin_verified_uid", el = 18;
+async function tl(t, e = wn) {
   if (typeof window > "u" || !window.crypto || !window.crypto.subtle)
     throw new Error("[eg-web-core] Web Crypto API is unavailable in this environment.");
   const i = new TextEncoder().encode(t + e), o = await crypto.subtle.digest("SHA-256", i);
   return Array.from(new Uint8Array(o)).map((l) => l.toString(16).padStart(2, "0")).join("");
 }
-async function ft() {
+async function mt() {
   if (typeof window > "u") return "unknown";
   try {
     const t = new AbortController(), e = setTimeout(() => t.abort(), 3e3), n = await fetch("https://api.ipify.org?format=json", { signal: t.signal });
@@ -13547,10 +13647,10 @@ async function ft() {
     return "unknown";
   }
 }
-function xt(t) {
+function yt(t) {
   return t ? t.replace(/\./g, "_").replace(/[^a-zA-Z0-9_]/g, "") : "unknown";
 }
-async function mt(t, e = {}) {
+async function bt(t, e = {}) {
   const n = {
     locked: !1,
     unlocksAt: null,
@@ -13562,7 +13662,7 @@ async function mt(t, e = {}) {
     const i = e.db || window.db;
     if (!i) {
       if (typeof window < "u") {
-        const u = localStorage.getItem(`admin_lock_${xt(t)}`);
+        const u = localStorage.getItem(`admin_lock_${yt(t)}`);
         if (u) {
           const h = JSON.parse(u), x = new Date(h.unlocksAt);
           if (/* @__PURE__ */ new Date() < x) {
@@ -13573,7 +13673,7 @@ async function mt(t, e = {}) {
       }
       return n;
     }
-    const o = e.lockoutCollection || "admin_lockout", a = i.collection(o).doc(xt(t)), l = await a.get();
+    const o = e.lockoutCollection || "admin_lockout", a = i.collection(o).doc(yt(t)), l = await a.get();
     if (!l.exists) return n;
     const s = l.data() || {}, p = s.failCount || 0;
     if (!s.lockedUntil)
@@ -13598,26 +13698,26 @@ async function mt(t, e = {}) {
     return console.warn("[eg-web-core] checkAdminLockout error (fail-open):", i.message), n;
   }
 }
-async function Mt(t, e, n, i = {}) {
+async function $t(t, e, n, i = {}) {
   var s, p, d, g, u, h, x, f;
-  const o = i.maxFailAttempts ?? Qa, a = i.lockoutDurationMs ?? Xa, l = xt(t);
+  const o = i.maxFailAttempts ?? Xa, a = i.lockoutDurationMs ?? Ja, l = yt(t);
   try {
     const b = i.db || window.db;
     if (b) {
-      const S = i.lockoutCollection || "admin_lockout", v = b.collection(S).doc(l), m = await v.get(), w = (m.exists && m.data().failCount || 0) + 1, L = {
+      const C = i.lockoutCollection || "admin_lockout", v = b.collection(C).doc(l), m = await v.get(), w = (m.exists && m.data().failCount || 0) + 1, L = {
         ipAddress: t,
         email: e,
         failCount: w,
         lastFailAt: ((d = (p = (s = window.firebase) == null ? void 0 : s.firestore) == null ? void 0 : p.FieldValue) == null ? void 0 : d.serverTimestamp()) || /* @__PURE__ */ new Date()
       };
       if (w >= o) {
-        const z = new Date(Date.now() + a), C = (u = (g = window.firebase) == null ? void 0 : g.firestore) == null ? void 0 : u.Timestamp;
-        L.lockedUntil = C ? C.fromDate(z) : z.toISOString(), L.lockedAt = ((f = (x = (h = window.firebase) == null ? void 0 : h.firestore) == null ? void 0 : x.FieldValue) == null ? void 0 : f.serverTimestamp()) || /* @__PURE__ */ new Date();
+        const z = new Date(Date.now() + a), A = (u = (g = window.firebase) == null ? void 0 : g.firestore) == null ? void 0 : u.Timestamp;
+        L.lockedUntil = A ? A.fromDate(z) : z.toISOString(), L.lockedAt = ((f = (x = (h = window.firebase) == null ? void 0 : h.firestore) == null ? void 0 : x.FieldValue) == null ? void 0 : f.serverTimestamp()) || /* @__PURE__ */ new Date();
       }
       await v.set(L, { merge: !0 });
     } else if (typeof window < "u") {
-      const S = `admin_lock_${l}`, v = localStorage.getItem(S), y = ((v ? JSON.parse(v) : { failCount: 0 }).failCount || 0) + 1, w = { ip: t, email: e, failCount: y };
-      y >= o && (w.unlocksAt = new Date(Date.now() + a).toISOString()), localStorage.setItem(S, JSON.stringify(w));
+      const C = `admin_lock_${l}`, v = localStorage.getItem(C), y = ((v ? JSON.parse(v) : { failCount: 0 }).failCount || 0) + 1, w = { ip: t, email: e, failCount: y };
+      y >= o && (w.unlocksAt = new Date(Date.now() + a).toISOString()), localStorage.setItem(C, JSON.stringify(w));
     }
     await kn({
       email: e,
@@ -13631,8 +13731,8 @@ async function Mt(t, e, n, i = {}) {
     console.warn("[eg-web-core] recordAdminFailedAttempt warning:", b.message);
   }
 }
-async function tl(t, e = {}) {
-  const n = xt(t);
+async function rl(t, e = {}) {
+  const n = yt(t);
   try {
     const i = e.db || window.db;
     if (i) {
@@ -13652,7 +13752,7 @@ async function kn(t, e = {}) {
       var u, h, x, f;
       const l = await a.get(o);
       let s = 1, p = 0;
-      l.exists && (s = l.data().currentPage || 1, p = l.data().currentCount || 0), p >= Ja && (s++, p = 0);
+      l.exists && (s = l.data().currentPage || 1, p = l.data().currentCount || 0), p >= el && (s++, p = 0);
       const d = n.collection(i).doc(`page_${s}`), g = window.firebase;
       a.set(
         d,
@@ -13674,7 +13774,7 @@ async function kn(t, e = {}) {
     console.warn("[eg-web-core] logAdminLoginAttempt failed (non-critical):", n.message);
   }
 }
-function yr(t, e = Qt) {
+function yr(t, e = Xt) {
   if (typeof window > "u" || !t) return !1;
   try {
     return sessionStorage.getItem(e) === t;
@@ -13682,27 +13782,27 @@ function yr(t, e = Qt) {
     return !1;
   }
 }
-function rl(t, e = Qt) {
+function nl(t, e = Xt) {
   if (!(typeof window > "u" || !t))
     try {
       sessionStorage.setItem(e, t);
     } catch {
     }
 }
-function Ve(t = Qt) {
+function qe(t = Xt) {
   if (!(typeof window > "u"))
     try {
       sessionStorage.removeItem(t);
     } catch {
     }
 }
-async function nl(t = {}) {
-  const e = await ft(), n = await mt(e, t);
+async function il(t = {}) {
+  const e = await mt(), n = await bt(e, t);
   if (n.locked)
     throw new Error(
       `Access is temporarily blocked due to repeated failed attempts. Please try again in ${n.hoursRemaining} hour(s).`
     );
-  const i = await $t(t.firebaseConfig, t.appName), o = window.firebase;
+  const i = await Dt(t.firebaseConfig, t.appName), o = window.firebase;
   if (!i || !o || !o.auth)
     throw new Error("[eg-web-core] Firebase Authentication SDK is unavailable.");
   try {
@@ -13714,14 +13814,14 @@ async function nl(t = {}) {
   try {
     l = await i.signInWithPopup(a);
   } catch (d) {
-    throw d.code === "auth/popup-closed-by-user" ? new Error("Sign-in popup was cancelled by user.") : (await Mt(e, "unknown-google-user", "fail_google", t), d);
+    throw d.code === "auth/popup-closed-by-user" ? new Error("Sign-in popup was cancelled by user.") : (await $t(e, "unknown-google-user", "fail_google", t), d);
   }
   const s = l.user;
   if (!s || !s.email)
     throw new Error("No user profile received from Google Authentication.");
   const p = t.allowedEmails;
   if (p && p.length > 0 && !p.some((g) => g.toLowerCase() === s.email.toLowerCase()))
-    throw await i.signOut(), Ve(t.sessionKey), await Mt(e, s.email, "fail_unauthorized", t), new Error(`Unauthorized account (${s.email}). Access to this administrative portal is restricted.`);
+    throw await i.signOut(), qe(t.sessionKey), await $t(e, s.email, "fail_unauthorized", t), new Error(`Unauthorized account (${s.email}). Access to this administrative portal is restricted.`);
   return {
     uid: s.uid,
     email: s.email,
@@ -13729,7 +13829,7 @@ async function nl(t = {}) {
     photoURL: s.photoURL
   };
 }
-async function il(t, e, n = {}) {
+async function ol(t, e, n = {}) {
   var g, u;
   const i = n.pinLength ?? 16, o = t.replace(/\D/g, "");
   if (o.length !== i)
@@ -13737,13 +13837,13 @@ async function il(t, e, n = {}) {
       success: !1,
       error: `PIN must be exactly ${i} numeric digits. Received ${o.length}.`
     };
-  const a = n.ip || await ft(), l = await mt(a, n);
+  const a = n.ip || await mt(), l = await bt(a, n);
   if (l.locked)
     return {
       success: !1,
       error: `Access blocked due to excessive failed attempts. Try again in ${l.hoursRemaining} hour(s).`
     };
-  const s = n.salt || n.pinSalt || wn, p = await el(o, s);
+  const s = n.salt || n.pinSalt || wn, p = await tl(o, s);
   let d = !1;
   if (n.expectedPinHash)
     d = n.expectedPinHash.toLowerCase() === p.toLowerCase();
@@ -13762,22 +13862,22 @@ async function il(t, e, n = {}) {
         error: `Database error while verifying PIN: ${h.message}`
       };
     }
-  return d ? (rl(e.uid, n.sessionKey), await tl(a, n), await kn({
+  return d ? (nl(e.uid, n.sessionKey), await rl(a, n), await kn({
     email: e.email,
     ipAddress: a,
     outcome: "success",
     userAgent: typeof navigator < "u" ? navigator.userAgent : "",
     uid: e.uid,
     timestamp: (/* @__PURE__ */ new Date()).toISOString()
-  }, n), { success: !0 }) : (Ve(n.sessionKey), await Mt(a, e.email, "fail_pin", n), {
+  }, n), { success: !0 }) : (qe(n.sessionKey), await $t(a, e.email, "fail_pin", n), {
     success: !1,
     error: "Incorrect security PIN. Access denied."
   });
 }
-async function ol(t = {}) {
-  Ve(t.sessionKey);
+async function al(t = {}) {
+  qe(t.sessionKey);
   try {
-    const e = await $t(t.firebaseConfig);
+    const e = await Dt(t.firebaseConfig);
     e && typeof e.signOut == "function" && await e.signOut();
   } catch (e) {
     console.warn("[eg-web-core] adminSignOut warning:", e.message);
@@ -13791,45 +13891,45 @@ function Sn(t = {}) {
     hoursRemaining: 0
   }), x = te(async () => {
     try {
-      const y = d !== "unknown" ? d : await ft();
+      const y = d !== "unknown" ? d : await mt();
       if (y !== "unknown") {
         g(y);
-        const w = await mt(y, t);
+        const w = await bt(y, t);
         h(w);
       }
     } catch {
     }
   }, [d, t]);
-  Z(() => {
+  Y(() => {
     let y = !0;
     async function w() {
       l(!0);
       try {
-        const L = await ft();
+        const L = await mt();
         if (y) {
           g(L);
-          const C = await mt(L, t);
-          h(C);
+          const A = await bt(L, t);
+          h(A);
         }
-        const z = await $t(t.firebaseConfig, t.appName);
-        z && typeof z.onAuthStateChanged == "function" ? z.onAuthStateChanged((C) => {
+        const z = await Dt(t.firebaseConfig, t.appName);
+        z && typeof z.onAuthStateChanged == "function" ? z.onAuthStateChanged((A) => {
           if (y) {
-            if (C && C.email) {
+            if (A && A.email) {
               if (t.allowedEmails && t.allowedEmails.length > 0 && !t.allowedEmails.some(
-                (I) => I.toLowerCase() === C.email.toLowerCase()
+                (I) => I.toLowerCase() === A.email.toLowerCase()
               )) {
-                Ve(t.sessionKey), n(null), o(!1), l(!1), z.signOut();
+                qe(t.sessionKey), n(null), o(!1), l(!1), z.signOut();
                 return;
               }
-              const B = {
-                uid: C.uid,
-                email: C.email,
-                displayName: C.displayName,
-                photoURL: C.photoURL
+              const R = {
+                uid: A.uid,
+                email: A.email,
+                displayName: A.displayName,
+                photoURL: A.photoURL
               };
-              n(B);
-              const R = yr(C.uid, t.sessionKey);
-              o(R);
+              n(R);
+              const B = yr(A.uid, t.sessionKey);
+              o(B);
             } else
               n(null), o(!1);
             l(!1);
@@ -13846,7 +13946,7 @@ function Sn(t = {}) {
   const f = te(async () => {
     p(null), l(!0);
     try {
-      const y = await nl(t);
+      const y = await il(t);
       n(y);
       const w = yr(y.uid, t.sessionKey);
       return o(w), await x(), l(!1), y;
@@ -13859,7 +13959,7 @@ function Sn(t = {}) {
         return p("Please sign in with Google first."), !1;
       p(null), l(!0);
       try {
-        const L = await il(y, e, {
+        const L = await ol(y, e, {
           ...t,
           ...w,
           ip: d
@@ -13870,15 +13970,15 @@ function Sn(t = {}) {
       }
     },
     [e, t, d, x]
-  ), S = te(async () => {
+  ), C = te(async () => {
     l(!0);
     try {
-      await ol(t), n(null), o(!1), p(null);
+      await al(t), n(null), o(!1), p(null);
     } finally {
       l(!1);
     }
   }, [t]), v = te(() => {
-    Ve(t.sessionKey), o(!1);
+    qe(t.sessionKey), o(!1);
   }, [t.sessionKey]), m = te(() => {
     p(null);
   }, []);
@@ -13892,13 +13992,13 @@ function Sn(t = {}) {
     clientIP: d,
     loginWithGoogle: f,
     verifyPin: b,
-    logout: S,
+    logout: C,
     resetPinPrompt: v,
     refreshLockout: x,
     clearError: m
   };
 }
-const al = ({
+const ll = ({
   title: t = "Admin Portal",
   subtitle: e = "Sign in with your authorized administrator credentials",
   logo: n,
@@ -13920,52 +14020,52 @@ const al = ({
     error: x,
     lockout: f,
     loginWithGoogle: b,
-    verifyPin: S,
+    verifyPin: C,
     logout: v,
     clearError: m
-  } = Sn(d), [y, w] = W(["", "", "", ""]), [L, z] = W(!1), [C, B] = W(!1), R = [
-    he(null),
-    he(null),
-    he(null),
-    he(null)
+  } = Sn(d), [y, w] = W(["", "", "", ""]), [L, z] = W(!1), [A, R] = W(!1), B = [
+    me(null),
+    me(null),
+    me(null),
+    me(null)
   ];
-  Z(() => {
+  Y(() => {
     u && g && l && l(g);
-  }, [u, g, l]), Z(() => {
+  }, [u, g, l]), Y(() => {
     g && !u && setTimeout(() => {
-      var M;
-      (M = R[0].current) == null || M.focus();
+      var _;
+      (_ = B[0].current) == null || _.focus();
     }, 100);
   }, [g, u]);
-  const N = (M, T) => {
-    var A;
-    const k = T.replace(/\D/g, "");
-    if (k.length > 4) {
-      j(k);
+  const j = (_, T) => {
+    var k;
+    const S = T.replace(/\D/g, "");
+    if (S.length > 4) {
+      E(S);
       return;
     }
-    const E = [...y];
-    E[M] = k, w(E), k.length === 4 && M < 3 && ((A = R[M + 1].current) == null || A.focus());
-  }, I = (M, T) => {
-    var k;
-    T.key === "Backspace" && y[M].length === 0 && M > 0 && ((k = R[M - 1].current) == null || k.focus());
-  }, j = (M) => {
-    var V, _, P, U;
-    const T = M.replace(/\D/g, "").slice(0, 16), k = T.slice(0, 4), E = T.slice(4, 8), A = T.slice(8, 12), D = T.slice(12, 16);
-    w([k, E, A, D]), T.length >= 16 ? (V = R[3].current) == null || V.focus() : T.length >= 12 ? (_ = R[3].current) == null || _.focus() : T.length >= 8 ? (P = R[2].current) == null || P.focus() : T.length >= 4 && ((U = R[1].current) == null || U.focus());
-  }, H = (M) => {
-    M.preventDefault();
-    const T = M.clipboardData.getData("text");
-    j(T);
-  }, $ = async (M) => {
-    M.preventDefault(), m();
+    const N = [...y];
+    N[_] = S, w(N), S.length === 4 && _ < 3 && ((k = B[_ + 1].current) == null || k.focus());
+  }, I = (_, T) => {
+    var S;
+    T.key === "Backspace" && y[_].length === 0 && _ > 0 && ((S = B[_ - 1].current) == null || S.focus());
+  }, E = (_) => {
+    var O, M, P, V;
+    const T = _.replace(/\D/g, "").slice(0, 16), S = T.slice(0, 4), N = T.slice(4, 8), k = T.slice(8, 12), D = T.slice(12, 16);
+    w([S, N, k, D]), T.length >= 16 ? (O = B[3].current) == null || O.focus() : T.length >= 12 ? (M = B[3].current) == null || M.focus() : T.length >= 8 ? (P = B[2].current) == null || P.focus() : T.length >= 4 && ((V = B[1].current) == null || V.focus());
+  }, H = (_) => {
+    _.preventDefault();
+    const T = _.clipboardData.getData("text");
+    E(T);
+  }, $ = async (_) => {
+    _.preventDefault(), m();
     const T = y.join("");
     if (T.length !== 16)
       return;
-    B(!0);
-    const k = await S(T, o);
-    B(!1), k && g && l && l(g);
-  }, O = y.join("").length;
+    R(!0);
+    const S = await C(T, o);
+    R(!1), S && g && l && l(g);
+  }, U = y.join("").length;
   return /* @__PURE__ */ r(
     "div",
     {
@@ -14333,17 +14433,17 @@ const al = ({
                       gridTemplateColumns: "repeat(4, 1fr)",
                       gap: "8px"
                     },
-                    children: [0, 1, 2, 3].map((M) => /* @__PURE__ */ r(
+                    children: [0, 1, 2, 3].map((_) => /* @__PURE__ */ r(
                       "input",
                       {
-                        ref: R[M],
+                        ref: B[_],
                         type: L ? "text" : "password",
                         inputMode: "numeric",
                         maxLength: 4,
-                        value: y[M],
-                        onChange: (T) => N(M, T.target.value),
-                        onKeyDown: (T) => I(M, T),
-                        onPaste: M === 0 ? H : void 0,
+                        value: y[_],
+                        onChange: (T) => j(_, T.target.value),
+                        onKeyDown: (T) => I(_, T),
+                        onPaste: _ === 0 ? H : void 0,
                         placeholder: "••••",
                         autoComplete: "off",
                         style: {
@@ -14355,7 +14455,7 @@ const al = ({
                           fontWeight: 600,
                           letterSpacing: "0.15em",
                           background: "var(--eg-bg-primary, #030712)",
-                          border: y[M].length === 4 ? "1px solid var(--eg-color-primary, #10b981)" : "1px solid var(--eg-border, rgba(255,255,255,0.12))",
+                          border: y[_].length === 4 ? "1px solid var(--eg-color-primary, #10b981)" : "1px solid var(--eg-border, rgba(255,255,255,0.12))",
                           borderRadius: "var(--eg-radius-md, 10px)",
                           color: "var(--eg-text-primary, #f9fafb)",
                           outline: "none",
@@ -14363,7 +14463,7 @@ const al = ({
                           boxSizing: "border-box"
                         }
                       },
-                      M
+                      _
                     ))
                   }
                 )
@@ -14372,24 +14472,24 @@ const al = ({
                 "button",
                 {
                   type: "submit",
-                  disabled: O !== 16 || C || f.locked,
+                  disabled: U !== 16 || A || f.locked,
                   style: {
                     width: "100%",
                     padding: "12px 20px",
-                    background: O === 16 && !C && !f.locked ? "var(--eg-color-primary, #10b981)" : "var(--eg-bg-tertiary, #1f2937)",
-                    color: O === 16 && !C && !f.locked ? "#ffffff" : "var(--eg-text-muted, #9ca3af)",
+                    background: U === 16 && !A && !f.locked ? "var(--eg-color-primary, #10b981)" : "var(--eg-bg-tertiary, #1f2937)",
+                    color: U === 16 && !A && !f.locked ? "#ffffff" : "var(--eg-text-muted, #9ca3af)",
                     border: "none",
                     borderRadius: "var(--eg-radius-md, 10px)",
                     fontSize: "var(--eg-text-base, 1rem)",
                     fontWeight: 600,
-                    cursor: O === 16 && !C && !f.locked ? "pointer" : "not-allowed",
+                    cursor: U === 16 && !A && !f.locked ? "pointer" : "not-allowed",
                     transition: "all var(--eg-transition-normal, 220ms)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "8px"
                   },
-                  children: C ? /* @__PURE__ */ c(se, { children: [
+                  children: A ? /* @__PURE__ */ c(se, { children: [
                     /* @__PURE__ */ r(
                       "span",
                       {
@@ -14472,7 +14572,7 @@ const al = ({
       ]
     }
   ) : !s || !l ? /* @__PURE__ */ r(
-    al,
+    ll,
     {
       authConfig: a,
       pinConfig: n,
@@ -14493,47 +14593,47 @@ const xs = ({
   className: a = ""
 }) => {
   var H;
-  const l = bt(), s = e || ((H = l.collections) == null ? void 0 : H.analytics) || "visitor_analytics", [p, d] = W({
+  const l = wt(), s = e || ((H = l.collections) == null ? void 0 : H.analytics) || "visitor_analytics", [p, d] = W({
     totalVisitors: 0,
     todayCount: 0,
     todayDate: br(),
     currentPage: 1
-  }), [g, u] = W(1), [h, x] = W(1), [f, b] = W([]), [S, v] = W(!0), [m, y] = W("All Domains"), [w, L] = W(null), [z, C] = W("details"), B = te(async ($) => {
-    var O, M;
+  }), [g, u] = W(1), [h, x] = W(1), [f, b] = W([]), [C, v] = W(!0), [m, y] = W("All Domains"), [w, L] = W(null), [z, A] = W("details"), R = te(async ($) => {
+    var U, _;
     v(!0);
     try {
       if (i) {
-        const U = await i();
-        d(U.meta), b(U.logs), x(U.meta.currentPage || 1), v(!1);
+        const V = await i();
+        d(V.meta), b(V.logs), x(V.meta.currentPage || 1), v(!1);
         return;
       }
-      const T = t || l.db || window.db || ((M = (O = window.firebase) == null ? void 0 : O.firestore) == null ? void 0 : M.call(O));
+      const T = t || l.db || window.db || ((_ = (U = window.firebase) == null ? void 0 : U.firestore) == null ? void 0 : _.call(U));
       if (!T) {
         v(!1);
         return;
       }
-      const k = await T.collection(s).doc("meta").get();
-      let E = 1, A = 0, D = 0;
-      if (k.exists) {
-        const U = k.data() || {};
-        A = U.totalVisitors || 0, E = U.currentPage || 1;
+      const S = await T.collection(s).doc("meta").get();
+      let N = 1, k = 0, D = 0;
+      if (S.exists) {
+        const V = S.data() || {};
+        k = V.totalVisitors || 0, N = V.currentPage || 1;
         const G = br();
-        D = U.todayDate === G && U.todayCount || 0, d({
-          totalVisitors: A,
+        D = V.todayDate === G && V.todayCount || 0, d({
+          totalVisitors: k,
           todayCount: D,
-          todayDate: U.todayDate || G,
-          currentPage: E
+          todayDate: V.todayDate || G,
+          currentPage: N
         });
       }
-      x(E);
-      const _ = Math.max(1, E - ($ ?? g) + 1), P = await T.collection(s).doc(`page_${_}`).get();
+      x(N);
+      const M = Math.max(1, N - ($ ?? g) + 1), P = await T.collection(s).doc(`page_${M}`).get();
       if (P.exists) {
-        const ee = ((P.data() || {}).logs || []).map((F, oe) => {
-          const ne = [];
-          F.city && F.city !== "Unknown" && F.city !== "N/A" && ne.push(F.city), F.region && F.region !== "Unknown" && F.region !== "N/A" && ne.push(F.region), F.country && F.country !== "Unknown" && F.country !== "N/A" && ne.push(F.country);
-          const ae = ne.length > 0 ? ne.join(", ") : "Unknown";
+        const Q = ((P.data() || {}).logs || []).map((F, oe) => {
+          const ie = [];
+          F.city && F.city !== "Unknown" && F.city !== "N/A" && ie.push(F.city), F.region && F.region !== "Unknown" && F.region !== "N/A" && ie.push(F.region), F.country && F.country !== "Unknown" && F.country !== "N/A" && ie.push(F.country);
+          const ae = ie.length > 0 ? ie.join(", ") : "Unknown";
           return {
-            id: F.id || `v_log_${_}_${oe}`,
+            id: F.id || `v_log_${M}_${oe}`,
             timestamp: F.timestamp || "",
             appName: F.appName || "web-app",
             pageVisited: F.pageVisited || "/",
@@ -14553,7 +14653,7 @@ const xs = ({
             raw: F
           };
         });
-        ee.reverse(), b(ee);
+        Q.reverse(), b(Q);
       } else
         b([]);
     } catch (T) {
@@ -14562,13 +14662,13 @@ const xs = ({
       v(!1);
     }
   }, [t, l.db, s, i, g]);
-  Z(() => {
-    B();
-  }, [B]);
-  const R = ($) => {
-    const O = Math.max(1, Math.min($, h));
-    u(O), B(O);
-  }, N = re(() => n && n.length > 0 ? n : ["All Domains", ...Array.from(new Set(f.map((O) => O.appName).filter(Boolean)))], [n, f]), I = re(() => m === "All Domains" ? f : f.filter(($) => $.appName.toLowerCase().includes(m.toLowerCase())), [f, m]), j = [
+  Y(() => {
+    R();
+  }, [R]);
+  const B = ($) => {
+    const U = Math.max(1, Math.min($, h));
+    u(U), R(U);
+  }, j = ee(() => n && n.length > 0 ? n : ["All Domains", ...Array.from(new Set(f.map((U) => U.appName).filter(Boolean)))], [n, f]), I = ee(() => m === "All Domains" ? f : f.filter(($) => $.appName.toLowerCase().includes(m.toLowerCase())), [f, m]), E = [
     {
       key: "timestamp",
       label: "Timestamp",
@@ -14576,10 +14676,10 @@ const xs = ({
       width: "180px",
       render: ($) => {
         if (!$.timestamp) return "—";
-        const O = new Date($.timestamp);
+        const U = new Date($.timestamp);
         return /* @__PURE__ */ c("div", { style: { fontSize: "0.8125rem" }, children: [
-          /* @__PURE__ */ r("div", { style: { fontWeight: 600 }, children: O.toLocaleDateString() }),
-          /* @__PURE__ */ r("div", { style: { color: "var(--eg-text-muted, #9ca3af)", fontSize: "0.75rem" }, children: O.toLocaleTimeString() })
+          /* @__PURE__ */ r("div", { style: { fontWeight: 600 }, children: U.toLocaleDateString() }),
+          /* @__PURE__ */ r("div", { style: { color: "var(--eg-text-muted, #9ca3af)", fontSize: "0.75rem" }, children: U.toLocaleTimeString() })
         ] });
       }
     },
@@ -14651,8 +14751,8 @@ const xs = ({
         "button",
         {
           type: "button",
-          onClick: (O) => {
-            O.stopPropagation(), L($), C("details");
+          onClick: (U) => {
+            U.stopPropagation(), L($), A("details");
           },
           style: {
             padding: "4px 8px",
@@ -14680,7 +14780,7 @@ const xs = ({
         },
         children: [
           /* @__PURE__ */ r(
-            je,
+            He,
             {
               title: "Total Unique Visitors",
               value: p.totalVisitors,
@@ -14696,7 +14796,7 @@ const xs = ({
             }
           ),
           /* @__PURE__ */ r(
-            je,
+            He,
             {
               title: "Today's Visitors",
               value: p.todayCount,
@@ -14713,7 +14813,7 @@ const xs = ({
             }
           ),
           /* @__PURE__ */ r(
-            je,
+            He,
             {
               title: "Telemetry Storage Buckets",
               value: `${g} / ${h}`,
@@ -14734,9 +14834,9 @@ const xs = ({
       vn,
       {
         data: I,
-        columns: j,
+        columns: E,
         keyExtractor: ($) => $.id,
-        loading: S,
+        loading: C,
         exportFileName: `analytics_bucket_${g}.csv`,
         toolbarSlot: /* @__PURE__ */ c("div", { style: { display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }, children: [
           /* @__PURE__ */ r(
@@ -14754,7 +14854,7 @@ const xs = ({
                 cursor: "pointer",
                 outline: "none"
               },
-              children: N.map(($) => /* @__PURE__ */ r("option", { value: $, children: $ }, $))
+              children: j.map(($) => /* @__PURE__ */ r("option", { value: $, children: $ }, $))
             }
           ),
           /* @__PURE__ */ c(
@@ -14774,8 +14874,8 @@ const xs = ({
                   "button",
                   {
                     type: "button",
-                    disabled: g <= 1 || S,
-                    onClick: () => R(g - 1),
+                    disabled: g <= 1 || C,
+                    onClick: () => B(g - 1),
                     style: {
                       background: "none",
                       border: "none",
@@ -14808,8 +14908,8 @@ const xs = ({
                   "button",
                   {
                     type: "button",
-                    disabled: g >= h || S,
-                    onClick: () => R(g + 1),
+                    disabled: g >= h || C,
+                    onClick: () => B(g + 1),
                     style: {
                       background: "none",
                       border: "none",
@@ -14829,8 +14929,8 @@ const xs = ({
             "button",
             {
               type: "button",
-              onClick: () => B(),
-              disabled: S,
+              onClick: () => R(),
+              disabled: C,
               style: {
                 display: "inline-flex",
                 alignItems: "center",
@@ -14841,7 +14941,7 @@ const xs = ({
                 borderRadius: "var(--eg-radius-md, 8px)",
                 color: "var(--eg-text-primary, #f9fafb)",
                 fontSize: "var(--eg-text-xs, 0.8125rem)",
-                cursor: S ? "not-allowed" : "pointer"
+                cursor: C ? "not-allowed" : "pointer"
               },
               children: [
                 /* @__PURE__ */ c(
@@ -14854,7 +14954,7 @@ const xs = ({
                     stroke: "currentColor",
                     strokeWidth: "2",
                     style: {
-                      animation: S ? "spin 0.8s linear infinite" : "none"
+                      animation: C ? "spin 0.8s linear infinite" : "none"
                     },
                     children: [
                       /* @__PURE__ */ r("path", { d: "M23 4v6h-6" }),
@@ -14871,7 +14971,7 @@ const xs = ({
       }
     ),
     w && /* @__PURE__ */ r(
-      lt,
+      ct,
       {
         isOpen: !!w,
         onClose: () => L(null),
@@ -14898,7 +14998,7 @@ const xs = ({
               "button",
               {
                 type: "button",
-                onClick: () => C("details"),
+                onClick: () => A("details"),
                 style: {
                   padding: "4px 10px",
                   borderRadius: "var(--eg-radius-sm, 6px)",
@@ -14915,7 +15015,7 @@ const xs = ({
               "button",
               {
                 type: "button",
-                onClick: () => C("json"),
+                onClick: () => A("json"),
                 style: {
                   padding: "4px 10px",
                   borderRadius: "var(--eg-radius-sm, 6px)",
@@ -14975,7 +15075,7 @@ const xs = ({
               { label: "Browser", val: w.browser || "Unknown" },
               { label: "Screen Resolution", val: w.screen || "N/A" },
               { label: "Language", val: w.language || "en" }
-            ].map(($, O) => /* @__PURE__ */ c(
+            ].map(($, U) => /* @__PURE__ */ c(
               "div",
               {
                 style: {
@@ -14989,7 +15089,7 @@ const xs = ({
                   /* @__PURE__ */ r("div", { style: { color: "var(--eg-text-primary, #f9fafb)", marginTop: "2px", wordBreak: "break-all" }, children: $.val })
                 ]
               },
-              O
+              U
             ))
           }
         ) : /* @__PURE__ */ r(
@@ -15022,9 +15122,9 @@ const xs = ({
   style: l,
   className: s = ""
 }) => {
-  var N;
-  const p = bt(), d = t || p.db, g = n || ((N = p.collections) == null ? void 0 : N.messages) || "messages", [u, h] = W([]), [x, f] = W(!0), [b, S] = W(null), [v, m] = W(null), [y, w] = W(!1), L = te(async () => {
-    var I, j, H;
+  var j;
+  const p = wt(), d = t || p.db, g = n || ((j = p.collections) == null ? void 0 : j.messages) || "messages", [u, h] = W([]), [x, f] = W(!0), [b, C] = W(null), [v, m] = W(null), [y, w] = W(!1), L = te(async () => {
+    var I, E, H;
     f(!0);
     try {
       if (i) {
@@ -15032,11 +15132,11 @@ const xs = ({
         h(T), f(!1);
         return;
       }
-      let $ = d || window.db || ((j = (I = window.firebase) == null ? void 0 : I.firestore) == null ? void 0 : j.call(I));
+      let $ = d || window.db || ((E = (I = window.firebase) == null ? void 0 : I.firestore) == null ? void 0 : E.call(I));
       if (!$ && (e != null && e.apiKey || (H = p.config) != null && H.apiKey))
         try {
-          const T = e || p.config, { db: k } = await Ce(T, p.appName === "web-app" ? void 0 : p.appName);
-          $ = k;
+          const T = e || p.config, { db: S } = await Le(T, p.appName === "web-app" ? void 0 : p.appName);
+          $ = S;
         } catch (T) {
           console.warn("[AdminMessagesView] Auto-init Firebase error:", T);
         }
@@ -15044,54 +15144,54 @@ const xs = ({
         f(!1);
         return;
       }
-      const M = (await $.collection(g).orderBy("createdAt", "desc").limit(100).get()).docs.map((T) => {
-        const k = T.data() || {};
-        let E = null;
-        return k.createdAt && (E = k.createdAt.toDate ? k.createdAt.toDate() : new Date(k.createdAt)), {
+      const _ = (await $.collection(g).orderBy("createdAt", "desc").limit(100).get()).docs.map((T) => {
+        const S = T.data() || {};
+        let N = null;
+        return S.createdAt && (N = S.createdAt.toDate ? S.createdAt.toDate() : new Date(S.createdAt)), {
           id: T.id,
-          name: k.name || "Anonymous",
-          email: k.email || "N/A",
-          contact: k.contact || "",
-          message: k.message || "",
-          appName: k.appName || "web-app",
-          createdAt: E,
-          userAgent: k.userAgent,
-          ip: k.ip
+          name: S.name || "Anonymous",
+          email: S.email || "N/A",
+          contact: S.contact || "",
+          message: S.message || "",
+          appName: S.appName || "web-app",
+          createdAt: N,
+          userAgent: S.userAgent,
+          ip: S.ip
         };
       });
-      h(M);
+      h(_);
     } catch ($) {
       console.warn("[eg-web-core] loadMessages warning:", $.message);
     } finally {
       f(!1);
     }
   }, [d, g, i, e, p.config, p.appName]);
-  Z(() => {
+  Y(() => {
     L();
   }, [L]);
   const z = async () => {
-    var I, j;
+    var I, E;
     if (v) {
       w(!0);
       try {
         if (o)
           await o(v.id);
         else {
-          const H = d || window.db || ((j = (I = window.firebase) == null ? void 0 : I.firestore) == null ? void 0 : j.call(I));
+          const H = d || window.db || ((E = (I = window.firebase) == null ? void 0 : I.firestore) == null ? void 0 : E.call(I));
           H && await H.collection(g).doc(v.id).delete();
         }
-        h((H) => H.filter(($) => $.id !== v.id)), (b == null ? void 0 : b.id) === v.id && S(null), m(null);
+        h((H) => H.filter(($) => $.id !== v.id)), (b == null ? void 0 : b.id) === v.id && C(null), m(null);
       } catch (H) {
         alert(`Failed to delete message: ${H.message}`);
       } finally {
         w(!1);
       }
     }
-  }, C = u.length, B = u.filter((I) => {
+  }, A = u.length, R = u.filter((I) => {
     if (!I.createdAt) return !1;
-    const j = new Date(I.createdAt), H = /* @__PURE__ */ new Date();
-    return j.getDate() === H.getDate() && j.getMonth() === H.getMonth() && j.getFullYear() === H.getFullYear();
-  }).length, R = [
+    const E = new Date(I.createdAt), H = /* @__PURE__ */ new Date();
+    return E.getDate() === H.getDate() && E.getMonth() === H.getMonth() && E.getFullYear() === H.getFullYear();
+  }).length, B = [
     {
       key: "createdAt",
       label: "Received Date",
@@ -15100,10 +15200,10 @@ const xs = ({
       getValue: (I) => I.createdAt ? new Date(I.createdAt).getTime() : 0,
       render: (I) => {
         if (!I.createdAt) return "—";
-        const j = new Date(I.createdAt);
+        const E = new Date(I.createdAt);
         return /* @__PURE__ */ c("div", { style: { fontSize: "0.8125rem" }, children: [
-          /* @__PURE__ */ r("div", { style: { fontWeight: 600 }, children: j.toLocaleDateString() }),
-          /* @__PURE__ */ r("div", { style: { color: "var(--eg-text-muted, #9ca3af)", fontSize: "0.75rem" }, children: j.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) })
+          /* @__PURE__ */ r("div", { style: { fontWeight: 600 }, children: E.toLocaleDateString() }),
+          /* @__PURE__ */ r("div", { style: { color: "var(--eg-text-muted, #9ca3af)", fontSize: "0.75rem" }, children: E.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) })
         ] });
       }
     },
@@ -15126,7 +15226,7 @@ const xs = ({
             textDecoration: "none",
             fontSize: "0.8125rem"
           },
-          onClick: (j) => j.stopPropagation(),
+          onClick: (E) => E.stopPropagation(),
           children: I.email
         }
       )
@@ -15188,8 +15288,8 @@ const xs = ({
           "button",
           {
             type: "button",
-            onClick: (j) => {
-              j.stopPropagation(), S(I);
+            onClick: (E) => {
+              E.stopPropagation(), C(I);
             },
             style: {
               padding: "4px 8px",
@@ -15209,8 +15309,8 @@ const xs = ({
           "button",
           {
             type: "button",
-            onClick: (j) => {
-              j.stopPropagation(), m(I);
+            onClick: (E) => {
+              E.stopPropagation(), m(I);
             },
             style: {
               padding: "4px 8px",
@@ -15241,10 +15341,10 @@ const xs = ({
         },
         children: [
           /* @__PURE__ */ r(
-            je,
+            He,
             {
               title: "Total Inquiries",
-              value: C,
+              value: A,
               subtitle: "All received user contact messages",
               icon: /* @__PURE__ */ c("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: [
                 /* @__PURE__ */ r("path", { d: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" }),
@@ -15255,10 +15355,10 @@ const xs = ({
             }
           ),
           /* @__PURE__ */ r(
-            je,
+            He,
             {
               title: "Received Today",
-              value: B,
+              value: R,
               subtitle: "Messages logged in the last 24 hours",
               icon: /* @__PURE__ */ c("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: [
                 /* @__PURE__ */ r("circle", { cx: "12", cy: "12", r: "10" }),
@@ -15275,11 +15375,11 @@ const xs = ({
       vn,
       {
         data: u,
-        columns: R,
+        columns: B,
         keyExtractor: (I) => I.id,
         loading: x,
         exportFileName: "contact_inquiries.csv",
-        onRowClick: (I) => S(I),
+        onRowClick: (I) => C(I),
         toolbarSlot: /* @__PURE__ */ c(
           "button",
           {
@@ -15323,10 +15423,10 @@ const xs = ({
       }
     ),
     b && /* @__PURE__ */ r(
-      lt,
+      ct,
       {
         isOpen: !!b,
-        onClose: () => S(null),
+        onClose: () => C(null),
         title: /* @__PURE__ */ r("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: /* @__PURE__ */ c("span", { children: [
           "Inquiry from ",
           b.name
@@ -15383,7 +15483,7 @@ const xs = ({
               "button",
               {
                 type: "button",
-                onClick: () => S(null),
+                onClick: () => C(null),
                 style: {
                   padding: "6px 16px",
                   background: "var(--eg-bg-tertiary, #1f2937)",
@@ -15470,7 +15570,7 @@ const xs = ({
       }
     ),
     v && /* @__PURE__ */ r(
-      lt,
+      ct,
       {
         isOpen: !!v,
         onClose: () => m(null),
@@ -15523,10 +15623,10 @@ const xs = ({
     )
   ] });
 };
-function It(t) {
+function Lt(t) {
   return t.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
 }
-function ll() {
+function sl() {
   const t = /* @__PURE__ */ new Date();
   return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`;
 }
@@ -15542,8 +15642,8 @@ const ys = ({
 }) => {
   const [p, d] = W({
     title: (t == null ? void 0 : t.title) || "",
-    slug: (t == null ? void 0 : t.slug) || (t != null && t.title ? It(t.title) : ""),
-    date: (t == null ? void 0 : t.date) || ll(),
+    slug: (t == null ? void 0 : t.slug) || (t != null && t.title ? Lt(t.title) : ""),
+    date: (t == null ? void 0 : t.date) || sl(),
     author: (t == null ? void 0 : t.author) || i,
     category: (t == null ? void 0 : t.category) || n[0] || "General",
     tags: (t == null ? void 0 : t.tags) || ["Guide", "Web"],
@@ -15571,66 +15671,66 @@ Detail the design decisions and advantages.
 ## Conclusion
 
 Summarize findings and next steps.`
-  ), [h, x] = W(""), [f, b] = W(!0), [S, v] = W("split"), [m, y] = W(!1), [w, L] = W(!1), z = he(null), C = (k) => {
-    d((E) => ({
-      ...E,
-      title: k,
-      slug: f ? It(k) : E.slug
+  ), [h, x] = W(""), [f, b] = W(!0), [C, v] = W("split"), [m, y] = W(!1), [w, L] = W(!1), z = me(null), A = (S) => {
+    d((N) => ({
+      ...N,
+      title: S,
+      slug: f ? Lt(S) : N.slug
     }));
-  }, B = (k) => {
-    const E = k.trim().replace(/^#/, "");
-    E && !p.tags.includes(E) && d((A) => ({
-      ...A,
-      tags: [...A.tags, E]
+  }, R = (S) => {
+    const N = S.trim().replace(/^#/, "");
+    N && !p.tags.includes(N) && d((k) => ({
+      ...k,
+      tags: [...k.tags, N]
     })), x("");
-  }, R = (k) => {
-    d((E) => ({
-      ...E,
-      tags: E.tags.filter((A) => A !== k)
+  }, B = (S) => {
+    d((N) => ({
+      ...N,
+      tags: N.tags.filter((k) => k !== S)
     }));
-  }, N = (k) => {
-    k.key === "Enter" || k.key === "," ? (k.preventDefault(), B(h)) : k.key === "Backspace" && !h && p.tags.length > 0 && R(p.tags[p.tags.length - 1]);
-  }, I = (k, E = "") => {
-    const A = z.current;
-    if (!A) return;
-    const D = A.selectionStart, V = A.selectionEnd, _ = A.value, P = _.slice(D, V), U = `${k}${P || "text"}${E}`, G = _.slice(0, D) + U + _.slice(V);
+  }, j = (S) => {
+    S.key === "Enter" || S.key === "," ? (S.preventDefault(), R(h)) : S.key === "Backspace" && !h && p.tags.length > 0 && B(p.tags[p.tags.length - 1]);
+  }, I = (S, N = "") => {
+    const k = z.current;
+    if (!k) return;
+    const D = k.selectionStart, O = k.selectionEnd, M = k.value, P = M.slice(D, O), V = `${S}${P || "text"}${N}`, G = M.slice(0, D) + V + M.slice(O);
     u(G), setTimeout(() => {
-      A.focus(), A.setSelectionRange(D + k.length, D + k.length + (P ? P.length : 4));
+      k.focus(), k.setSelectionRange(D + S.length, D + S.length + (P ? P.length : 4));
     }, 50);
-  }, j = te(() => {
-    const k = p.tags.map((A) => `  - "${A}"`).join(`
-`), E = p.description.replace(/"/g, '\\"');
+  }, E = te(() => {
+    const S = p.tags.map((k) => `  - "${k}"`).join(`
+`), N = p.description.replace(/"/g, '\\"');
     return `---
 title: "${p.title}"
 slug: "${p.slug}"
 date: "${p.date}"
 author: "${p.author}"
 category: "${p.category}"
-description: "${E}"
+description: "${N}"
 tags:
-${k}
+${S}
 ---
 
 ${g}
 `;
   }, [p, g]), H = () => {
-    const k = j();
-    navigator.clipboard.writeText(k).then(() => {
+    const S = E();
+    navigator.clipboard.writeText(S).then(() => {
       y(!0), setTimeout(() => y(!1), 2e3);
     });
   }, $ = () => {
-    const k = j(), E = new Blob([k], { type: "text/markdown;charset=utf-8;" }), A = URL.createObjectURL(E), D = document.createElement("a");
-    D.href = A, D.download = `${p.slug || "article"}.md`, document.body.appendChild(D), D.click(), document.body.removeChild(D), URL.revokeObjectURL(A);
-  }, O = async () => {
+    const S = E(), N = new Blob([S], { type: "text/markdown;charset=utf-8;" }), k = URL.createObjectURL(N), D = document.createElement("a");
+    D.href = k, D.download = `${p.slug || "article"}.md`, document.body.appendChild(D), D.click(), document.body.removeChild(D), URL.revokeObjectURL(k);
+  }, U = async () => {
     if (o) {
       L(!0);
       try {
-        await o(j(), p);
+        await o(E(), p);
       } finally {
         L(!1);
       }
     }
-  }, M = p.description.length, T = M >= 120 && M <= 160;
+  }, _ = p.description.length, T = _ >= 120 && _ <= 160;
   return /* @__PURE__ */ c(
     "div",
     {
@@ -15681,26 +15781,26 @@ ${g}
                       borderRadius: "var(--eg-radius-md, 8px)",
                       border: "1px solid var(--eg-border, rgba(255, 255, 255, 0.1))"
                     },
-                    children: ["split", "edit", "preview"].map((k) => /* @__PURE__ */ r(
+                    children: ["split", "edit", "preview"].map((S) => /* @__PURE__ */ r(
                       "button",
                       {
                         type: "button",
-                        onClick: () => v(k),
+                        onClick: () => v(S),
                         style: {
                           padding: "4px 10px",
                           borderRadius: "var(--eg-radius-sm, 6px)",
                           border: "none",
-                          background: S === k ? "var(--eg-color-primary, #10b981)" : "transparent",
-                          color: S === k ? "#ffffff" : "var(--eg-text-muted, #9ca3af)",
+                          background: C === S ? "var(--eg-color-primary, #10b981)" : "transparent",
+                          color: C === S ? "#ffffff" : "var(--eg-text-muted, #9ca3af)",
                           fontSize: "0.75rem",
                           fontWeight: 600,
                           textTransform: "capitalize",
                           cursor: "pointer",
                           transition: "background var(--eg-transition-fast, 150ms)"
                         },
-                        children: k === "split" ? "Split View" : k === "edit" ? "Editor" : "Preview"
+                        children: S === "split" ? "Split View" : S === "edit" ? "Editor" : "Preview"
                       },
-                      k
+                      S
                     ))
                   }
                 )
@@ -15767,7 +15867,7 @@ ${g}
                   {
                     type: "button",
                     disabled: w,
-                    onClick: O,
+                    onClick: U,
                     style: {
                       display: "inline-flex",
                       alignItems: "center",
@@ -15815,7 +15915,7 @@ ${g}
                   {
                     type: "text",
                     value: p.title,
-                    onChange: (k) => C(k.target.value),
+                    onChange: (S) => A(S.target.value),
                     placeholder: "e.g. Modern Full-Stack Architecture with React & Cloud Services",
                     style: {
                       width: "100%",
@@ -15857,7 +15957,7 @@ ${g}
                     type: "text",
                     value: p.slug,
                     disabled: f,
-                    onChange: (k) => d({ ...p, slug: It(k.target.value) }),
+                    onChange: (S) => d({ ...p, slug: Lt(S.target.value) }),
                     placeholder: "article-url-slug",
                     style: {
                       width: "100%",
@@ -15881,7 +15981,7 @@ ${g}
                     "select",
                     {
                       value: p.category,
-                      onChange: (k) => d({ ...p, category: k.target.value }),
+                      onChange: (S) => d({ ...p, category: S.target.value }),
                       style: {
                         width: "100%",
                         padding: "8px 12px",
@@ -15893,7 +15993,7 @@ ${g}
                         outline: "none",
                         cursor: "pointer"
                       },
-                      children: n.map((k) => /* @__PURE__ */ r("option", { value: k, children: k }, k))
+                      children: n.map((S) => /* @__PURE__ */ r("option", { value: S, children: S }, S))
                     }
                   )
                 ] }),
@@ -15904,7 +16004,7 @@ ${g}
                     {
                       type: "text",
                       value: p.author,
-                      onChange: (k) => d({ ...p, author: k.target.value }),
+                      onChange: (S) => d({ ...p, author: S.target.value }),
                       style: {
                         width: "100%",
                         padding: "8px 12px",
@@ -15937,7 +16037,7 @@ ${g}
                       minHeight: "42px"
                     },
                     children: [
-                      p.tags.map((k) => /* @__PURE__ */ c(
+                      p.tags.map((S) => /* @__PURE__ */ c(
                         "span",
                         {
                           style: {
@@ -15954,12 +16054,12 @@ ${g}
                           },
                           children: [
                             "#",
-                            k,
+                            S,
                             /* @__PURE__ */ r(
                               "button",
                               {
                                 type: "button",
-                                onClick: () => R(k),
+                                onClick: () => B(S),
                                 style: {
                                   background: "none",
                                   border: "none",
@@ -15973,15 +16073,15 @@ ${g}
                             )
                           ]
                         },
-                        k
+                        S
                       )),
                       /* @__PURE__ */ r(
                         "input",
                         {
                           type: "text",
                           value: h,
-                          onChange: (k) => x(k.target.value),
-                          onKeyDown: N,
+                          onChange: (S) => x(S.target.value),
+                          onKeyDown: j,
                           placeholder: p.tags.length === 0 ? "Type tag and press Enter..." : "",
                           style: {
                             flex: 1,
@@ -16010,7 +16110,7 @@ ${g}
                         color: T ? "#34d399" : "var(--eg-text-muted, #9ca3af)"
                       },
                       children: [
-                        M,
+                        _,
                         " chars (Recommended: 120-160)"
                       ]
                     }
@@ -16021,7 +16121,7 @@ ${g}
                   {
                     rows: 2,
                     value: p.description,
-                    onChange: (k) => d({ ...p, description: k.target.value }),
+                    onChange: (S) => d({ ...p, description: S.target.value }),
                     placeholder: "A concise, compelling overview of the article topics...",
                     style: {
                       width: "100%",
@@ -16047,12 +16147,12 @@ ${g}
           {
             style: {
               display: "grid",
-              gridTemplateColumns: S === "split" ? "1fr 1fr" : "1fr",
+              gridTemplateColumns: C === "split" ? "1fr 1fr" : "1fr",
               gap: "var(--eg-space-4, 16px)",
               minHeight: "600px"
             },
             children: [
-              (S === "split" || S === "edit") && /* @__PURE__ */ c(
+              (C === "split" || C === "edit") && /* @__PURE__ */ c(
                 "div",
                 {
                   style: {
@@ -16086,12 +16186,12 @@ ${g}
                           { label: "Quote", title: "Blockquote", action: () => I("> ") },
                           { label: "List", title: "Bullet List", action: () => I("- ") },
                           { label: "Link", title: "Hyperlink", action: () => I("[", "](https://example.com)") }
-                        ].map((k, E) => /* @__PURE__ */ r(
+                        ].map((S, N) => /* @__PURE__ */ r(
                           "button",
                           {
                             type: "button",
-                            title: k.title,
-                            onClick: k.action,
+                            title: S.title,
+                            onClick: S.action,
                             style: {
                               padding: "4px 8px",
                               background: "var(--eg-bg-secondary, #111827)",
@@ -16102,9 +16202,9 @@ ${g}
                               fontWeight: 600,
                               cursor: "pointer"
                             },
-                            children: k.label
+                            children: S.label
                           },
-                          E
+                          N
                         ))
                       }
                     ),
@@ -16113,7 +16213,7 @@ ${g}
                       {
                         ref: z,
                         value: g,
-                        onChange: (k) => u(k.target.value),
+                        onChange: (S) => u(S.target.value),
                         placeholder: "Write your article in Markdown format...",
                         style: {
                           flex: 1,
@@ -16135,7 +16235,7 @@ ${g}
                   ]
                 }
               ),
-              (S === "split" || S === "preview") && /* @__PURE__ */ c(
+              (C === "split" || C === "preview") && /* @__PURE__ */ c(
                 "div",
                 {
                   style: {
@@ -16221,7 +16321,7 @@ ${g}
                               }
                             )
                           ] }),
-                          /* @__PURE__ */ r(Yt, { content: g })
+                          /* @__PURE__ */ r(Qt, { content: g })
                         ]
                       }
                     )
@@ -16238,8 +16338,8 @@ ${g}
   const [e, n] = W([]), [i, o] = W(!0), [a, l] = W(null), s = te(async () => {
     try {
       o(!0);
-      const p = await me.getProducts(t);
-      n([...p]), me.syncGithubVersions(p, (d, g) => {
+      const p = await we.getProducts(t);
+      n([...p]), we.syncGithubVersions(p, (d, g) => {
         n(
           (u) => u.map((h) => h.id === d ? { ...h, version: g } : h)
         );
@@ -16250,14 +16350,14 @@ ${g}
       o(!1);
     }
   }, [t]);
-  return Z(() => {
+  return Y(() => {
     s();
   }, [s]), { products: e, loading: i, error: a, refresh: s };
 }, vs = (t, e, n) => {
   const [i, o] = W([]), [a, l] = W(!0), [s, p] = W(null), d = te(async () => {
     try {
       l(!0);
-      const g = await me.getBlogs(t, e, n);
+      const g = await we.getBlogs(t, e, n);
       o([...g]);
     } catch (g) {
       p(g instanceof Error ? g : new Error(String(g)));
@@ -16265,14 +16365,14 @@ ${g}
       l(!1);
     }
   }, [t, e, n]);
-  return Z(() => {
+  return Y(() => {
     d();
   }, [d]), { blogs: i, loading: a, error: s, refresh: d };
 }, ws = (t) => {
   const [e, n] = W([]), [i, o] = W(!0);
-  return Z(() => {
+  return Y(() => {
     let a = !0;
-    return me.getNews(t).then((l) => {
+    return we.getNews(t).then((l) => {
       a && (n(l), o(!1));
     }), () => {
       a = !1;
@@ -16280,9 +16380,9 @@ ${g}
   }, [t]), { news: e, loading: i };
 }, ks = (t, e) => {
   const [n, i] = W(null), [o, a] = W(!0);
-  return Z(() => {
+  return Y(() => {
     let l = !0;
-    return me.getPageContent(t, e).then((s) => {
+    return we.getPageContent(t, e).then((s) => {
       l && (i(s), a(!1));
     }), () => {
       l = !1;
@@ -16298,16 +16398,16 @@ ${g}
   enabled: l = !0,
   requireExplicitConsent: s = !1
 } = {}) => {
-  var b, S;
-  const p = bt(), d = e || ((b = p.config) != null && b.apiKey ? p.config : void 0), g = t || (p.appName && p.appName !== "web-app" ? p.appName : typeof window < "u" && window.location.hostname ? window.location.hostname : "web-app"), u = n || ((S = p.collections) == null ? void 0 : S.analytics) || "visitor_analytics", h = i || be, x = o || qe, f = he(!1);
-  Z(() => {
+  var b, C;
+  const p = wt(), d = e || ((b = p.config) != null && b.apiKey ? p.config : void 0), g = t || (p.appName && p.appName !== "web-app" ? p.appName : typeof window < "u" && window.location.hostname ? window.location.hostname : "web-app"), u = n || ((C = p.collections) == null ? void 0 : C.analytics) || "visitor_analytics", h = i || ke, x = o || Ye, f = me(!1);
+  Y(() => {
     if (!l) return;
     let v = !0;
     const m = async () => {
-      if (!Gt(h) && !(s && !ki(h)) && !jr(x) && !f.current) {
+      if (!qt(h) && !(s && !Si(h)) && !jr(x) && !f.current) {
         f.current = !0;
         try {
-          const w = await Ci(g, {
+          const w = await Ai(g, {
             consentStorageKey: h,
             sessionStorageKey: x
           });
@@ -16318,8 +16418,8 @@ ${g}
           let L = !0;
           if (d && d.apiKey)
             try {
-              const { db: z } = await Ce(d, g === "web-app" ? void 0 : g);
-              z ? L = await Ai(z, w, {
+              const { db: z } = await Le(d, g === "web-app" ? void 0 : g);
+              z ? L = await Ii(z, w, {
                 collectionName: u
               }) : L = !1;
             } catch (z) {
@@ -16327,7 +16427,7 @@ ${g}
             }
           a && Promise.resolve(a(w)).catch((z) => {
             console.warn("[useVisitorTracker] Custom log handler error:", z);
-          }), L && Si(x);
+          }), L && Ci(x);
         } finally {
           f.current = !1;
         }
@@ -16346,7 +16446,7 @@ function Cs(t = "data/updates.json") {
   const e = typeof t == "string" ? t.includes("/") && !t.endsWith(".json") ? { githubRepo: t } : { updatesUrl: t } : t, [n, i] = W(e.initialUpdates || []), [o, a] = W(!e.initialUpdates || e.initialUpdates.length === 0), [l, s] = W(null), p = te(async (g = !1) => {
     a(!0), s(null);
     try {
-      const u = await Ha({ ...e, forceRefresh: g });
+      const u = await Fa({ ...e, forceRefresh: g });
       i(u);
     } catch (u) {
       s(u instanceof Error ? u : new Error(String(u)));
@@ -16354,7 +16454,7 @@ function Cs(t = "data/updates.json") {
       a(!1);
     }
   }, [e.updatesUrl, e.githubRepo, e.preferGitHub, e.cacheTtlMs]);
-  Z(() => {
+  Y(() => {
     p(!1);
   }, [p]);
   const d = te(() => p(!0), [p]);
@@ -16371,305 +16471,305 @@ export {
   fs as AdminAuthGuard,
   ys as AdminBlogEditor,
   us as AdminLayout,
-  al as AdminLoginForm,
+  ll as AdminLoginForm,
   ms as AdminMessagesView,
   Nl as AnalyticsIcon,
-  qi as ArrowDownIcon,
-  Vi as ArrowLeftIcon,
-  Ui as ArrowRightIcon,
-  Gi as ArrowUpIcon,
-  xi as BUCKET_PAGE_SIZE,
-  ue as Badge,
+  Ki as ArrowDownIcon,
+  Ui as ArrowLeftIcon,
+  Gi as ArrowRightIcon,
+  qi as ArrowUpIcon,
+  mi as BUCKET_PAGE_SIZE,
+  ye as Badge,
   ln as BalanceScaleIcon,
   kl as BarsIcon,
-  vo as BellIcon,
-  $a as BlogCard,
+  wo as BellIcon,
+  Da as BlogCard,
   ss as BlogList,
   as as BlogPostView,
   ls as BlogSidebar,
   Yr as BoltIcon,
   Xr as BookIcon,
   Wl as BookOpenIcon,
-  Lo as BookmarkIcon,
+  To as BookmarkIcon,
   en as BrainIcon,
-  No as BugIcon,
-  Zo as BullhornIcon,
+  Po as BugIcon,
+  Yo as BullhornIcon,
   Tl as BullseyeIcon,
-  Tt as Button,
-  ut as CLOUD_DEV_PREFIX,
-  Bt as CLOUD_EMAIL_PREFIX,
-  ht as CLOUD_HWCORE_PREFIX,
-  gt as CLOUD_HW_PREFIX,
-  _t as CLOUD_PHONE_PREFIX,
-  be as CONSENT_STORAGE_KEY,
+  Wt as Button,
+  xt as CLOUD_DEV_PREFIX,
+  _t as CLOUD_EMAIL_PREFIX,
+  ft as CLOUD_HWCORE_PREFIX,
+  ut as CLOUD_HW_PREFIX,
+  Mt as CLOUD_PHONE_PREFIX,
+  ke as CONSENT_STORAGE_KEY,
   or as CacheBuster,
-  Ro as CalendarIcon,
+  Bo as CalendarIcon,
   nn as ChartLineIcon,
-  Mo as CheckCircleIcon,
-  Xi as CheckIcon,
-  ka as ChessBishopIcon,
-  Sa as ChessBoardIcon,
-  Ri as ChessComIcon,
-  va as ChessKingIcon,
-  qt as ChessKnightIcon,
+  $o as CheckCircleIcon,
+  Ji as CheckIcon,
+  Sa as ChessBishopIcon,
+  Ca as ChessBoardIcon,
+  Bi as ChessComIcon,
+  wa as ChessKingIcon,
+  Kt as ChessKnightIcon,
   Hr as ChessPawnIcon,
-  ba as ChessQueenIcon,
-  wa as ChessRookIcon,
-  Qi as ChevronDownIcon,
-  Ki as ChevronLeftIcon,
-  Zi as ChevronRightIcon,
-  Yi as ChevronUpIcon,
-  da as ClipboardIcon,
-  zo as ClockIcon,
+  va as ChessQueenIcon,
+  ka as ChessRookIcon,
+  Xi as ChevronDownIcon,
+  Zi as ChevronLeftIcon,
+  Yi as ChevronRightIcon,
+  Qi as ChevronUpIcon,
+  pa as ClipboardIcon,
+  Ro as ClockIcon,
   Vr as CloseIcon,
-  Vo as CloudIcon,
+  Uo as CloudIcon,
   pn as CodeBranchIcon,
-  Ho as CodeIcon,
+  Fo as CodeIcon,
   qr as CogIcon,
-  ia as CompassIcon,
-  yo as CompressIcon,
+  oa as CompassIcon,
+  bo as CompressIcon,
   ml as ConsentBanner,
   yl as ConsentControl,
   hs as ContactForm,
   es as Container,
   _l as ControllerIcon,
-  io as CopyIcon,
+  oo as CopyIcon,
   Kr as CpuIcon,
-  ya as CrosshairsIcon,
-  ca as CrownIcon,
+  ba as CrosshairsIcon,
+  da as CrownIcon,
   dn as CutIcon,
   Cr as DEFAULT_FIREBASE_COLLECTIONS,
-  Ue as DEFAULT_FIREBASE_CONFIG,
-  Xa as DEFAULT_LOCKOUT_DURATION_MS,
-  Qa as DEFAULT_MAX_FAIL_ATTEMPTS,
+  Ke as DEFAULT_FIREBASE_CONFIG,
+  Ja as DEFAULT_LOCKOUT_DURATION_MS,
+  Xa as DEFAULT_MAX_FAIL_ATTEMPTS,
   wn as DEFAULT_PIN_SALT,
-  Qt as DEFAULT_SESSION_KEY,
-  me as DataCache,
+  Xt as DEFAULT_SESSION_KEY,
+  we as DataCache,
   fi as DataCacheService,
   vn as DataGrid,
-  Fo as DatabaseIcon,
-  Po as DesktopIcon,
+  Oo as DatabaseIcon,
+  Ho as DesktopIcon,
   ps as DesktopPreviewSimulator,
-  Mi as DiscordIcon,
+  $i as DiscordIcon,
   ds as DocsViewer,
   hn as DoorOpenIcon,
-  ro as DownloadIcon,
-  Io as EditIcon,
-  Kt as EnvelopeIcon,
-  mo as ExpandIcon,
-  oo as ExternalLinkIcon,
-  la as EyeIcon,
-  sa as EyeSlashIcon,
-  Li as FacebookIcon,
-  uo as FastBackwardIcon,
-  fo as FastForwardIcon,
-  ao as FilterIcon,
+  no as DownloadIcon,
+  Lo as EditIcon,
+  Zt as EnvelopeIcon,
+  yo as ExpandIcon,
+  ao as ExternalLinkIcon,
+  sa as EyeIcon,
+  ca as EyeSlashIcon,
+  Ti as FacebookIcon,
+  fo as FastBackwardIcon,
+  xo as FastForwardIcon,
+  lo as FilterIcon,
   rn as FireIcon,
   Ar as FirebaseContext,
-  hl as FirebaseProvider,
-  aa as FlagIcon,
+  ul as FirebaseProvider,
+  la as FlagIcon,
   jl as FlameIcon,
   Xl as Footer,
   ql as ForkIcon,
   Jr as GamepadIcon,
-  Bi as GitHubIcon,
+  _i as GitHubIcon,
   Dl as GlobeAsiaIcon,
-  kt as GlobeIcon,
-  Zt as GraduationCapIcon,
-  oa as HandshakeIcon,
+  Ct as GlobeIcon,
+  Yt as GraduationCapIcon,
+  aa as HandshakeIcon,
   Ql as Header,
-  Wo as HeartIcon,
-  pa as HistoryIcon,
-  bo as HomeIcon,
+  zo as HeartIcon,
+  ga as HistoryIcon,
+  vo as HomeIcon,
   Yl as Icon,
   Jl as ImageSlider,
-  Bo as InfoIcon,
-  Ti as InstagramIcon,
-  xa as KeyboardIcon,
-  Ja as LOGS_PER_BUCKET_DOC,
-  na as LandmarkIcon,
+  _o as InfoIcon,
+  Wi as InstagramIcon,
+  ma as KeyboardIcon,
+  el as LOGS_PER_BUCKET_DOC,
+  ia as LandmarkIcon,
   cn as LayerGroupIcon,
   Ul as LayersIcon,
   Bl as LearnIcon,
-  zi as LichessIcon,
-  fa as LightbulbIcon,
-  _i as LinkedInIcon,
+  Ri as LichessIcon,
+  xa as LightbulbIcon,
+  Mi as LinkedInIcon,
   Fl as ListAltIcon,
   an as ListIcon,
-  wo as LockIcon,
+  ko as LockIcon,
   Nr as Logo,
   Hl as MailIcon,
   Pl as MapMarkerIcon,
   on as MapPinIcon,
-  Yt as MarkdownViewer,
-  Hi as MastodonIcon,
+  Qt as MarkdownViewer,
+  Fi as MastodonIcon,
   os as MdViewer,
-  Qo as MedalIcon,
+  Xo as MedalIcon,
   Ur as MenuIcon,
   Al as MicrochipIcon,
-  qo as MicroscopeIcon,
-  lt as Modal,
-  Co as MoonIcon,
-  ha as NetworkWiredIcon,
-  ea as NewspaperIcon,
+  Ko as MicroscopeIcon,
+  ct as Modal,
+  Ao as MoonIcon,
+  ua as NetworkWiredIcon,
+  ta as NewspaperIcon,
   Bn as NotificationBell,
   rs as PageHeader,
-  ma as PaletteIcon,
+  ya as PaletteIcon,
   Fr as PaperPlaneIcon,
   $l as ParchmentIcon,
-  co as PauseIcon,
-  Fi as PinterestIcon,
-  so as PlayIcon,
-  Ca as ProductCard,
+  po as PauseIcon,
+  Oi as PinterestIcon,
+  co as PlayIcon,
+  Aa as ProductCard,
   is as ProductDetail,
   ns as ProductGrid,
-  Xo as PuzzleIcon,
-  Do as QuestionCircleIcon,
-  Jo as QuoteIcon,
-  Ei as RedditIcon,
-  to as RedoIcon,
+  Jo as PuzzleIcon,
+  Eo as QuestionCircleIcon,
+  ea as QuoteIcon,
+  ji as RedditIcon,
+  ro as RedoIcon,
   Gr as RefreshIcon,
-  Uo as RobotIcon,
-  Go as RocketIcon,
-  qe as SESSION_STORAGE_KEY,
+  Go as RobotIcon,
+  qo as RocketIcon,
+  Ye as SESSION_STORAGE_KEY,
   kr as STORAGE_KEY,
   Ol as ScaleIcon,
   Gl as ScissorsIcon,
   tn as ScrollIcon,
-  Ji as SearchIcon,
+  eo as SearchIcon,
   ts as Section,
   vl as SendMailIcon,
-  Oo as ServerIcon,
+  Vo as ServerIcon,
   Cl as SettingsIcon,
   Kl as ShareAltIcon,
   gn as ShareIcon,
-  Ut as ShareModal,
-  jo as ShieldCheckIcon,
-  Eo as ShieldIcon,
+  Gt as ShareModal,
+  No as ShieldCheckIcon,
+  jo as ShieldIcon,
   Zl as SignOutIcon,
-  ga as SignalIcon,
+  ha as SignalIcon,
   Vl as SkullCrossbonesIcon,
   sn as SkullIcon,
-  lo as SlidersIcon,
-  Ii as SmartScrollButton,
+  so as SlidersIcon,
+  Li as SmartScrollButton,
   Or as SocialIcon,
-  Ko as SparklesIcon,
-  xo as SpinnerIcon,
-  Oi as SpotifyIcon,
-  To as StarIcon,
-  je as StatCard,
-  go as StepBackwardIcon,
-  ho as StepForwardIcon,
-  po as StopIcon,
-  ua as StopwatchIcon,
-  So as SunIcon,
+  Zo as SparklesIcon,
+  mo as SpinnerIcon,
+  Vi as SpotifyIcon,
+  Wo as StarIcon,
+  He as StatCard,
+  ho as StepBackwardIcon,
+  uo as StepForwardIcon,
+  go as StopIcon,
+  fa as StopwatchIcon,
+  Co as SunIcon,
   Sl as SyncIcon,
   Jt as THEMES,
   Qr as TargetIcon,
-  $i as TelegramIcon,
+  Di as TelegramIcon,
   Sr as ThemeContext,
-  pl as ThemeProvider,
+  gl as ThemeProvider,
   Ir as ThemeToggle,
-  Pi as ThreadsIcon,
-  ji as TikTokIcon,
-  $o as TimesCircleIcon,
+  Hi as ThreadsIcon,
+  Ni as TikTokIcon,
+  Do as TimesCircleIcon,
   wl as TimesIcon,
   Il as ToolsIcon,
   xl as TotemTicker,
   Ml as TrainIcon,
-  Ao as TrashIcon,
-  Yo as TrophyIcon,
+  Io as TrashIcon,
+  Qo as TrophyIcon,
   zl as TvIcon,
-  Ni as TwitchIcon,
+  Pi as TwitchIcon,
   bl as TwitterIcon,
-  eo as UndoIcon,
-  ko as UnlockIcon,
+  to as UndoIcon,
+  So as UnlockIcon,
   cs as UpdatesTimeline,
-  no as UploadIcon,
-  ta as UserIcon,
-  ra as UsersIcon,
-  _o as WarningIcon,
-  Di as WhatsAppIcon,
+  io as UploadIcon,
+  ra as UserIcon,
+  na as UsersIcon,
+  Mo as WarningIcon,
+  Ei as WhatsAppIcon,
   El as WorldIcon,
   Zr as WrenchIcon,
   Pr as XTwitterIcon,
-  Wi as YouTubeIcon,
+  zi as YouTubeIcon,
   Ll as ZapIcon,
-  ol as adminSignOut,
-  Ci as assembleVisitorLog,
-  mt as checkAdminLockout,
-  qa as checkCloudContactRateLimit,
+  al as adminSignOut,
+  Ai as assembleVisitorLog,
+  bt as checkAdminLockout,
+  Ka as checkCloudContactRateLimit,
   yn as checkContactRateLimit,
-  tl as clearAdminLockout,
-  Ve as clearAdminSession,
+  rl as clearAdminLockout,
+  qe as clearAdminSession,
   gs as clearContactRateLimit,
-  el as computePinHash,
-  Wa as createCustomMarkedRenderer,
-  vi as detectBrowser,
-  bi as detectOS,
-  ja as detectPlatform,
+  tl as computePinHash,
+  za as createCustomMarkedRenderer,
+  wi as detectBrowser,
+  vi as detectOS,
+  Na as detectPlatform,
   mn as enhanceMarkdownContainer,
   Ln as ensureFirebaseAuthSDK,
   In as ensureFirebaseSDK,
-  Ia as ensureMermaidLoaded,
-  La as ensurePrismLoaded,
-  we as escapeHtmlEntities,
-  Na as extractHighlightsFromMarkdown,
-  wi as fetchGeoLocation,
+  La as ensureMermaidLoaded,
+  Ta as ensurePrismLoaded,
+  Ce as escapeHtmlEntities,
+  Pa as extractHighlightsFromMarkdown,
+  ki as fetchGeoLocation,
   ur as fetchGitHubReleases,
   fr as fetchUpdatesFromJson,
   bn as flushOfflineContactMessages,
-  Da as formatBytes,
-  Ea as formatReleaseDate,
-  Ua as generateMathCaptcha,
-  ul as getAppSlug,
-  fl as getBlogSlug,
-  ft as getClientIP,
-  $t as getFirebaseAuth,
+  Ea as formatBytes,
+  ja as formatReleaseDate,
+  Ga as generateMathCaptcha,
+  fl as getAppSlug,
+  xi as getBlogSlug,
+  mt as getClientIP,
+  Dt as getFirebaseAuth,
   Tn as getFirestore,
-  gl as getFoucPreventScript,
-  Ze as getHardwareCoreFingerprint,
-  Ye as getHardwareFingerprint,
-  Ke as getMachineFingerprint,
-  yi as getTodayDateString,
-  St as getUserIdentityHashes,
+  hl as getFoucPreventScript,
+  Xe as getHardwareCoreFingerprint,
+  Je as getHardwareFingerprint,
+  Qe as getMachineFingerprint,
+  bi as getTodayDateString,
+  At as getUserIdentityHashes,
   fn as highlightCode,
-  Ce as initFirebase,
+  Le as initFirebase,
   yr as isAdminSessionVerified,
-  Gt as isConsentDenied,
-  ki as isConsentGranted,
+  qt as isConsentDenied,
+  Si as isConsentGranted,
   jr as isSessionLogged,
-  Ha as loadUpdates,
+  Fa as loadUpdates,
   kn as logAdminLoginAttempt,
-  Si as markSessionLogged,
-  Pa as normalizeCategory,
-  Ga as normalizeGpuRenderer,
+  Ci as markSessionLogged,
+  Ha as normalizeCategory,
+  qa as normalizeGpuRenderer,
   gr as normalizeMarkdown,
-  Ba as openImageLightbox,
-  nt as openMermaidFullscreenModal,
+  _a as openImageLightbox,
+  ot as openMermaidFullscreenModal,
   xn as parseMarkdownToHtml,
-  Mt as recordAdminFailedAttempt,
-  Ka as recordCloudContactRateLimit,
-  Le as recordContactSubmissionTime,
-  ke as sanitizeHtml,
-  xt as sanitizeIPKey,
-  ie as sanitizeUrl,
-  rl as setAdminSessionVerified,
-  nl as signInWithGooglePopup,
-  Aa as slugify,
-  Za as submitContactInquiry,
-  Ta as transformAlertCallouts,
+  $t as recordAdminFailedAttempt,
+  Za as recordCloudContactRateLimit,
+  ze as recordContactSubmissionTime,
+  Ae as sanitizeHtml,
+  yt as sanitizeIPKey,
+  ne as sanitizeUrl,
+  nl as setAdminSessionVerified,
+  il as signInWithGooglePopup,
+  Ia as slugify,
+  Ya as submitContactInquiry,
+  Wa as transformAlertCallouts,
   Sn as useAdminAuth,
   vs as useBlogs,
-  bt as useFirebase,
+  wt as useFirebase,
   ws as useNews,
   Wn as useNotifications,
   ks as usePageContent,
   bs as useProducts,
-  yt as useTheme,
+  vt as useTheme,
   Cs as useUpdates,
   Ss as useVisitorTracker,
-  il as verifyAdminPin,
-  Ai as writeVisitorLogToFirestore
+  ol as verifyAdminPin,
+  Ii as writeVisitorLogToFirestore
 };
 //# sourceMappingURL=index.js.map

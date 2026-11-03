@@ -437,6 +437,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
         onClose={() => setShareOpen(false)}
         title={product.title || product.name || 'Application'}
         description={product.description || product.short_description}
+        imageUrl={(product.imageUrl as string) || (product.iconUrl as string) || undefined}
       />
     </article>
   );

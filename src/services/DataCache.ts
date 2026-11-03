@@ -793,7 +793,15 @@ export const getAppSlug = (product: ProductItem): string => {
  * Derives a clean URL slug from a BlogPostItem
  */
 export const getBlogSlug = (blog: BlogPostItem): string => {
-  if (blog.slug) return blog.slug;
+  // If blog has a human-readable slug that isn't a fallback ID like "post-70" or "70"
+  if (
+    blog.slug &&
+    !/^post-\d+$/i.test(blog.slug) &&
+    !/^article-\d+$/i.test(blog.slug) &&
+    !/^\d+$/.test(blog.slug)
+  ) {
+    return blog.slug;
+  }
   const title = String(blog.heading || blog.title || `article-${blog.id}`).trim();
   const s = title
     .replace(/c\+\+/gi, 'cpp')

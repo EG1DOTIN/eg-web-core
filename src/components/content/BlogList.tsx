@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Badge } from '../common/Badge';
-import { BlogPostItem } from '../../services/DataCache';
+import { BlogPostItem, getBlogSlug } from '../../services/DataCache';
 import { MarkdownViewer } from './MarkdownViewer';
 
 export type { BlogPostItem };
@@ -176,6 +176,8 @@ export interface BlogPostViewProps {
   showToc?: boolean;
   /** Whether to show the Social Share button (default: true) */
   showShare?: boolean;
+  /** Optional custom canonical share URL override (e.g. https://www.eg1.in/blog?title=slug) */
+  shareUrl?: string;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -194,9 +196,19 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({
   textAlign = 'justify',
   showToc = true,
   showShare = true,
+  shareUrl,
   className = '',
   style,
 }) => {
+  const postSlug = getBlogSlug(post);
+  const resolvedShareUrl =
+    shareUrl ||
+    (typeof window !== 'undefined'
+      ? `${window.location.origin}${window.location.pathname.endsWith('.html') ? '/blog.html' : '/blog'}?title=${postSlug}`
+      : '');
+
+  const resolvedImage = post.output_image || post.imageUrl || `assets/img/blog/id${post.id}.webp`;
+
   return (
     <MarkdownViewer
       content={post.content || post.full_description}
@@ -205,6 +217,8 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({
       textAlign={textAlign}
       showToc={showToc}
       showShare={showShare}
+      shareUrl={resolvedShareUrl}
+      imageUrl={resolvedImage}
       metadata={{
         id: post.id,
         title: post.title || post.heading,
@@ -213,7 +227,8 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({
         category: post.category,
         tags: post.tags,
         readingTime: post.readingTime,
-        imageUrl: post.output_image || post.imageUrl,
+        imageUrl: resolvedImage,
+        output_image: resolvedImage,
         short_description: post.short_description || post.description,
         description: post.description || post.short_description,
       }}

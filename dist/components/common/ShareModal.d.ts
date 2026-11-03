@@ -5,9 +5,11 @@ export interface ShareModalProps {
     title: string;
     url?: string;
     description?: string;
+    imageUrl?: string;
 }
 /**
- * Native Web Share dialog fallback modal with one-click social sharing and clipboard copy.
+ * Native Web Share dialog fallback modal with one-click social sharing,
+ * thumbnail preview, and clipboard copy.
  *
  * @example
  * ```tsx
@@ -16,6 +18,7 @@ export interface ShareModalProps {
  *   onClose={() => setIsOpen(false)}
  *   title="Modular Web Suite"
  *   url="https://example.com"
+ *   imageUrl="https://example.com/thumb.webp"
  * />
  * ```
  */
