@@ -16335,24 +16335,24 @@ ${g}
     }
   );
 }, bs = (t = "data/apps.json") => {
-  const [e, n] = W([]), [i, o] = W(!0), [a, l] = W(null), s = te(async () => {
+  const [e, n] = W([]), [i, o] = W(!0), [a, l] = W(null), s = typeof t == "string" ? { productsUrl: t, syncGithub: !1 } : { syncGithub: !1, ...t }, p = te(async () => {
     try {
       o(!0);
-      const p = await we.getProducts(t);
-      n([...p]), we.syncGithubVersions(p, (d, g) => {
+      const d = await we.getProducts(s.productsUrl || t);
+      n([...d]), s.syncGithub && we.syncGithubVersions(d, (g, u) => {
         n(
-          (u) => u.map((h) => h.id === d ? { ...h, version: g } : h)
+          (h) => h.map((x) => x.id === g ? { ...x, version: u } : x)
         );
       });
-    } catch (p) {
-      l(p instanceof Error ? p : new Error(String(p)));
+    } catch (d) {
+      l(d instanceof Error ? d : new Error(String(d)));
     } finally {
       o(!1);
     }
   }, [t]);
   return Y(() => {
-    s();
-  }, [s]), { products: e, loading: i, error: a, refresh: s };
+    p();
+  }, [p]), { products: e, loading: i, error: a, refresh: p };
 }, vs = (t, e, n) => {
   const [i, o] = W([]), [a, l] = W(!0), [s, p] = W(null), d = te(async () => {
     try {

@@ -13,6 +13,7 @@ export declare const useProducts: (productsUrlOrOptions?: string | {
     mdDir?: string;
     slugs?: string[];
     filterActive?: boolean;
+    syncGithub?: boolean;
 }) => {
     products: ProductItem[];
     loading: boolean;
