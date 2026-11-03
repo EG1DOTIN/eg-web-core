@@ -29,6 +29,9 @@ import {
 } from '../index';
 import { CORE_DOCUMENTATION_ARTICLES } from './docsData';
 
+declare const __LIB_VERSION__: string | undefined;
+const LIB_VERSION = typeof __LIB_VERSION__ !== 'undefined' ? __LIB_VERSION__ : '1.0.1';
+
 /* -------------------------------------------------------------------------- */
 /* Consumer Web App Example Mock Data (Acme Demo Store)                       */
 /* -------------------------------------------------------------------------- */
@@ -264,7 +267,7 @@ export const ShowcaseApp: React.FC = () => {
                         lineHeight: '1.3',
                       }}
                     >
-                      v1.0.1
+                      v{LIB_VERSION}
                     </span>
                     <span
                       style={{
@@ -862,7 +865,7 @@ export const DemoWidget: React.FC<{ initialCount?: number }> = ({ initialCount =
 
   return (
     <div className="demo-widget-container">
-      <Badge variant="primary">Active v1.0.1</Badge>
+      <Badge variant="primary">Active v{LIB_VERSION}</Badge>
       <Button variant="primary" size="md" onClick={() => setCount(count + 1)}>
         Count: {count}
       </Button>
