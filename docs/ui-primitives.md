@@ -33,7 +33,7 @@ This document describes the atomic UI components, interactive widgets, privacy c
 | `<NotificationBell />` | Announcements trigger with unread counter badge. | `storageKey`, `fetchUrl`, `allUpdatesUrl`. Interactive dropdown drawer. |
 | `<CacheBuster />` | Purges service workers, CacheStorage, and resets in-memory data. | `size`, `showLabel`, `onRefreshComplete`. Hard-reload button. |
 | `<Modal />` | Accessible popup dialog with backdrop blur. | `isOpen`, `onClose`, `title`, `maxWidth`, `footer`. ESC key and focus lock. |
-| `<ShareModal />` | Share dialog with copy link and social buttons. | `isOpen`, `onClose`, `title`, `url`, `description`. WhatsApp, X, LinkedIn, Telegram. |
+| `<ShareModal />` | Share dialog with copy link, image preview, and social buttons. | `isOpen`, `onClose`, `title`, `url`, `description`, `imageUrl`. WhatsApp, X, Facebook, LinkedIn, Telegram. |
 | `<TotemTicker />` | Smooth vertical news announcement ticker. | `items`, `intervalMs`, `label`. Pause-on-hover, prev/next arrows. |
 | `<SmartScrollButton />`| Scroll-to-top / bottom with progress ring. | `threshold`, `size`, `color`, `position`. Auto-detects bottom of page. |
 | `<ConsentBanner />` | Non-intrusive GDPR telemetry consent banner. | `onAccept`, `onDecline`, `storageKey`, `privacyPolicyUrl`. Slide-in banner. |
@@ -199,7 +199,7 @@ export function AppDetailModal() {
 ---
 
 ### 📤 Social Share Modal (`<ShareModal />`)
-Social sharing dialog with one-click link copying and direct sharing to WhatsApp, X (Twitter), LinkedIn, and Telegram:
+Social sharing dialog with one-click link copying, direct sharing to WhatsApp, X (Twitter), Facebook, LinkedIn, and Telegram, and rich card preview:
 
 ```tsx
 import React, { useState } from 'react';
@@ -215,13 +215,24 @@ export function ShareArticleButton() {
         isOpen={open}
         onClose={() => setOpen(false)}
         title="Modern Cloud Architecture with React"
-        url="https://eg1.in/blog.html?id=cloud-architecture"
+        url="https://eg1.in/blog?title=modern-cloud-architecture"
         description="Comprehensive tutorial on building high-performance web systems."
+        imageUrl="https://eg1.in/assets/img/blog/cloud-architecture.webp"
       />
     </>
   );
 }
 ```
+
+#### 📋 Props Reference: `ShareModalProps`
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `isOpen` | `boolean` | **Required** | Controls dialog open visibility |
+| `onClose` | `() => void` | **Required** | Close handler callback |
+| `title` | `string` | **Required** | Article or page title to share |
+| `url` | `string` | `window.location.href` | Canonical URL to share |
+| `description` | `string` | `''` | Summary description for the share payload |
+| `imageUrl` | `string` | `undefined` | Optional preview image thumbnail URL displayed in social card |
 
 ---
 

@@ -19,6 +19,7 @@ import {
   Button,
   Badge,
   Modal,
+  ShareModal,
   ConsentBanner,
   ConsentControl,
   ContactForm,
@@ -121,28 +122,29 @@ Consumer applications configure their own visual identity by passing simple prop
 
 const EXAMPLE_UPDATES: UpdateEntry[] = [
   {
-    id: 'upd-1-2-0',
-    version: '1.2.0-demo',
-    date: 'October 2026',
-    title: 'Acme Demo Store Version 1.2 Update',
+    id: 'upd-1-0-1',
+    version: '1.0.1',
+    date: 'November 2026',
+    title: 'EGWebCore v1.0.1: Clean Title Slugs & Rich Social Sharing',
     category: 'FEATURE',
-    description: 'Sample release changelog entry demonstrating the UpdatesTimeline component.',
+    description: 'Updated core library with semantic blog title slug routing, enhanced ShareModal with image preview, and mobile native sharing.',
     highlights: [
-      'Added sample widget product cards to demonstrate the ProductGrid layout.',
-      'Demonstrated responsive grid behavior across mobile, tablet, and desktop.',
-      'Tested modal contact form dialogs with math CAPTCHA verification.',
+      'DataCache.getBlogSlug(): Semantic title slug derivation from filenames/titles for SEO-friendly URLs.',
+      'ShareModal: Added imageUrl thumbnail preview card, Facebook share target, and automatic title deduplication.',
+      'MarkdownViewer & BlogPostView: Added explicit shareUrl prop and navigator.share() mobile integration.',
     ],
   },
   {
     id: 'upd-1-0-0',
-    version: '1.0.0-demo',
-    date: 'September 2026',
-    title: 'Initial Demo Application Setup',
+    version: '1.0.0',
+    date: 'October 2026',
+    title: 'Official Open-Source Release of EGWebCore',
     category: 'SETUP',
-    description: 'Initial demonstration application demonstrating EGWebCore component integration.',
+    description: 'Initial release of EGWebCore universal React UI primitives, design tokens, and hooks.',
     highlights: [
       'Configured universal Header and Footer custom presets.',
       'Enabled ThemeToggle, NotificationBell, and interactive news ticker.',
+      'Integrated DataCache with SWR and 50-record bucket telemetry.',
     ],
   },
 ];
@@ -200,6 +202,7 @@ export const ShowcaseApp: React.FC = () => {
 
   // Interactive Modal State
   const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [demoShareOpen, setDemoShareOpen] = useState(false);
   const [copiedInstall, setCopiedInstall] = useState(false);
 
   const handleCopyInstall = () => {
@@ -261,7 +264,7 @@ export const ShowcaseApp: React.FC = () => {
                         lineHeight: '1.3',
                       }}
                     >
-                      v1.0.0
+                      v1.0.1
                     </span>
                     <span
                       style={{
@@ -756,6 +759,9 @@ export const ShowcaseApp: React.FC = () => {
                     <Button variant="outline" size="md" onClick={() => setDemoModalOpen(true)}>
                       🪟 Open Interactive Modal
                     </Button>
+                    <Button variant="outline" size="md" onClick={() => setDemoShareOpen(true)}>
+                      📤 Test ShareModal (v1.0.1)
+                    </Button>
                   </div>
                 </div>
 
@@ -856,7 +862,7 @@ export const DemoWidget: React.FC<{ initialCount?: number }> = ({ initialCount =
 
   return (
     <div className="demo-widget-container">
-      <Badge variant="primary">Active v1.0.0</Badge>
+      <Badge variant="primary">Active v1.0.1</Badge>
       <Button variant="primary" size="md" onClick={() => setCount(count + 1)}>
         Count: {count}
       </Button>
@@ -1220,6 +1226,15 @@ export const DemoWidget: React.FC<{ initialCount?: number }> = ({ initialCount =
           It features backdrop blur, focus trapping, keyboard ESC dismissal, and automatic body scroll locking.
         </p>
       </Modal>
+
+      {/* Interactive Share Modal (Usable from playground) */}
+      <ShareModal
+        isOpen={demoShareOpen}
+        onClose={() => setDemoShareOpen(false)}
+        title="EGWebCore Library — Universal React 18 Engine"
+        url="https://web-core.eg1.in"
+        description="Unified React component library, design tokens, hooks, and services powering the EG1 ecosystem."
+      />
 
       {/* Global GDPR Consent Banner */}
       <ConsentBanner />

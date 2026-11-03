@@ -47,7 +47,9 @@ flowchart LR
 | `post` | `BlogPostItem` | **Required** | The active blog post to render |
 | `onBack` | `() => void` | **Required** | Back button callback to return to the list |
 | `showToc` | `boolean` | `true` | Displays floating table of contents on desktop |
-| `showShare` | `boolean` | `true` | Displays social sharing trigger modal |
+| `showShare` | `boolean` | `true` | Displays social sharing trigger button & modal |
+| `shareUrl` | `string` | `undefined` | Canonical share URL override (defaults to current page URL) |
+| `textAlign` | `'left' \| 'center' \| 'right' \| 'justify'` | `'justify'` | Text alignment for article prose content |
 
 ### 💻 Blog Engine Example
 
@@ -100,6 +102,12 @@ flowchart TD
 | `content` | `string` | `undefined` | Raw Markdown string (with optional YAML frontmatter header) |
 | `url` | `string` | `undefined` | Relative path or URL to an external `.md` file to fetch |
 | `metadata` | `MarkdownMetadata` | `undefined` | Explicit metadata overriding extracted frontmatter |
+| `shareUrl` | `string` | `undefined` | Canonical URL passed to share action (defaults to window.location.href) |
+| `imageUrl` | `string` | `undefined` | Explicit featured header image URL |
+| `showShare` | `boolean` | `true` | Whether to show Web Share action (uses native share API on mobile) |
+| `showRaw` | `boolean` | `true` | Whether to show View Raw Markdown modal trigger |
+| `showToc` | `boolean` | `false` | Whether to extract and display Table of Contents outline |
+| `textAlign` | `'left' \| 'center' \| 'right' \| 'justify'` | `'justify'` | Text alignment for prose content |
 | `className` | `string` | `''` | Custom wrapper class |
 
 ### 💻 Markdown Viewer Example
