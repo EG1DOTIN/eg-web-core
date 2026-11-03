@@ -132,11 +132,11 @@ export const Header: React.FC<HeaderProps> = ({
 
   const checkIsActive = (link: NavLinkItem): boolean => {
     if (link.active) return true;
-    const cleanCurrent = currentPath.replace(/^\/+/, '').split('?')[0].split('#')[0] || 'index.html';
-    const cleanHref = link.href.replace(/^\/+/, '').split('?')[0].split('#')[0];
+    const cleanCurrent = currentPath.replace(/^\/+/, '').split('?')[0].split('#')[0].toLowerCase().replace(/\.html$/, '') || 'index';
+    const cleanHref = link.href.replace(/^\/+/, '').split('?')[0].split('#')[0].toLowerCase().replace(/\.html$/, '');
 
     if (cleanCurrent === cleanHref) return true;
-    if (cleanHref === 'index.html' && (cleanCurrent === '' || cleanCurrent === 'index.html')) return true;
+    if ((cleanHref === 'index' || cleanHref === '') && (cleanCurrent === '' || cleanCurrent === 'index')) return true;
 
     // Check children
     if (link.children) {

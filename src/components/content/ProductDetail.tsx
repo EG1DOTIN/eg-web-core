@@ -412,7 +412,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
           </button>
         ) : (
           <a
-            href="apps.html"
+            href="apps"
             style={{
               display: 'inline-flex',
               alignItems: 'center',

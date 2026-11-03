@@ -672,7 +672,7 @@ const Cr = {
   storageKey: t = "eg_seen_updates",
   fetchUrl: e = "data/updates.json",
   items: n,
-  allUpdatesUrl: i = "updates.html",
+  allUpdatesUrl: i = "updates",
   onNavigate: o
 }) => {
   const [a, l] = W(!1), [s, p] = W({}), d = he(null), { isDark: g } = yt(), u = Wn({
@@ -2712,7 +2712,7 @@ class fi {
       markdownBody: a,
       webapp_link: l.webapp_link || "",
       attach_upload_file_1: l.attach_upload_file_1 || "",
-      button1: l.button1 || (l.product_type === "WebApp" && l.webapp_link ? { LAUNCH: l.webapp_link, sameTab: "false" } : { "VIEW DETAILS": `apps.html?title=${u}`, sameTab: "true" }),
+      button1: l.button1 || (l.product_type === "WebApp" && l.webapp_link ? { LAUNCH: l.webapp_link, sameTab: "false" } : { "VIEW DETAILS": `apps?title=${u}`, sameTab: "true" }),
       button2: l.button2 || (l.attach_upload_file_1 ? { DOWNLOAD: l.attach_upload_file_1, sameTab: "true" } : void 0),
       createdAt: l.createdAt || "",
       updatedAt: l.updatedAt || ""
@@ -3513,7 +3513,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     return !1;
   }
 }, ml = ({
-  privacyPolicyUrl: t = "privacypolicy.html",
+  privacyPolicyUrl: t = "privacypolicy",
   storageKey: e,
   message: n = "We collect anonymous telemetry to optimize tools & apps performance.",
   privacyPolicyLabel: i = "Privacy Policy",
@@ -3980,7 +3980,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   className: R = "",
   style: N = {}
 }) => {
-  const [I, j] = W(!1), { isDark: H } = yt(), $ = z === "dark" ? !0 : z === "light" ? !1 : H, O = v || Math.round(m * 0.38), M = Math.round(m * 0.135), T = Math.max(7, Math.round(m * 0.075)), k = Math.max(3, Math.round(m * 0.045)), E = L ? I : !0, A = y === "none" || L && !I ? "transparent" : $ ? I ? "var(--eg-bg-surface-hover, rgba(255, 255, 255, 0.08))" : "var(--eg-bg-surface, rgba(255, 255, 255, 0.04))" : I ? "var(--eg-bg-surface-hover, rgba(0, 0, 0, 0.04))" : "var(--eg-bg-surface, rgba(0, 0, 0, 0.02))", D = y === "none" || L && !I ? "transparent" : I ? h || u || A : u || A, U = L && !I ? "transparent" : $ ? I ? "var(--eg-border-hover, rgba(255, 255, 255, 0.35))" : "var(--eg-border-default, rgba(255, 255, 255, 0.15))" : I ? "var(--eg-border-hover, rgba(0, 0, 0, 0.25))" : "var(--eg-border-default, rgba(0, 0, 0, 0.12))", _ = L && !I ? "transparent" : I ? f || x || U : x || U, P = e || ($ ? "#ffffff" : "var(--eg-text-primary, #0f172a)"), V = $ ? i ? I ? "var(--eg-text-primary, #ffffff)" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.45))" : "var(--eg-text-primary, #ffffff)" : i ? I ? "var(--eg-text-primary, #0f172a)" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.45))" : "var(--eg-text-primary, #0f172a)", G = I ? a || o || V : o || V, ee = $ ? p ? I ? "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : "var(--eg-text-muted, rgba(255, 255, 255, 0.25))" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : p ? I ? "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))" : "var(--eg-text-muted, rgba(0, 0, 0, 0.25))" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))", F = I ? g || d || ee : d || ee, oe = y === "circle" ? "50%" : y === "rounded" ? `${Math.max(6, Math.round(m * 0.18))}px` : y === "square" ? "4px" : "0";
+  const [I, j] = W(!1), { isDark: H } = yt(), $ = z === "dark" ? !0 : z === "light" ? !1 : H, O = v || Math.round(m * 0.38), M = Math.round(m * 0.135), T = Math.max(7, Math.round(m * 0.075)), k = Math.max(3, Math.round(m * 0.045)), E = L ? I : !0, A = y === "none" || L && !I ? "transparent" : $ ? I ? "var(--eg-bg-surface-hover, rgba(255, 255, 255, 0.08))" : "var(--eg-bg-surface, rgba(255, 255, 255, 0.04))" : I ? "var(--eg-bg-surface-hover, rgba(0, 0, 0, 0.04))" : "var(--eg-bg-surface, rgba(0, 0, 0, 0.02))", D = y === "none" || L && !I ? "transparent" : I ? h || u || A : u || A, V = L && !I ? "transparent" : $ ? I ? "var(--eg-border-hover, rgba(255, 255, 255, 0.35))" : "var(--eg-border-default, rgba(255, 255, 255, 0.15))" : I ? "var(--eg-border-hover, rgba(0, 0, 0, 0.25))" : "var(--eg-border-default, rgba(0, 0, 0, 0.12))", _ = L && !I ? "transparent" : I ? f || x || V : x || V, P = e || ($ ? "#ffffff" : "var(--eg-text-primary, #0f172a)"), U = $ ? i ? I ? "var(--eg-text-primary, #ffffff)" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.45))" : "var(--eg-text-primary, #ffffff)" : i ? I ? "var(--eg-text-primary, #0f172a)" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.45))" : "var(--eg-text-primary, #0f172a)", G = I ? a || o || U : o || U, ee = $ ? p ? I ? "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : "var(--eg-text-muted, rgba(255, 255, 255, 0.25))" : "var(--eg-text-secondary, rgba(255, 255, 255, 0.6))" : p ? I ? "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))" : "var(--eg-text-muted, rgba(0, 0, 0, 0.25))" : "var(--eg-text-secondary, rgba(0, 0, 0, 0.6))", F = I ? g || d || ee : d || ee, oe = y === "circle" ? "50%" : y === "rounded" ? `${Math.max(6, Math.round(m * 0.18))}px` : y === "square" ? "4px" : "0";
   return /* @__PURE__ */ c(
     "div",
     {
@@ -5440,8 +5440,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   }, []);
   const M = [
     { label: "HOME", href: "index.html" }
-  ], T = p && p.length > 0 ? p : M, k = (A, D, U) => {
-    if (!(U || D.startsWith("http://") || D.startsWith("https://"))) {
+  ], T = p && p.length > 0 ? p : M, k = (A, D, V) => {
+    if (!(V || D.startsWith("http://") || D.startsWith("https://"))) {
       if (D === "#" || D === "javascript:void(0);") {
         A.preventDefault();
         return;
@@ -5450,8 +5450,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
     }
   }, E = (A) => {
     if (A.active) return !0;
-    const D = g.replace(/^\/+/, "").split("?")[0].split("#")[0] || "index.html", U = A.href.replace(/^\/+/, "").split("?")[0].split("#")[0];
-    return D === U || U === "index.html" && (D === "" || D === "index.html") ? !0 : A.children ? A.children.some((_) => E(_)) : !1;
+    const D = g.replace(/^\/+/, "").split("?")[0].split("#")[0].toLowerCase().replace(/\.html$/, "") || "index", V = A.href.replace(/^\/+/, "").split("?")[0].split("#")[0].toLowerCase().replace(/\.html$/, "");
+    return D === V || (V === "index" || V === "") && (D === "" || D === "index") ? !0 : A.children ? A.children.some((_) => E(_)) : !1;
   };
   return /* @__PURE__ */ c(
     "header",
@@ -5613,8 +5613,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                       },
                       className: "eg-desktop-nav",
                       children: T.map((A) => {
-                        const D = E(A), U = A.children && A.children.length > 0, _ = H === A.label;
-                        return U ? /* @__PURE__ */ c("div", { style: { position: "relative" }, children: [
+                        const D = E(A), V = A.children && A.children.length > 0, _ = H === A.label;
+                        return V ? /* @__PURE__ */ c("div", { style: { position: "relative" }, children: [
                           /* @__PURE__ */ c(
                             "button",
                             {
@@ -5660,7 +5660,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                 gap: "2px"
                               },
                               children: A.children.map((P) => {
-                                const V = E(P);
+                                const U = E(P);
                                 return /* @__PURE__ */ c(
                                   "a",
                                   {
@@ -5673,9 +5673,9 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                       borderRadius: "6px",
                                       textDecoration: "none",
                                       fontSize: "13px",
-                                      fontWeight: V ? 700 : 500,
-                                      color: V ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-primary, #0f172a)",
-                                      background: V ? "rgba(16, 185, 129, 0.12)" : "transparent",
+                                      fontWeight: U ? 700 : 500,
+                                      color: U ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-primary, #0f172a)",
+                                      background: U ? "rgba(16, 185, 129, 0.12)" : "transparent",
                                       display: "flex",
                                       alignItems: "center",
                                       justifyContent: "space-between",
@@ -5683,10 +5683,10 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
                                       transition: "all 0.15s ease"
                                     },
                                     onMouseEnter: (G) => {
-                                      V || (G.currentTarget.style.background = "var(--eg-bg-subtle, rgba(0, 0, 0, 0.05))");
+                                      U || (G.currentTarget.style.background = "var(--eg-bg-subtle, rgba(0, 0, 0, 0.05))");
                                     },
                                     onMouseLeave: (G) => {
-                                      V || (G.currentTarget.style.background = "transparent");
+                                      U || (G.currentTarget.style.background = "transparent");
                                     },
                                     children: [
                                       /* @__PURE__ */ c("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
@@ -6031,17 +6031,17 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
   brandTitle: a,
   brandSubtitle: l,
   aboutText: s,
-  aboutReadMoreUrl: p = "about.html",
+  aboutReadMoreUrl: p = "about",
   socialLinks: d,
   socialAlignment: g = "left",
   contactAlignment: u = "left",
   followLabel: h = "Follow",
   contactLabel: x = "Contact",
   contactButtonText: f = "Send Message",
-  contactUrl: b = "contact.html",
+  contactUrl: b = "contact",
   sections: S,
   copyrightText: v,
-  privacyPolicyUrl: m = "privacypolicy.html",
+  privacyPolicyUrl: m = "privacypolicy",
   developedByText: y,
   developedByUrl: w,
   developedByPrefix: L,
@@ -6062,8 +6062,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
         if (!D) return "";
         try {
           if (typeof document < "u") {
-            const U = document.createElement("div");
-            return U.innerHTML = D, U.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((P) => P.remove()), (U.textContent || U.innerText || "").replace(/\s+/g, " ").replace(/^ABOUT\s*[^:\n-]+\s*[:-]?\s*/i, "").trim();
+            const V = document.createElement("div");
+            return V.innerHTML = D, V.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((P) => P.remove()), (V.textContent || V.innerText || "").replace(/\s+/g, " ").replace(/^ABOUT\s*[^:\n-]+\s*[:-]?\s*/i, "").trim();
           }
         } catch {
         }
@@ -6073,8 +6073,8 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
       if (!A && k.content && (A = E(k.content)), A) {
         let D = A;
         if (A.length > 135) {
-          const U = A.slice(0, 135), _ = U.lastIndexOf(" ");
-          D = (_ > 0 ? U.slice(0, _) : U).trim() + "...";
+          const V = A.slice(0, 135), _ = V.lastIndexOf(" ");
+          D = (_ > 0 ? V.slice(0, _) : V).trim() + "...";
         }
         H(D);
       }
@@ -7349,7 +7349,7 @@ const me = new fi(), ul = (t) => t.slug ? t.slug : (t.title || t.name || `app-${
             ) : /* @__PURE__ */ r(
               "a",
               {
-                href: "apps.html",
+                href: "apps",
                 style: {
                   display: "inline-flex",
                   alignItems: "center",
@@ -8065,7 +8065,7 @@ const Yt = ({
   const { parsedMeta: E, markdownBody: A } = re(() => {
     const Y = t !== void 0 ? t : z, { meta: X, body: ce } = Ma(Y);
     return { parsedMeta: X, markdownBody: ce };
-  }, [t, z]), D = i || n.title || n.heading || E.title || E.heading || "", U = o || n.author || E.author || "", _ = a || n.date || E.date || E.createdAt || "", P = l || n.category || E.category || (Array.isArray(E.tags) && E.tags.length > 0 ? E.tags[0] : "") || "", V = re(() => s && s.length > 0 ? s : n.tags && n.tags.length > 0 ? n.tags : Array.isArray(E.tags) ? E.tags : typeof E.tags == "string" ? [E.tags] : [], [s, n.tags, E.tags]), G = d || n.output_image || n.imageUrl || E.output_image || E.imageUrl || "", ee = g || u || n.short_description || n.description || (typeof E.short_description == "string" ? E.short_description : void 0) || (typeof E.description == "string" ? E.description : void 0) || "", F = re(() => gr(A), [A]), oe = re(() => {
+  }, [t, z]), D = i || n.title || n.heading || E.title || E.heading || "", V = o || n.author || E.author || "", _ = a || n.date || E.date || E.createdAt || "", P = l || n.category || E.category || (Array.isArray(E.tags) && E.tags.length > 0 ? E.tags[0] : "") || "", U = re(() => s && s.length > 0 ? s : n.tags && n.tags.length > 0 ? n.tags : Array.isArray(E.tags) ? E.tags : typeof E.tags == "string" ? [E.tags] : [], [s, n.tags, E.tags]), G = d || n.output_image || n.imageUrl || E.output_image || E.imageUrl || "", ee = g || u || n.short_description || n.description || (typeof E.short_description == "string" ? E.short_description : void 0) || (typeof E.description == "string" ? E.description : void 0) || "", F = re(() => gr(A), [A]), oe = re(() => {
     if (!ee.trim()) return "";
     try {
       const Y = K.parseInline(gr(ee));
@@ -8242,7 +8242,7 @@ const Yt = ({
             ]
           }
         ),
-        (D || P || U || _) && /* @__PURE__ */ c(
+        (D || P || V || _) && /* @__PURE__ */ c(
           "header",
           {
             style: {
@@ -8251,9 +8251,9 @@ const Yt = ({
               paddingBottom: "20px"
             },
             children: [
-              (P || V.length > 0) && /* @__PURE__ */ c("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "14px" }, children: [
+              (P || U.length > 0) && /* @__PURE__ */ c("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "14px" }, children: [
                 P && /* @__PURE__ */ r(ue, { variant: "neutral", size: "sm", children: P }),
-                V.filter((Y) => Y.toLowerCase() !== P.toLowerCase()).map((Y) => /* @__PURE__ */ c(ue, { variant: "neutral", size: "sm", children: [
+                U.filter((Y) => Y.toLowerCase() !== P.toLowerCase()).map((Y) => /* @__PURE__ */ c(ue, { variant: "neutral", size: "sm", children: [
                   "#",
                   Y
                 ] }, Y))
@@ -8284,11 +8284,11 @@ const Yt = ({
                     fontSize: "13.5px"
                   },
                   children: [
-                    U && /* @__PURE__ */ c("span", { children: [
+                    V && /* @__PURE__ */ c("span", { children: [
                       "By ",
-                      /* @__PURE__ */ r("strong", { children: U })
+                      /* @__PURE__ */ r("strong", { children: V })
                     ] }),
-                    U && _ && /* @__PURE__ */ r("span", { children: "•" }),
+                    V && _ && /* @__PURE__ */ r("span", { children: "•" }),
                     _ && /* @__PURE__ */ r("span", { children: _ }),
                     ne && /* @__PURE__ */ c(se, { children: [
                       /* @__PURE__ */ r("span", { children: "•" }),
@@ -10041,7 +10041,7 @@ const cs = ({
     ) }),
     /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: Object.entries(w).map(([T, k]) => {
       const E = k.filter(
-        (D) => D.title.toLowerCase().includes(l.toLowerCase()) || D.category.toLowerCase().includes(l.toLowerCase()) || D.tags && D.tags.some((U) => U.toLowerCase().includes(l.toLowerCase()))
+        (D) => D.title.toLowerCase().includes(l.toLowerCase()) || D.category.toLowerCase().includes(l.toLowerCase()) || D.tags && D.tags.some((V) => V.toLowerCase().includes(l.toLowerCase()))
       );
       if (E.length === 0) return null;
       const A = p[T];
@@ -10074,7 +10074,7 @@ const cs = ({
           }
         ),
         !A && /* @__PURE__ */ r("div", { style: { display: "flex", flexDirection: "column", gap: "3px", marginTop: "6px" }, children: E.map((D) => {
-          const U = D.id === o;
+          const V = D.id === o;
           return /* @__PURE__ */ c(
             "button",
             {
@@ -10089,9 +10089,9 @@ const cs = ({
                 padding: "8px 12px",
                 borderRadius: "6px",
                 border: "1px solid transparent",
-                background: U ? "rgba(16, 185, 129, 0.12)" : "transparent",
-                color: U ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-secondary, #475569)",
-                fontWeight: U ? 600 : 500,
+                background: V ? "rgba(16, 185, 129, 0.12)" : "transparent",
+                color: V ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-secondary, #475569)",
+                fontWeight: V ? 600 : 500,
                 fontSize: "13px",
                 cursor: "pointer",
                 textAlign: "left",
@@ -10832,8 +10832,8 @@ const cs = ({
       y((D) => D + 1), x((D) => {
         if (D >= 100)
           return d(!1), 100;
-        const U = D + 4;
-        return v((_) => _ + Math.floor(Math.random() * 28) + 12), b($[Math.floor(Math.random() * $.length)]), U;
+        const V = D + 4;
+        return v((_) => _ + Math.floor(Math.random() * 28) + 12), b($[Math.floor(Math.random() * $.length)]), V;
       });
     }, 250)), () => clearInterval(A);
   }, [p]);
@@ -11979,7 +11979,7 @@ const hs = ({
   style: C
 }) => {
   var We, Xe, Xt;
-  const B = bt(), R = u || B.db, N = h || ((We = B.config) != null && We.apiKey ? B.config : void 0), I = x || (B.appName !== "web-app" ? B.appName : "web-app"), j = d || ((Xe = B.collections) == null ? void 0 : Xe.messages) || "messages", H = g || ((Xt = B.collections) == null ? void 0 : Xt.analytics) || "visitor_analytics", [$, O] = W(""), [M, T] = W(""), [k, E] = W(""), [A, D] = W(""), [U, _] = W(""), [P, V] = W(null), [G, ee] = W(!a), [F, oe] = W(!1), [ne, ae] = W(null), [Qe, Y] = W(!1);
+  const B = bt(), R = u || B.db, N = h || ((We = B.config) != null && We.apiKey ? B.config : void 0), I = x || (B.appName !== "web-app" ? B.appName : "web-app"), j = d || ((Xe = B.collections) == null ? void 0 : Xe.messages) || "messages", H = g || ((Xt = B.collections) == null ? void 0 : Xt.analytics) || "visitor_analytics", [$, O] = W(""), [M, T] = W(""), [k, E] = W(""), [A, D] = W(""), [V, _] = W(""), [P, U] = W(null), [G, ee] = W(!a), [F, oe] = W(!1), [ne, ae] = W(null), [Qe, Y] = W(!1);
   Z(() => {
     let J = !0;
     async function ve() {
@@ -11994,7 +11994,7 @@ const hs = ({
     };
   }, [R, N, I, j, b]);
   const X = te(() => {
-    V(Ua()), _("");
+    U(Ua()), _("");
   }, []), ce = () => {
     o && !G && (ee(!0), P || X());
   };
@@ -12023,7 +12023,7 @@ const hs = ({
         X(), ae({ type: "error", message: "Please complete the anti-spam verification challenge." });
         return;
       }
-      const de = parseInt(U.trim(), 10);
+      const de = parseInt(V.trim(), 10);
       if (isNaN(de) || de !== P.expected) {
         ae({ type: "error", message: "Incorrect anti-spam verification answer. Please try again." }), X();
         return;
@@ -12337,7 +12337,7 @@ const hs = ({
                     name: "botAnswer",
                     type: "number",
                     required: !0,
-                    value: U,
+                    value: V,
                     onChange: (J) => _(J.target.value),
                     placeholder: "Answer",
                     style: {
@@ -12555,11 +12555,11 @@ function vn({
   const [m, y] = W(""), [w, L] = W(f || null), [z, C] = W(b), [B, R] = W(i), [N, I] = W(1), j = re(() => {
     if (!m.trim()) return t;
     const _ = m.toLowerCase().trim();
-    return t.filter((P) => s && s.length > 0 ? s.some((V) => {
-      const G = e.find((F) => F.key === V), ee = G != null && G.getValue ? G.getValue(P) : P[V];
+    return t.filter((P) => s && s.length > 0 ? s.some((U) => {
+      const G = e.find((F) => F.key === U), ee = G != null && G.getValue ? G.getValue(P) : P[U];
       return ee != null && String(ee).toLowerCase().includes(_);
-    }) : e.some((V) => {
-      const G = V.getValue ? V.getValue(P) : P[V.key];
+    }) : e.some((U) => {
+      const G = U.getValue ? U.getValue(P) : P[U.key];
       return G != null && String(G).toLowerCase().includes(_);
     }));
   }, [t, m, s, e]), H = re(() => {
@@ -12576,13 +12576,13 @@ function vn({
   }, M = H.length, T = Math.max(1, Math.ceil(M / B)), k = Math.min(Math.max(1, N), T), E = re(() => {
     const _ = (k - 1) * B;
     return H.slice(_, _ + B);
-  }, [H, k, B]), A = M === 0 ? 0 : (k - 1) * B + 1, D = Math.min(k * B, M), U = te(() => {
+  }, [H, k, B]), A = M === 0 ? 0 : (k - 1) * B + 1, D = Math.min(k * B, M), V = te(() => {
     if (H.length === 0) return;
     const _ = e.map((oe) => mr(oe.label)).join(","), P = H.map((oe) => e.map((ne) => {
       const ae = ne.getValue ? ne.getValue(oe) : oe[ne.key];
       return mr(ae);
-    }).join(",")), V = "\uFEFF" + [_, ...P].join(`\r
-`), G = new Blob([V], { type: "text/csv;charset=utf-8;" }), ee = URL.createObjectURL(G), F = document.createElement("a");
+    }).join(",")), U = "\uFEFF" + [_, ...P].join(`\r
+`), G = new Blob([U], { type: "text/csv;charset=utf-8;" }), ee = URL.createObjectURL(G), F = document.createElement("a");
     F.href = ee, F.setAttribute("download", d), document.body.appendChild(F), F.click(), document.body.removeChild(F), URL.revokeObjectURL(ee);
   }, [H, e, d]);
   return /* @__PURE__ */ c(
@@ -12688,7 +12688,7 @@ function vn({
                   "button",
                   {
                     type: "button",
-                    onClick: U,
+                    onClick: V,
                     disabled: H.length === 0,
                     style: {
                       display: "inline-flex",
@@ -12737,11 +12737,11 @@ function vn({
                     borderBottom: "1px solid var(--eg-border, rgba(255, 255, 255, 0.08))"
                   },
                   children: e.map((_) => {
-                    const P = w === _.key, V = _.sortable !== !1;
+                    const P = w === _.key, U = _.sortable !== !1;
                     return /* @__PURE__ */ r(
                       "th",
                       {
-                        onClick: () => V && O(_.key),
+                        onClick: () => U && O(_.key),
                         style: {
                           padding: "12px 16px",
                           color: P ? "var(--eg-color-primary, #10b981)" : "var(--eg-text-secondary, #d1d5db)",
@@ -12749,7 +12749,7 @@ function vn({
                           fontSize: "var(--eg-text-xs, 0.8125rem)",
                           textTransform: "uppercase",
                           letterSpacing: "0.04em",
-                          cursor: V ? "pointer" : "default",
+                          cursor: U ? "pointer" : "default",
                           userSelect: "none",
                           whiteSpace: "nowrap",
                           width: _.width,
@@ -12767,7 +12767,7 @@ function vn({
                             },
                             children: [
                               /* @__PURE__ */ r("span", { children: _.label }),
-                              V && /* @__PURE__ */ r("span", { style: { fontSize: "0.75rem", opacity: P ? 1 : 0.35 }, children: P && z === "asc" ? "▲" : P && z === "desc" ? "▼" : "⇅" })
+                              U && /* @__PURE__ */ r("span", { style: { fontSize: "0.75rem", opacity: P ? 1 : 0.35 }, children: P && z === "asc" ? "▲" : P && z === "desc" ? "▼" : "⇅" })
                             ]
                           }
                         )
@@ -12816,7 +12816,7 @@ function vn({
                   children: u
                 }
               ) }) : E.map((_, P) => {
-                const V = n ? n(_, P) : P;
+                const U = n ? n(_, P) : P;
                 return /* @__PURE__ */ r(
                   "tr",
                   {
@@ -12845,7 +12845,7 @@ function vn({
                       );
                     })
                   },
-                  V
+                  U
                 );
               }) })
             ]
@@ -13950,9 +13950,9 @@ const al = ({
     var k;
     T.key === "Backspace" && y[M].length === 0 && M > 0 && ((k = R[M - 1].current) == null || k.focus());
   }, j = (M) => {
-    var U, _, P, V;
+    var V, _, P, U;
     const T = M.replace(/\D/g, "").slice(0, 16), k = T.slice(0, 4), E = T.slice(4, 8), A = T.slice(8, 12), D = T.slice(12, 16);
-    w([k, E, A, D]), T.length >= 16 ? (U = R[3].current) == null || U.focus() : T.length >= 12 ? (_ = R[3].current) == null || _.focus() : T.length >= 8 ? (P = R[2].current) == null || P.focus() : T.length >= 4 && ((V = R[1].current) == null || V.focus());
+    w([k, E, A, D]), T.length >= 16 ? (V = R[3].current) == null || V.focus() : T.length >= 12 ? (_ = R[3].current) == null || _.focus() : T.length >= 8 ? (P = R[2].current) == null || P.focus() : T.length >= 4 && ((U = R[1].current) == null || U.focus());
   }, H = (M) => {
     M.preventDefault();
     const T = M.clipboardData.getData("text");
@@ -14503,8 +14503,8 @@ const xs = ({
     v(!0);
     try {
       if (i) {
-        const V = await i();
-        d(V.meta), b(V.logs), x(V.meta.currentPage || 1), v(!1);
+        const U = await i();
+        d(U.meta), b(U.logs), x(U.meta.currentPage || 1), v(!1);
         return;
       }
       const T = t || l.db || window.db || ((M = (O = window.firebase) == null ? void 0 : O.firestore) == null ? void 0 : M.call(O));
@@ -14515,13 +14515,13 @@ const xs = ({
       const k = await T.collection(s).doc("meta").get();
       let E = 1, A = 0, D = 0;
       if (k.exists) {
-        const V = k.data() || {};
-        A = V.totalVisitors || 0, E = V.currentPage || 1;
+        const U = k.data() || {};
+        A = U.totalVisitors || 0, E = U.currentPage || 1;
         const G = br();
-        D = V.todayDate === G && V.todayCount || 0, d({
+        D = U.todayDate === G && U.todayCount || 0, d({
           totalVisitors: A,
           todayCount: D,
-          todayDate: V.todayDate || G,
+          todayDate: U.todayDate || G,
           currentPage: E
         });
       }
@@ -15593,7 +15593,7 @@ Summarize findings and next steps.`
   }, I = (k, E = "") => {
     const A = z.current;
     if (!A) return;
-    const D = A.selectionStart, U = A.selectionEnd, _ = A.value, P = _.slice(D, U), V = `${k}${P || "text"}${E}`, G = _.slice(0, D) + V + _.slice(U);
+    const D = A.selectionStart, V = A.selectionEnd, _ = A.value, P = _.slice(D, V), U = `${k}${P || "text"}${E}`, G = _.slice(0, D) + U + _.slice(V);
     u(G), setTimeout(() => {
       A.focus(), A.setSelectionRange(D + k.length, D + k.length + (P ? P.length : 4));
     }, 50);
