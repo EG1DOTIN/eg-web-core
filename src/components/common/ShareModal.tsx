@@ -8,10 +8,12 @@ export interface ShareModalProps {
   title: string;
   url?: string;
   description?: string;
+  imageUrl?: string;
 }
 
 /**
- * Native Web Share dialog fallback modal with one-click social sharing and clipboard copy.
+ * Native Web Share dialog fallback modal with one-click social sharing,
+ * thumbnail preview, and clipboard copy.
  *
  * @example
  * ```tsx
@@ -20,6 +22,7 @@ export interface ShareModalProps {
  *   onClose={() => setIsOpen(false)}
  *   title="Modular Web Suite"
  *   url="https://example.com"
+ *   imageUrl="https://example.com/thumb.webp"
  * />
  * ```
  */
@@ -29,6 +32,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   title,
   url,
   description = '',
+  imageUrl,
 }) => {
   const [copied, setCopied] = useState(false);
   const targetUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
@@ -44,7 +48,11 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   };
 
   const encodedUrl = encodeURIComponent(targetUrl);
-  const encodedTitle = encodeURIComponent(`${title}: ${description}`);
+  const shareText =
+    description && description.trim() && description.trim() !== title.trim()
+      ? `${title} - ${description.trim()}`
+      : title;
+  const encodedTitle = encodeURIComponent(shareText);
 
   const platforms = [
     {
@@ -63,6 +71,11 @@ export const ShareModal: React.FC<ShareModalProps> = ({
       color: '#0A66C2',
     },
     {
+      name: 'Facebook',
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      color: '#1877F2',
+    },
+    {
       name: 'Telegram',
       url: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
       color: '#229ED9',
@@ -76,8 +89,74 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={`Share "${title}"`} maxWidth="480px">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-        <p style={{ margin: 0, fontSize: '13.5px', color: 'var(--eg-text-secondary, #cbd5e1)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {/* Preview Card with Image & Title if Image or Description is Available */}
+        {(imageUrl || description) && (
+          <div
+            style={{
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'center',
+              padding: '10px 12px',
+              background: 'var(--eg-bg-subtle, rgba(255, 255, 255, 0.04))',
+              border: '1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.1))',
+              borderRadius: 'var(--eg-radius-md, 8px)',
+              overflow: 'hidden',
+            }}
+          >
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={title}
+                style={{
+                  width: '58px',
+                  height: '58px',
+                  objectFit: 'cover',
+                  borderRadius: '6px',
+                  flexShrink: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                }}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            )}
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <div
+                style={{
+                  margin: 0,
+                  fontSize: '13.5px',
+                  fontWeight: 600,
+                  color: 'var(--eg-text-primary, #f8fafc)',
+                  lineHeight: 1.35,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                }}
+              >
+                {title}
+              </div>
+              {description && description.trim() !== title.trim() && (
+                <div
+                  style={{
+                    margin: '4px 0 0 0',
+                    fontSize: '12px',
+                    color: 'var(--eg-text-muted, #94a3b8)',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {description}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <p style={{ margin: 0, fontSize: '13px', color: 'var(--eg-text-secondary, #cbd5e1)' }}>
           Share this link with friends, developers, or colleagues:
         </p>
 

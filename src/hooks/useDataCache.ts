@@ -11,24 +11,31 @@ import { DataCache, ProductItem, NewsItem, PageContent, BlogPostItem } from '../
  * ```
  */
 export const useProducts = (
-  productsUrlOrOptions: string | { productsUrl?: string; mdDir?: string; slugs?: string[]; filterActive?: boolean } = 'data/apps.json'
+  productsUrlOrOptions: string | { productsUrl?: string; mdDir?: string; slugs?: string[]; filterActive?: boolean; syncGithub?: boolean } = 'data/apps.json'
 ) => {
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const options =
+    typeof productsUrlOrOptions === 'string'
+      ? { productsUrl: productsUrlOrOptions, syncGithub: false }
+      : { syncGithub: false, ...productsUrlOrOptions };
+
   const load = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await DataCache.getProducts(productsUrlOrOptions);
+      const data = await DataCache.getProducts(options.productsUrl || productsUrlOrOptions);
       setProducts([...data]);
 
-      // Automatically sync GitHub versions in background
-      DataCache.syncGithubVersions(data, (productId, version) => {
-        setProducts((prev) =>
-          prev.map((item) => (item.id === productId ? { ...item, version } : item))
-        );
-      });
+      // Only sync GitHub versions if explicitly requested (defaults to false to eliminate runtime API rate-limiting)
+      if (options.syncGithub) {
+        DataCache.syncGithubVersions(data, (productId, version) => {
+          setProducts((prev) =>
+            prev.map((item) => (item.id === productId ? { ...item, version } : item))
+          );
+        });
+      }
     } catch (e) {
       setError(e instanceof Error ? e : new Error(String(e)));
     } finally {

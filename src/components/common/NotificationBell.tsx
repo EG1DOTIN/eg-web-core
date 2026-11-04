@@ -28,7 +28,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
   storageKey = 'eg_seen_updates',
   fetchUrl = 'data/updates.json',
   items,
-  allUpdatesUrl = 'updates.html',
+  allUpdatesUrl = 'updates',
   onNavigate,
 }) => {
   const [isOpen, setIsOpen] = useState(false);

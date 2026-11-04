@@ -54,6 +54,8 @@ export interface MarkdownViewerProps {
   backLabel?: string;
   /** Whether to show the Web Share button (default: true) */
   showShare?: boolean;
+  /** Explicit canonical URL to share (falls back to window.location.href) */
+  shareUrl?: string;
   /** Whether to show the View Raw Markdown button (default: true) */
   showRaw?: boolean;
   /** Whether to extract and display Table of Contents (default: false) */
@@ -200,6 +202,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
   onBack,
   backLabel = 'Back',
   showShare = true,
+  shareUrl,
   showRaw = true,
   showToc = false,
   headerExtra,
@@ -303,6 +306,45 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
     (typeof parsedMeta.short_description === 'string' ? parsedMeta.short_description : undefined) ||
     (typeof parsedMeta.description === 'string' ? parsedMeta.description : undefined) ||
     '';
+
+  const resolvedShareUrl =
+    shareUrl ||
+    (typeof window !== 'undefined' ? window.location.href : '');
+
+  const resolvedFullImageUrl = useMemo(() => {
+    if (!resolvedImageUrl) return '';
+    if (resolvedImageUrl.startsWith('http://') || resolvedImageUrl.startsWith('https://')) {
+      return resolvedImageUrl;
+    }
+    if (typeof window !== 'undefined') {
+      const origin = window.location.origin;
+      return `${origin}/${resolvedImageUrl.replace(/^\//, '')}`;
+    }
+    return resolvedImageUrl;
+  }, [resolvedImageUrl]);
+
+  const handleShareClick = async () => {
+    const textToShare =
+      resolvedDescription && resolvedDescription.trim() && resolvedDescription.trim() !== resolvedTitle.trim()
+        ? `${resolvedTitle} - ${resolvedDescription.trim()}`
+        : resolvedTitle;
+
+    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      try {
+        await navigator.share({
+          title: resolvedTitle,
+          text: textToShare,
+          url: resolvedShareUrl,
+        });
+        return;
+      } catch (err: any) {
+        if (err && err.name === 'AbortError') {
+          return;
+        }
+      }
+    }
+    setShareOpen(true);
+  };
 
   const cleanMarkdownBody = useMemo(() => normalizeMarkdown(markdownBody), [markdownBody]);
 
@@ -452,7 +494,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           {showShare && (
             <button
               type="button"
-              onClick={() => setShareOpen(true)}
+              onClick={handleShareClick}
               style={{
                 background: 'transparent',
                 border: '1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.12))',
@@ -876,8 +918,9 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           isOpen={shareOpen}
           onClose={() => setShareOpen(false)}
           title={resolvedTitle}
-          url={typeof window !== 'undefined' ? window.location.href : ''}
-          description={resolvedTitle}
+          url={resolvedShareUrl}
+          description={resolvedDescription}
+          imageUrl={resolvedFullImageUrl}
         />
       )}
 

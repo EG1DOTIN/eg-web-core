@@ -30,6 +30,8 @@ export interface BlogPostViewProps {
     showToc?: boolean;
     /** Whether to show the Social Share button (default: true) */
     showShare?: boolean;
+    /** Optional custom canonical share URL override (e.g. https://www.eg1.in/blog?title=slug) */
+    shareUrl?: string;
     className?: string;
     style?: React.CSSProperties;
 }

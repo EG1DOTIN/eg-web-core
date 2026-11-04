@@ -47,6 +47,8 @@ export interface MarkdownViewerProps {
     backLabel?: string;
     /** Whether to show the Web Share button (default: true) */
     showShare?: boolean;
+    /** Explicit canonical URL to share (falls back to window.location.href) */
+    shareUrl?: string;
     /** Whether to show the View Raw Markdown button (default: true) */
     showRaw?: boolean;
     /** Whether to extract and display Table of Contents (default: false) */

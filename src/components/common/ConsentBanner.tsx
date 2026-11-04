@@ -32,7 +32,7 @@ export interface ConsentBannerProps {
  * ```
  */
 export const ConsentBanner: React.FC<ConsentBannerProps> = ({
-  privacyPolicyUrl = 'privacypolicy.html',
+  privacyPolicyUrl = 'privacypolicy',
   storageKey,
   message = 'We collect anonymous telemetry to optimize tools & apps performance.',
   privacyPolicyLabel = 'Privacy Policy',
