@@ -8,10 +8,10 @@ This directory houses all generic, accessible, website-agnostic React components
 
 | Directory | Scope & Purpose | Example Components |
 |---|---|---|
-| [`common/`](file:///home/gautam/AntigravityProjects/EG1-LIVE-WEBSITES/eg-web-core/src/components/common) | Universal UI primitives & feedback widgets | `Button`, `Badge`, `Modal`, `Spinner`, `SmartScrollButton`, `ConsentBanner`, `NotificationBell` |
-| [`layout/`](file:///home/gautam/AntigravityProjects/EG1-LIVE-WEBSITES/eg-web-core/src/components/layout) | Structural page layouts & shells | `Container`, `Section`, `Header`, `Footer`, `ImageSlider` |
-| [`content/`](file:///home/gautam/AntigravityProjects/EG1-LIVE-WEBSITES/eg-web-core/src/components/content) | Information display & catalog views | `ProductCard`, `ProductGrid`, `ProductDetail`, `MarkdownArticle`, `TableOfContents` |
-| [`admin/`](file:///home/gautam/AntigravityProjects/EG1-LIVE-WEBSITES/eg-web-core/src/components/admin) | Administrative back-office suite | `AdminLayout`, `AdminDataTable`, `AdminAuditLog`, `AdminStatsCard` |
+| [`common/`](./common) | Universal UI primitives & feedback widgets | `Button`, `Badge`, `Modal`, `Spinner`, `SmartScrollButton`, `ConsentBanner`, `NotificationBell` |
+| [`layout/`](./layout) | Structural page layouts & shells | `Container`, `Section`, `Header`, `Footer`, `ImageSlider` |
+| [`content/`](./content) | Information display & catalog views | `ProductCard`, `ProductGrid`, `ProductDetail`, `MarkdownArticle`, `TableOfContents` |
+| [`admin/`](./admin) | Administrative back-office suite | `AdminLayout`, `AdminDataTable`, `AdminAuditLog`, `AdminStatsCard` |
 
 ---
 
