@@ -42,3 +42,6 @@ Thumbs.db
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+# AI Agent Local Rules
+.agents
