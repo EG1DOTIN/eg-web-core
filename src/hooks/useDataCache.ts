@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { DataCache, ProductItem, NewsItem, PageContent, BlogPostItem } from '../services/DataCache';
 
 /**
@@ -17,10 +17,16 @@ export const useProducts = (
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const options =
+  const optionsKey =
     typeof productsUrlOrOptions === 'string'
+      ? productsUrlOrOptions
+      : JSON.stringify(productsUrlOrOptions);
+
+  const options = useMemo(() => {
+    return typeof productsUrlOrOptions === 'string'
       ? { productsUrl: productsUrlOrOptions, syncGithub: false }
       : { syncGithub: false, ...productsUrlOrOptions };
+  }, [optionsKey]);
 
   const load = useCallback(async () => {
     try {
@@ -41,7 +47,7 @@ export const useProducts = (
     } finally {
       setLoading(false);
     }
-  }, [productsUrlOrOptions]);
+  }, [optionsKey]);
 
   useEffect(() => {
     load();
