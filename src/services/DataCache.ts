@@ -354,7 +354,9 @@ export class DataCacheService {
   ): Promise<ProductItem[]> {
     const options = typeof optionsOrUrl === 'string' ? { productsUrl: optionsOrUrl } : optionsOrUrl;
     const productsUrl = options.productsUrl || 'data/apps.json';
-    const mdDir = options.mdDir || 'data/apps/';
+    const cleanDir = options.mdDir
+      ? (options.mdDir.endsWith('/') ? options.mdDir : `${options.mdDir}/`)
+      : 'data/apps/';
     const filterActive = options.filterActive !== false;
 
     if (this.products && this.products.length > 0) {
@@ -363,7 +365,16 @@ export class DataCacheService {
         : this.products;
     }
 
-    const cacheKey = `eg_apps_cache_v4_${encodeURIComponent(productsUrl)}`;
+    // Attempt to fetch Markdown files first
+    const slugs = (options.slugs && options.slugs.length > 0 ? options.slugs : this.KNOWN_APP_SLUGS).slice();
+    const requested = this.getRequestedAppSlug();
+    if (requested && !slugs.includes(requested)) {
+      slugs.unshift(requested);
+    }
+
+    const cacheKey = options.mdDir
+      ? `eg_apps_cache_v5_md_${encodeURIComponent(cleanDir)}_${slugs.join('_')}`
+      : `eg_apps_cache_v5_${encodeURIComponent(productsUrl)}`;
     const cached = this.getPersistent<ProductItem[]>(cacheKey);
     if (cached && Array.isArray(cached) && cached.length > 0) {
       this.products = cached;
@@ -372,21 +383,20 @@ export class DataCacheService {
         : cached;
     }
 
-    // 1. Attempt to fetch Markdown files first
-    const slugs = (options.slugs && options.slugs.length > 0 ? options.slugs : this.KNOWN_APP_SLUGS).slice();
-    const requested = this.getRequestedAppSlug();
-    if (requested && !slugs.includes(requested)) {
-      slugs.unshift(requested);
-    }
-
     try {
+      const rootDir = cleanDir.startsWith('/') || cleanDir.startsWith('http') ? cleanDir : `/${cleanDir}`;
+      const relDir = cleanDir.replace(/^\/+/, '');
       const fetchPromises = slugs.map(async (slug) => {
         try {
           const cleanSlug = slug.trim();
-          const candidates = [
-            `${mdDir}${cleanSlug.toLowerCase()}.md`,
-            `${mdDir}${cleanSlug}.md`,
-          ];
+          const candidates = Array.from(
+            new Set([
+              `${rootDir}${cleanSlug.toLowerCase()}.md`,
+              `${rootDir}${cleanSlug}.md`,
+              `${relDir}${cleanSlug.toLowerCase()}.md`,
+              `${relDir}${cleanSlug}.md`,
+            ])
+          );
           let text: string | null = null;
           for (const cand of candidates) {
             try {
