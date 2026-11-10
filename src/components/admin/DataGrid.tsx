@@ -10,6 +10,7 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
+import './DataGrid.css';
 
 export type SortType = 'string' | 'number' | 'date' | 'ip';
 export type SortDirection = 'asc' | 'desc' | null;
@@ -121,6 +122,24 @@ function formatCsvCell(val: any): string {
   return str;
 }
 
+/**
+ * Highly performant, generic administrative DataGrid with search, pagination, sorting, and CSV export.
+ *
+ * @param props - DataGridProps configuration
+ * @returns Fully styled administrative data table component
+ *
+ * @example
+ * ```tsx
+ * <DataGrid
+ *   data={users}
+ *   columns={[
+ *     { key: 'name', label: 'User Name', sortable: true },
+ *     { key: 'email', label: 'Email Address' },
+ *   ]}
+ *   exportFileName="users.csv"
+ * />
+ * ```
+ */
 export function DataGrid<T>({
   data,
   columns,

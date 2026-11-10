@@ -20,6 +20,18 @@ export declare function ensurePrismLoaded(): Promise<PrismApi | null>;
 export declare function transformAlertCallouts(html: string): string;
 export declare function highlightCode(rawCode: string, lang: string): string;
 export declare function createCustomMarkedRenderer(): InstanceType<typeof marked.Renderer>;
+/**
+ * Parses raw Markdown text into sanitized HTML with syntax highlighting,
+ * alert callouts, and Mermaid diagrams.
+ *
+ * @param markdown - Raw Markdown string
+ * @returns Sanitized and formatted HTML markup
+ *
+ * @example
+ * ```ts
+ * const html = parseMarkdownToHtml('# Hello World\n> [!NOTE]\n> Note text');
+ * ```
+ */
 export declare function parseMarkdownToHtml(markdown: string): string;
 export declare function openMermaidFullscreenModal(svgEl: SVGElement, title?: string): void;
 export declare function openImageLightbox(src: string, title?: string): void;

@@ -1,0 +1,55 @@
+.eg-admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--eg-bg-canvas, #0a0d14);
+  color: var(--eg-text-primary, #f8fafc);
+  font-family: var(--eg-font-sans, sans-serif);
+  box-sizing: border-box;
+}
+
+.eg-admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  background: var(--eg-bg-surface, #0f172a);
+  border-right: 1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.08));
+  transition: width 0.25s ease;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.eg-admin-sidebar--collapsed {
+  width: 76px;
+}
+
+.eg-admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.eg-admin-header {
+  height: 64px;
+  background: var(--eg-bg-header, rgba(15, 23, 42, 0.85));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.08));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.eg-admin-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+

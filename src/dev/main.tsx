@@ -30,7 +30,7 @@ import {
 import { CORE_DOCUMENTATION_ARTICLES } from './docsData';
 
 declare const __LIB_VERSION__: string | undefined;
-const LIB_VERSION = typeof __LIB_VERSION__ !== 'undefined' ? __LIB_VERSION__ : '1.0.1';
+const LIB_VERSION = typeof __LIB_VERSION__ !== 'undefined' ? __LIB_VERSION__ : '1.1.0';
 
 /* -------------------------------------------------------------------------- */
 /* Consumer Web App Example Mock Data (Acme Demo Store)                       */

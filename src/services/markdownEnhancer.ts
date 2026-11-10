@@ -646,6 +646,18 @@ export function createCustomMarkedRenderer(): InstanceType<typeof marked.Rendere
 // 7. Universal parseMarkdownToHtml Parser
 // --------------------------------------------------------------------------
 
+/**
+ * Parses raw Markdown text into sanitized HTML with syntax highlighting,
+ * alert callouts, and Mermaid diagrams.
+ *
+ * @param markdown - Raw Markdown string
+ * @returns Sanitized and formatted HTML markup
+ *
+ * @example
+ * ```ts
+ * const html = parseMarkdownToHtml('# Hello World\n> [!NOTE]\n> Note text');
+ * ```
+ */
 export function parseMarkdownToHtml(markdown: string): string {
   if (!markdown || !markdown.trim()) return '';
   const renderer = createCustomMarkedRenderer();

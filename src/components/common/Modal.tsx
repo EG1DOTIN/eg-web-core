@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import './Modal.css';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -11,6 +12,9 @@ export interface ModalProps {
 
 /**
  * Accessible dialog modal with backdrop blur, keyboard ESC dismissal, and smooth scale-in animation.
+ *
+ * @param props - ModalProps configuration
+ * @returns Dialog modal or null if not open
  *
  * @example
  * ```tsx
@@ -47,67 +51,20 @@ export const Modal: React.FC<ModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 99999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '16px',
-        background: 'rgba(0, 0, 0, 0.65)',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
-        animation: 'egFadeIn 0.2s ease-out',
-      }}
+      className="eg-modal-backdrop"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div
-        style={{
-          width: '100%',
-          maxWidth,
-          background: 'var(--eg-bg-surface-elevated, #1a2742)',
-          border: '1px solid var(--eg-border-default, rgba(255, 255, 255, 0.15))',
-          borderRadius: 'var(--eg-radius-lg, 14px)',
-          boxShadow: 'var(--eg-shadow-lg, 0 16px 40px rgba(0, 0, 0, 0.6))',
-          color: 'var(--eg-text-primary, #f8fafc)',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          maxHeight: 'calc(100vh - 40px)',
-          animation: 'egScaleIn 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
-          fontFamily: 'var(--eg-font-sans, sans-serif)',
-        }}
-      >
+      <div className="eg-modal-container" style={{ maxWidth }}>
         {title && (
-          <div
-            style={{
-              padding: '16px 20px',
-              borderBottom: '1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.08))',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              background: 'var(--eg-bg-subtle, #0f172a)',
-            }}
-          >
-            <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 600 }}>{title}</h3>
+          <div className="eg-modal-header">
+            <h3 className="eg-modal-header__title">{title}</h3>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close modal"
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--eg-text-muted, #94a3b8)',
-                cursor: 'pointer',
-                padding: '4px',
-                borderRadius: '6px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              className="eg-modal-header__close"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -117,34 +74,10 @@ export const Modal: React.FC<ModalProps> = ({
           </div>
         )}
 
-        <div style={{ padding: '20px', overflowY: 'auto', flex: 1 }}>{children}</div>
+        <div className="eg-modal-body">{children}</div>
 
-        {footer && (
-          <div
-            style={{
-              padding: '14px 20px',
-              borderTop: '1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.08))',
-              background: 'var(--eg-bg-subtle, #0f172a)',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              gap: '10px',
-            }}
-          >
-            {footer}
-          </div>
-        )}
+        {footer && <div className="eg-modal-footer">{footer}</div>}
       </div>
-
-      <style>{`
-        @keyframes egFadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes egScaleIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
     </div>
   );
 };

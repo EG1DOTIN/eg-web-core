@@ -1,0 +1,86 @@
+/**
+ * SmartScrollButton.css
+ * Floating smart bidirectional scroll assistant styles
+ */
+
+.back-to-top-btn,
+.eg-smart-scroll-btn {
+  position: fixed;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  opacity: 0.85;
+}
+
+.back-to-top-btn:hover,
+.eg-smart-scroll-btn:hover {
+  opacity: 1;
+  transform: translateY(-3px) scale(1.06);
+}
+
+.eg-smart-scroll-btn--primary {
+  background-color: var(--eg-primary-600, #059669);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+.eg-smart-scroll-btn--primary:hover {
+  background-color: var(--eg-primary-700, #047857);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.eg-smart-scroll-btn--accent {
+  background-color: #d4af37;
+  color: #111827;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
+}
+
+.eg-smart-scroll-btn--accent:hover {
+  background-color: #b89628;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.65);
+}
+
+.eg-smart-scroll-btn--neutral {
+  background-color: var(--eg-surface, #1e293b);
+  color: var(--eg-text, #f1f5f9);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.eg-smart-scroll-btn--neutral:hover {
+  background-color: var(--eg-surface-hover, #334155);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+.eg-smart-scroll-btn svg {
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn,
+  .eg-smart-scroll-btn {
+    bottom: 16px !important;
+    right: 16px !important;
+    width: 44px !important;
+    height: 44px !important;
+    z-index: 1000 !important;
+    opacity: 0.82 !important;
+  }
+
+  .back-to-top-btn svg,
+  .eg-smart-scroll-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+

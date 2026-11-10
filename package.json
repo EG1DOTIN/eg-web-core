@@ -1,6 +1,6 @@
 {
   "name": "eg-web-core",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Unified core React component library, design tokens, hooks, and services for EG web applications.",
   "license": "MIT",
   "type": "module",

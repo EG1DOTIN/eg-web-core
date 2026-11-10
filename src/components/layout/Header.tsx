@@ -4,6 +4,7 @@ import { NotificationBell } from '../common/NotificationBell';
 import { CacheBuster } from '../common/CacheBuster';
 import { Logo } from '../common/Logo';
 import { sanitizeUrl } from '../../services/sanitizer';
+import './Header.css';
 
 export interface NavLinkItem {
   label: string;

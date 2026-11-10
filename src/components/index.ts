@@ -24,6 +24,5 @@ export * from './content/BlogList';
 export * from './content/MarkdownViewer';
 export * from './content/UpdatesTimeline';
 export * from './content/DocsViewer';
-export * from './content/DesktopPreviewSimulator';
 export * from './content/ContactForm';
 export * from './admin';

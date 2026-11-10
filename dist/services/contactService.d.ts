@@ -160,5 +160,18 @@ export declare function flushOfflineContactMessages(db: any, collectionName?: st
  * Submits a contact inquiry to Cloud Firestore `/messages` collection.
  * Gracefully falls back to offline localStorage queue if the client is offline,
  * and automatically flushes queued offline messages upon reconnecting.
+ *
+ * @param payload - Message payload containing user inquiry
+ * @param options - SubmitContactOptions configuration
+ * @returns Result object with success/failure and rate limit status
+ *
+ * @example
+ * ```ts
+ * const result = await submitContactInquiry({
+ *   name: 'John Doe',
+ *   email: 'john@example.com',
+ *   message: 'Hello EG1 Team!',
+ * });
+ * ```
  */
 export declare function submitContactInquiry(payload: ContactMessagePayload, options?: SubmitContactOptions): Promise<SubmitContactResult>;

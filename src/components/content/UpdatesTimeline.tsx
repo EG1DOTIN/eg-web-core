@@ -3,6 +3,7 @@ import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { sanitizeUrl } from '../../services/sanitizer';
 import { UpdateItem, ReleaseAsset, formatBytes } from '../../services/updatesService';
+import './UpdatesTimeline.css';
 
 export type { UpdateItem, ReleaseAsset };
 export type UpdateEntry = UpdateItem;
@@ -153,6 +154,19 @@ function getCategoryColor(cat?: string): { color: string; bg: string; border: st
 /**
  * Comprehensive vertical updates timeline component featuring category filter pills,
  * dynamic item counts, keyword search, platform download pills, and context-aware action triggers.
+ *
+ * @param props - UpdatesTimelineProps configuration
+ * @returns Fully styled and interactive timeline component
+ *
+ * @example
+ * ```tsx
+ * <UpdatesTimeline
+ *   updates={updatesData}
+ *   title="Release History"
+ *   subtitle="All product updates, improvements, and fixes"
+ *   onNavigate={(url) => window.location.href = url}
+ * />
+ * ```
  */
 export const UpdatesTimeline: React.FC<UpdatesTimelineProps> = ({
   updates,

@@ -7,14 +7,17 @@ export interface AdminMessageItem {
     contact?: string;
     message: string;
     appName?: string;
-    createdAt?: any;
+    createdAt?: string | number | {
+        seconds?: number;
+        nanoseconds?: number;
+    } | null;
     userAgent?: string;
     ip?: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 export interface AdminMessagesViewProps {
     /** Firestore database instance (defaults to useFirebase().db or window.db) */
-    db?: any;
+    db?: unknown;
     /** Firebase app configuration */
     firebaseConfig?: FirebaseAppConfig;
     /** Collection name storing messages (default: 'messages') */
@@ -30,4 +33,18 @@ export interface AdminMessagesViewProps {
     /** Custom class name */
     className?: string;
 }
+/**
+ * Administrative inquiries and messages viewer with one-click reply and safe deletion.
+ *
+ * @param props - AdminMessagesViewProps configuration
+ * @returns Messages management console
+ *
+ * @example
+ * ```tsx
+ * <AdminMessagesView
+ *   collectionName="messages"
+ *   title="User Inquiries"
+ * />
+ * ```
+ */
 export declare const AdminMessagesView: React.FC<AdminMessagesViewProps>;

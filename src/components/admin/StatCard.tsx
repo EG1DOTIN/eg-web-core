@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import './StatCard.css';
 
 export interface StatCardProps {
   /** Metric label or title (e.g. 'Total Unique Visitors') */
@@ -33,6 +34,22 @@ export interface StatCardProps {
   className?: string;
 }
 
+/**
+ * KPI metric stat card for administrative dashboards with trend indicator.
+ *
+ * @param props - StatCardProps configuration
+ * @returns Metric stat card element
+ *
+ * @example
+ * ```tsx
+ * <StatCard
+ *   title="Active Users"
+ *   value="1,248"
+ *   subtitle="Past 24 hours"
+ *   trend={{ value: "+12%", direction: "up" }}
+ * />
+ * ```
+ */
 export const StatCard: React.FC<StatCardProps> = ({
   title,
   value,

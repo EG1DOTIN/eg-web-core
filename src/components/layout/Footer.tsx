@@ -4,6 +4,7 @@ import { sanitizeUrl } from '../../services/sanitizer';
 import { Logo } from '../common/Logo';
 import { SmartScrollButton } from '../common/SmartScrollButton';
 import { SocialIcon } from '../common/SocialIcons';
+import './Footer.css';
 
 export interface FooterLink {
   label: string;

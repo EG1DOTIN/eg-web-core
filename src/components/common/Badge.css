@@ -1,0 +1,69 @@
+.eg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-family: var(--eg-font-sans, sans-serif);
+  line-height: 1.2;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+/* Sizes */
+.eg-badge--sm,
+.eg-badge-sm {
+  padding: 2px 6px;
+  font-size: 11px;
+  border-radius: 4px;
+}
+
+.eg-badge--md,
+.eg-badge-md {
+  padding: 3px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+
+/* Variants */
+.eg-badge--primary,
+.eg-badge-primary {
+  background: rgba(16, 185, 129, 0.14);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.eg-badge--success,
+.eg-badge-success {
+  background: rgba(0, 220, 130, 0.14);
+  color: #00dc82;
+  border: 1px solid rgba(0, 220, 130, 0.25);
+}
+
+.eg-badge--warning,
+.eg-badge-warning {
+  background: rgba(245, 158, 11, 0.14);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.eg-badge--danger,
+.eg-badge-danger {
+  background: rgba(239, 68, 68, 0.14);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.eg-badge--info,
+.eg-badge-info {
+  background: rgba(56, 189, 248, 0.14);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.eg-badge--neutral,
+.eg-badge-neutral {
+  background: var(--eg-bg-subtle, rgba(255, 255, 255, 0.08));
+  color: var(--eg-text-secondary, #cbd5e1);
+  border: 1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.12));
+}
+

@@ -8,6 +8,9 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 /**
  * Universal interactive button primitive supporting variants, sizes, and leading icons.
  *
+ * @param props - ButtonProps configuration
+ * @returns Accessible HTML button element
+ *
  * @example
  * ```tsx
  * <Button variant="primary" size="md" onClick={() => alert('Clicked')}>

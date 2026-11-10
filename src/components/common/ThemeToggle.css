@@ -1,0 +1,38 @@
+.eg-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.12));
+  border-radius: var(--eg-radius-md, 8px);
+  color: var(--eg-text-primary, inherit);
+  cursor: pointer;
+  transition: all var(--eg-transition-fast, 150ms);
+  box-sizing: border-box;
+}
+
+.eg-theme-toggle:hover {
+  border-color: var(--eg-border-hover, #10b981);
+  background-color: var(--eg-bg-surface-hover, rgba(255, 255, 255, 0.05));
+}
+
+.eg-theme-toggle:focus-visible {
+  outline: 2px solid var(--eg-color-primary, #10b981);
+  outline-offset: 2px;
+}
+
+.eg-theme-toggle--sm {
+  padding: 6px;
+}
+
+.eg-theme-toggle--md {
+  padding: 8px;
+}
+
+.eg-theme-toggle--lg {
+  padding: 10px;
+}
+

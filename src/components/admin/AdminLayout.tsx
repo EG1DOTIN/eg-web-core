@@ -11,6 +11,7 @@
 import React, { useState } from 'react';
 import { AdminUser } from '../../services/adminAuthService';
 import { ThemeToggle } from '../common/ThemeToggle';
+import './AdminLayout.css';
 
 export interface AdminNavItem {
   /** Unique navigation identifier */
@@ -58,6 +59,25 @@ export interface AdminLayoutProps {
   className?: string;
 }
 
+/**
+ * Responsive administrative layout shell featuring collapsible sidebar,
+ * top navigation bar with user profile, theme toggle, and mobile drawer.
+ *
+ * @param props - AdminLayoutProps configuration
+ * @returns Responsive admin shell layout
+ *
+ * @example
+ * ```tsx
+ * <AdminLayout
+ *   brandTitle="EG1 Management"
+ *   navItems={[{ id: 'overview', label: 'Overview' }]}
+ *   activeNavId="overview"
+ *   onNavSelect={(id) => setActiveNav(id)}
+ * >
+ *   <OverviewView />
+ * </AdminLayout>
+ * ```
+ */
 export const AdminLayout: React.FC<AdminLayoutProps> = ({
   brandTitle = 'Admin Portal',
   brandSubtitle = 'Security & Control',

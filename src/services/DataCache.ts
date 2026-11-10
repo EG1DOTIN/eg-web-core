@@ -89,6 +89,17 @@ export interface WebsiteContent {
   [key: string]: unknown;
 }
 
+/**
+ * Centralized data caching and synchronization service enforcing zero redundant Firestore reads.
+ * Caches catalog items, blogs, news, and markdown documents locally in memory and localStorage.
+ *
+ * @example
+ * ```ts
+ * import { DataCache } from 'eg-web-core';
+ *
+ * const products = await DataCache.getProducts();
+ * ```
+ */
 export class DataCacheService {
   public products: ProductItem[] | null = null;
   public blogs: BlogPostItem[] | null = null;

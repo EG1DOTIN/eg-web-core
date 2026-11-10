@@ -1,0 +1,85 @@
+.eg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-family: var(--eg-font-sans, sans-serif);
+  cursor: pointer;
+  transition: all var(--eg-transition-fast, 150ms);
+  outline: none;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.eg-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.eg-button:focus-visible {
+  outline: 2px solid var(--eg-color-primary, #10b981);
+  outline-offset: 2px;
+}
+
+/* Sizes */
+.eg-button--sm,
+.eg-button-sm {
+  padding: 6px 12px;
+  font-size: 12.5px;
+  border-radius: 6px;
+  min-height: 32px;
+}
+
+.eg-button--md,
+.eg-button-md {
+  padding: 9px 18px;
+  font-size: 14px;
+  border-radius: 8px;
+  min-height: 40px;
+}
+
+.eg-button--lg,
+.eg-button-lg {
+  padding: 12px 24px;
+  font-size: 15.5px;
+  border-radius: 10px;
+  min-height: 44px;
+}
+
+/* Variants */
+.eg-button--primary,
+.eg-button-primary {
+  background: var(--eg-color-primary, #10b981);
+  color: #ffffff;
+  border: none;
+}
+
+.eg-button--secondary,
+.eg-button-secondary {
+  background: var(--eg-bg-surface-elevated, #1a2742);
+  color: var(--eg-text-primary, #f8fafc);
+  border: 1px solid var(--eg-border-default, rgba(255, 255, 255, 0.15));
+}
+
+.eg-button--outline,
+.eg-button-outline {
+  background: transparent;
+  color: var(--eg-color-primary, #10b981);
+  border: 1px solid var(--eg-color-primary, #10b981);
+}
+
+.eg-button--ghost,
+.eg-button-ghost {
+  background: transparent;
+  color: var(--eg-text-primary, inherit);
+  border: none;
+}
+
+.eg-button--danger,
+.eg-button-danger {
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+}
+

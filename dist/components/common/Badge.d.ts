@@ -9,6 +9,9 @@ export interface BadgeProps {
 /**
  * Compact status and category badge with semantic color variants.
  *
+ * @param props - BadgeProps configuration
+ * @returns Stylized status pill badge element
+ *
  * @example
  * ```tsx
  * <Badge variant="success" size="sm">Active</Badge>

@@ -11,6 +11,9 @@ export interface ContainerProps {
  * Standard responsive layout container enforcing consistent max-widths and horizontal padding.
  * Supports standard (`min(1536px, 94%)`), wide (`min(1680px, 96%)`), narrow (`880px`), or fluid (`100%`) layouts.
  *
+ * @param props - ContainerProps configuration
+ * @returns Responsive container division
+ *
  * @example
  * ```tsx
  * <Container wide={true}>
@@ -29,6 +32,9 @@ export interface SectionProps {
 /**
  * Standard semantic section wrapper with default vertical padding.
  *
+ * @param props - SectionProps configuration
+ * @returns Semantic section element
+ *
  * @example
  * ```tsx
  * <Section id="products" padded={true}>
@@ -46,6 +52,9 @@ export interface PageHeaderProps {
 }
 /**
  * Consistent page hero header with title, subtitle, and optional pill badge.
+ *
+ * @param props - PageHeaderProps configuration
+ * @returns Page hero title banner
  *
  * @example
  * ```tsx

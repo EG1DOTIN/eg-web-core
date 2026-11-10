@@ -15,7 +15,6 @@ This document covers the domain-specific application modules, blog engine, Markd
 | **Product Detail** | [`../src/components/content/ProductDetail.tsx`](../src/components/content/ProductDetail.tsx) | Multi-OS downloads, features list, screenshot viewer |
 | **Updates Timeline** | [`../src/components/content/UpdatesTimeline.tsx`](../src/components/content/UpdatesTimeline.tsx) | Chronological release changelog with category badges |
 | **Docs Viewer** | [`../src/components/content/DocsViewer.tsx`](../src/components/content/DocsViewer.tsx) | Technical documentation browser with sidebar and search |
-| **Desktop App Simulator** | [`../src/components/content/DesktopPreviewSimulator.tsx`](../src/components/content/DesktopPreviewSimulator.tsx) | Interactive PySide6 Qt desktop GUI antivirus simulator |
 
 ---
 
@@ -338,38 +337,4 @@ export function DocumentationPage() {
 }
 ```
 
----
 
-## 7. 🛡️ Desktop App Simulator (`<DesktopPreviewSimulator />`)
-
-An interactive web simulator replicating the PySide6 Qt desktop GUI of pyEGClamUI. Enables prospective users to test the desktop software directly in their web browser:
-- **3-Tier Protection Status**: `Protected`, `Warning`, and `Danger`.
-- **5 Qt Tabs**: Dashboard, Scan Engine, Quarantine Manager, Scan Logs, and Settings.
-- **Interactive Scan Modal**: Simulated filesystem scan with animated progress bar and file counter.
-- **Quarantine Manager**: Allows testing threat quarantine, restore, and permanent deletion.
-- **Terminal Logs Viewer**: Live simulated console terminal logs with copy-to-clipboard button.
-
-### 📋 Props Reference: `DesktopPreviewSimulatorProps`
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `appName` | `string` | `'pyEGClamUI'` | Application name displayed in the simulated Qt window title |
-| `version` | `string` | `'3.1.0'` | Version string displayed in status headers |
-| `defaultStatus` | `'protected' \| 'warning' \| 'danger'` | `'protected'` | Initial antivirus shield status |
-
-### 💻 Desktop Simulator Example
-
-```tsx
-import React from 'react';
-import { DesktopPreviewSimulator } from 'eg-web-core';
-
-export function LiveAppTour() {
-  return (
-    <div style={{ padding: '24px' }}>
-      <h2>Interactive Desktop Demo</h2>
-      <p>Experience pyEGClamUI directly in your browser without installing Python or Qt.</p>
-      
-      <DesktopPreviewSimulator appName="pyEGClamUI" version="3.1.0" />
-    </div>
-  );
-}
-```

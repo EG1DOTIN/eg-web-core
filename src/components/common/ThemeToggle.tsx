@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from '../../theme/ThemeContext';
+import './ThemeToggle.css';
 
 export interface ThemeToggleProps {
   id?: string;
@@ -30,36 +31,15 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   const handleClick = isBinaryToggle ? toggleTheme : cycleTheme;
 
   const pxSize = size === 'sm' ? 18 : size === 'lg' ? 24 : 20;
-  const padding = size === 'sm' ? '6px' : size === 'lg' ? '10px' : '8px';
 
   return (
     <button
       type="button"
       id={id}
       onClick={handleClick}
-      className={`eg-theme-toggle ${className}`}
+      className={`eg-theme-toggle eg-theme-toggle--${size} ${className}`}
       title={isBinaryToggle ? (isDark ? 'Switch to Light Theme' : 'Switch to Dark Theme') : `Current theme: ${theme}. Click to switch theme.`}
       aria-label={isBinaryToggle ? (isDark ? 'Switch to Light Theme' : 'Switch to Dark Theme') : `Current theme: ${theme}. Click to cycle themes.`}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '6px',
-        padding,
-        background: 'transparent',
-        border: '1px solid var(--eg-border-subtle, rgba(255, 255, 255, 0.12))',
-        borderRadius: 'var(--eg-radius-md, 8px)',
-        color: 'var(--eg-text-primary, inherit)',
-        cursor: 'pointer',
-        transition: 'all var(--eg-transition-fast, 150ms)',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'var(--eg-border-hover, #10b981)';
-        e.currentTarget.style.backgroundColor = 'var(--eg-bg-surface-hover, rgba(255, 255, 255, 0.05))';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'var(--eg-border-subtle, rgba(255, 255, 255, 0.12))';
-        e.currentTarget.style.backgroundColor = 'transparent';
-      }}
     >
       {theme === 'crystal' ? (
         // Crystal / Gem SVG
