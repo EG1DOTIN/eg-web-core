@@ -1,4 +1,5 @@
 import React from 'react';
+import './Container.css';
 
 export interface ContainerProps {
   children: React.ReactNode;
@@ -12,6 +13,9 @@ export interface ContainerProps {
 /**
  * Standard responsive layout container enforcing consistent max-widths and horizontal padding.
  * Supports standard (`min(1536px, 94%)`), wide (`min(1680px, 96%)`), narrow (`880px`), or fluid (`100%`) layouts.
+ *
+ * @param props - ContainerProps configuration
+ * @returns Responsive container division
  *
  * @example
  * ```tsx
@@ -28,24 +32,18 @@ export const Container: React.FC<ContainerProps> = ({
   className = '',
   style,
 }) => {
-  const computedMaxWidth = fluid
-    ? '100%'
+  const variantClass = fluid
+    ? 'eg-container--fluid'
     : wide
-    ? 'var(--eg-container-wide, min(1680px, 96%))'
+    ? 'eg-container--wide'
     : narrow
-    ? 'var(--eg-container-narrow, 880px)'
-    : 'var(--eg-container-max, min(1536px, 94%))';
+    ? 'eg-container--narrow'
+    : 'eg-container--default';
 
   return (
     <div
-      className={`eg-container ${className}`}
-      style={{
-        maxWidth: computedMaxWidth,
-        margin: '0 auto',
-        padding: '0 clamp(16px, 2.5vw, 32px)',
-        boxSizing: 'border-box',
-        ...style,
-      }}
+      className={`eg-container ${variantClass} ${className}`}
+      style={style}
     >
       {children}
     </div>
@@ -62,6 +60,9 @@ export interface SectionProps {
 
 /**
  * Standard semantic section wrapper with default vertical padding.
+ *
+ * @param props - SectionProps configuration
+ * @returns Semantic section element
  *
  * @example
  * ```tsx
@@ -80,11 +81,8 @@ export const Section: React.FC<SectionProps> = ({
   return (
     <section
       id={id}
-      className={`eg-section ${className}`}
-      style={{
-        padding: padded ? '40px 0' : '0',
-        ...style,
-      }}
+      className={`eg-section ${padded ? 'eg-section--padded' : 'eg-section--unpadded'} ${className}`}
+      style={style}
     >
       {children}
     </section>
@@ -101,6 +99,9 @@ export interface PageHeaderProps {
 
 /**
  * Consistent page hero header with title, subtitle, and optional pill badge.
+ *
+ * @param props - PageHeaderProps configuration
+ * @returns Page hero title banner
  *
  * @example
  * ```tsx
@@ -121,54 +122,11 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   return (
     <div
       className={`eg-page-header ${className}`}
-      style={{
-        margin: '28px 0 36px',
-        textAlign: 'center',
-        ...style,
-      }}
+      style={style}
     >
-      {badge && (
-        <span
-          style={{
-            display: 'inline-block',
-            padding: '3px 12px',
-            borderRadius: '9999px',
-            fontSize: '12px',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: '0.8px',
-            background: 'rgba(16, 185, 129, 0.12)',
-            color: 'var(--eg-color-primary, #10b981)',
-            marginBottom: '10px',
-          }}
-        >
-          {badge}
-        </span>
-      )}
-      <h1
-        style={{
-          fontSize: 'var(--eg-text-3xl, 2rem)',
-          fontWeight: 800,
-          color: 'var(--eg-text-primary, #0f172a)',
-          margin: '0 0 10px',
-          letterSpacing: '-0.5px',
-        }}
-      >
-        {title}
-      </h1>
-      {subtitle && (
-        <p
-          style={{
-            fontSize: 'var(--eg-text-base, 1rem)',
-            color: 'var(--eg-text-secondary, #64748b)',
-            maxWidth: '760px',
-            margin: '0 auto',
-            lineHeight: 1.6,
-          }}
-        >
-          {subtitle}
-        </p>
-      )}
+      {badge && <span className="eg-page-header__badge">{badge}</span>}
+      <h1 className="eg-page-header__title">{title}</h1>
+      {subtitle && <p className="eg-page-header__subtitle">{subtitle}</p>}
     </div>
   );
 };

@@ -31,7 +31,7 @@ export interface ContactFormProps {
     /** Collection storing cross-browser and cross-device rate limit records (defaults to 'visitor_analytics') */
     analyticsCollection?: string;
     /** Direct Firestore database instance (defaults to useFirebase().db or window.db) */
-    db?: any;
+    db?: unknown;
     /** Explicit Firebase app config for direct initialization */
     firebaseConfig?: FirebaseAppConfig;
     /** Application or domain name attached to inquiry payload (defaults to FirebaseContext appName or 'web-app') */

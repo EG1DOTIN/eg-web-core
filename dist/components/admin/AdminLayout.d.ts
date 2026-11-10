@@ -44,4 +44,23 @@ export interface AdminLayoutProps {
     /** Custom class name */
     className?: string;
 }
+/**
+ * Responsive administrative layout shell featuring collapsible sidebar,
+ * top navigation bar with user profile, theme toggle, and mobile drawer.
+ *
+ * @param props - AdminLayoutProps configuration
+ * @returns Responsive admin shell layout
+ *
+ * @example
+ * ```tsx
+ * <AdminLayout
+ *   brandTitle="EG1 Management"
+ *   navItems={[{ id: 'overview', label: 'Overview' }]}
+ *   activeNavId="overview"
+ *   onNavSelect={(id) => setActiveNav(id)}
+ * >
+ *   <OverviewView />
+ * </AdminLayout>
+ * ```
+ */
 export declare const AdminLayout: React.FC<AdminLayoutProps>;

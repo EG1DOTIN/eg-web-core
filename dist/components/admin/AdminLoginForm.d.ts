@@ -20,4 +20,19 @@ export interface AdminLoginFormProps {
     /** Custom CSS class */
     className?: string;
 }
+/**
+ * Two-factor administrative login form with Google OAuth and 16-digit segmented PIN entry.
+ *
+ * @param props - AdminLoginFormProps configuration
+ * @returns Complete 2FA login card interface
+ *
+ * @example
+ * ```tsx
+ * <AdminLoginForm
+ *   title="EG1 Secure Console"
+ *   allowedEmails={['admin@example.com']}
+ *   onSuccess={(user) => console.log('Welcome:', user.displayName)}
+ * />
+ * ```
+ */
 export declare const AdminLoginForm: React.FC<AdminLoginFormProps>;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CONSENT_STORAGE_KEY, SESSION_STORAGE_KEY } from '../../services/visitorTracker';
 import { sanitizeUrl } from '../../services/sanitizer';
+import './ConsentBanner.css';
 
 export interface ConsentBannerProps {
   /** Target Privacy Policy link URL (default: 'privacypolicy.html') */
@@ -117,97 +118,31 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({
     <aside
       id="analytics-consent-banner"
       aria-label="Privacy and Cookie Consent"
-      style={{
-        position: 'fixed',
-        bottom: '20px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: 'calc(100% - 32px)',
-        maxWidth: '680px',
-        background: 'rgba(15, 23, 42, 0.94)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        color: '#f8fafc',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        borderRadius: '12px',
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.35)',
-        padding: '14px 20px',
-        zIndex: 999999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '14px',
-        fontFamily: 'var(--eg-font-sans, sans-serif)',
-        fontSize: '13.5px',
-        lineHeight: 1.5,
-        boxSizing: 'border-box',
-      }}
+      className="eg-consent-banner"
     >
-      <div style={{ flex: '1 1 240px', minWidth: 0 }}>
+      <div className="eg-consent-banner__content">
         <span>{message}</span>{' '}
         {privacyPolicyUrl && (
           <a
             href={sanitizeUrl(privacyPolicyUrl)}
-            style={{
-              color: '#60a5fa',
-              textDecoration: 'underline',
-              marginLeft: '6px',
-              fontWeight: 500,
-            }}
+            className="eg-consent-banner__link"
           >
             {privacyPolicyLabel}
           </a>
         )}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, flexWrap: 'wrap' }}>
+      <div className="eg-consent-banner__actions">
         <button
           type="button"
           onClick={() => handleConsent('denied')}
-          style={{
-            background: 'rgba(255, 255, 255, 0.08)',
-            color: '#cbd5e1',
-            border: '1px solid rgba(255, 255, 255, 0.22)',
-            padding: '7px 15px',
-            borderRadius: '6px',
-            fontSize: '13px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
-            e.currentTarget.style.borderColor = '#ef4444';
-            e.currentTarget.style.color = '#fca5a5';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.22)';
-            e.currentTarget.style.color = '#cbd5e1';
-          }}
+          className="eg-consent-banner__btn-decline"
         >
           {declineLabel}
         </button>
         <button
           type="button"
           onClick={() => handleConsent('granted')}
-          style={{
-            background: '#2563eb',
-            color: '#ffffff',
-            border: 'none',
-            padding: '7px 18px',
-            borderRadius: '6px',
-            fontSize: '13px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#1d4ed8';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = '#2563eb';
-          }}
+          className="eg-consent-banner__btn-accept"
         >
           {acceptLabel}
         </button>

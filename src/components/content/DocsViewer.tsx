@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { sanitizeHtml } from '../../services/sanitizer';
 import { parseMarkdownToHtml, enhanceMarkdownContainer } from '../../services/markdownEnhancer';
+import './DocsViewer.css';
 
 export interface DocArticle {
   id: string;
@@ -281,91 +282,9 @@ export const DocsViewer: React.FC<DocsViewerProps> = ({
 
   return (
     <div
-      className={`eg-docs-viewer-root ${className}`}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '280px minmax(0, 1fr) 240px',
-        gap: '32px',
-        alignItems: 'start',
-        fontFamily: 'var(--eg-font-sans, sans-serif)',
-        color: 'var(--eg-text-primary, #0f172a)',
-        position: 'relative',
-        ...style,
-      }}
+      className={`eg-docs-viewer-root ${className}`.trim()}
+      style={style}
     >
-      <style>{`
-        @keyframes egDocsDrawerSlideIn {
-          from { transform: translateX(-100%); }
-          to { transform: translateX(0); }
-        }
-        @keyframes egDocsFadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .eg-docs-drawer-backdrop {
-          animation: egDocsFadeIn 0.2s ease;
-        }
-        .eg-docs-mobile-drawer {
-          animation: egDocsDrawerSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .eg-docs-floating-menu-btn {
-          display: none;
-        }
-        .eg-docs-mobile-bar {
-          display: none;
-        }
-        @media (max-width: 1200px) {
-          .eg-docs-viewer-root {
-            grid-template-columns: 260px minmax(0, 1fr) !important;
-            gap: 24px !important;
-          }
-          .eg-docs-viewer-root > aside.eg-docs-toc {
-            display: none !important;
-          }
-        }
-        @media (max-width: 900px) {
-          .eg-docs-viewer-root {
-            grid-template-columns: minmax(0, 1fr) !important;
-            gap: 16px !important;
-          }
-          .eg-docs-desktop-sidebar {
-            display: none !important;
-          }
-          .eg-docs-toc {
-            display: none !important;
-          }
-          .eg-docs-mobile-bar {
-            display: block !important;
-          }
-          .eg-docs-floating-menu-btn {
-            display: inline-flex !important;
-            align-items: center;
-            gap: 7px;
-            position: fixed;
-            bottom: 24px;
-            left: 20px;
-            z-index: 850;
-            padding: 10px 18px;
-            border-radius: 9999px;
-            background: var(--eg-color-primary, #10b981);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-          }
-          .eg-docs-floating-menu-btn:hover {
-            background: var(--eg-color-primary-hover, #059669);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.55);
-          }
-          .eg-docs-floating-menu-btn:active {
-            transform: scale(0.96);
-          }
-        }
-      `}</style>
-
       {/* Mobile Drawer Backdrop */}
       {mobileDrawerOpen && (
         <div

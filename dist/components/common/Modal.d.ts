@@ -10,6 +10,9 @@ export interface ModalProps {
 /**
  * Accessible dialog modal with backdrop blur, keyboard ESC dismissal, and smooth scale-in animation.
  *
+ * @param props - ModalProps configuration
+ * @returns Dialog modal or null if not open
+ *
  * @example
  * ```tsx
  * <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="App Details">

@@ -361,6 +361,17 @@ export async function fetchUpdatesFromJson(
 
 /**
  * Universal update loader that automatically routes between static JSON and live GitHub Releases.
+ *
+ * @param options - LoadUpdatesOptions configuration
+ * @returns Array of parsed and normalized UpdateItem objects
+ *
+ * @example
+ * ```ts
+ * const updates = await loadUpdates({
+ *   updatesUrl: '/data/updates.json',
+ *   githubRepo: 'EG1DOTIN/eg1.in',
+ * });
+ * ```
  */
 export async function loadUpdates(options: LoadUpdatesOptions): Promise<UpdateItem[]> {
   const { updatesUrl, githubRepo, preferGitHub = false, cacheTtlMs, forceRefresh } = options;

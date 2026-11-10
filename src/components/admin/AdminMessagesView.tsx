@@ -15,6 +15,7 @@ import { DataGrid, DataGridColumn } from './DataGrid';
 import { Modal } from '../common/Modal';
 import { useFirebase } from '../../theme/FirebaseContext';
 import { FirebaseAppConfig, initFirebase } from '../../services/firebase';
+import './AdminMessagesView.css';
 
 export interface AdminMessageItem {
   id: string;
@@ -23,15 +24,15 @@ export interface AdminMessageItem {
   contact?: string;
   message: string;
   appName?: string;
-  createdAt?: any;
+  createdAt?: string | number | { seconds?: number; nanoseconds?: number } | null;
   userAgent?: string;
   ip?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface AdminMessagesViewProps {
   /** Firestore database instance (defaults to useFirebase().db or window.db) */
-  db?: any;
+  db?: unknown;
   /** Firebase app configuration */
   firebaseConfig?: FirebaseAppConfig;
   /** Collection name storing messages (default: 'messages') */
@@ -48,6 +49,36 @@ export interface AdminMessagesViewProps {
   className?: string;
 }
 
+function parseTimestamp(val: unknown): Date | null {
+  if (!val) return null;
+  if (typeof val === 'string' || typeof val === 'number') {
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  if (typeof val === 'object' && val !== null && 'seconds' in val) {
+    const s = Number((val as { seconds: number }).seconds);
+    return new Date(s * 1000);
+  }
+  if (val instanceof Date) {
+    return val;
+  }
+  return null;
+}
+
+/**
+ * Administrative inquiries and messages viewer with one-click reply and safe deletion.
+ *
+ * @param props - AdminMessagesViewProps configuration
+ * @returns Messages management console
+ *
+ * @example
+ * ```tsx
+ * <AdminMessagesView
+ *   collectionName="messages"
+ *   title="User Inquiries"
+ * />
+ * ```
+ */
 export const AdminMessagesView: React.FC<AdminMessagesViewProps> = ({
   db: propDb,
   firebaseConfig,
@@ -163,8 +194,8 @@ export const AdminMessagesView: React.FC<AdminMessagesViewProps> = ({
   // Metrics
   const totalCount = messages.length;
   const todayCount = messages.filter((m) => {
-    if (!m.createdAt) return false;
-    const d = new Date(m.createdAt);
+    const d = parseTimestamp(m.createdAt);
+    if (!d) return false;
     const now = new Date();
     return (
       d.getDate() === now.getDate() &&
@@ -179,10 +210,13 @@ export const AdminMessagesView: React.FC<AdminMessagesViewProps> = ({
       label: 'Received Date',
       sortType: 'date',
       width: '160px',
-      getValue: (row) => (row.createdAt ? new Date(row.createdAt).getTime() : 0),
+      getValue: (row) => {
+        const d = parseTimestamp(row.createdAt);
+        return d ? d.getTime() : 0;
+      },
       render: (row) => {
-        if (!row.createdAt) return '—';
-        const d = new Date(row.createdAt);
+        const d = parseTimestamp(row.createdAt);
+        if (!d) return '—';
         return (
           <div style={{ fontSize: '0.8125rem' }}>
             <div style={{ fontWeight: 600 }}>{d.toLocaleDateString()}</div>
@@ -321,7 +355,7 @@ export const AdminMessagesView: React.FC<AdminMessagesViewProps> = ({
   ];
 
   return (
-    <div className={`eg-admin-messages-view ${className}`} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--eg-space-6, 24px)', ...style }}>
+    <div className={`eg-admin-messages-view ${className}`.trim()} style={style}>
       {title && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2 style={{ fontSize: 'var(--eg-text-xl, 1.25rem)', fontWeight: 700, margin: 0, color: 'var(--eg-text-primary, #f9fafb)' }}>
@@ -330,13 +364,7 @@ export const AdminMessagesView: React.FC<AdminMessagesViewProps> = ({
         </div>
       )}
       {/* Metric Cards */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: 'var(--eg-space-4, 16px)',
-        }}
-      >
+      <div className="eg-admin-messages-view__stats">
         <StatCard
           title="Total Inquiries"
           value={totalCount}
@@ -508,7 +536,7 @@ export const AdminMessagesView: React.FC<AdminMessagesViewProps> = ({
               <div>
                 <span style={{ color: 'var(--eg-text-muted, #9ca3af)', fontSize: '0.7rem', display: 'block' }}>Date Received:</span>
                 <span style={{ color: 'var(--eg-text-primary, #f9fafb)' }}>
-                  {activeMessage.createdAt ? new Date(activeMessage.createdAt).toLocaleString() : 'N/A'}
+                  {parseTimestamp(activeMessage.createdAt)?.toLocaleString() || 'N/A'}
                 </span>
               </div>
               <div>

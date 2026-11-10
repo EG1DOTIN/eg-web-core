@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNotifications, NotificationItem } from '../../hooks/useNotifications';
 import { sanitizeUrl } from '../../services/sanitizer';
 import { useTheme } from '../../theme/ThemeContext';
+import './NotificationBell.css';
 
 export interface NotificationBellProps {
   storageKey?: string;

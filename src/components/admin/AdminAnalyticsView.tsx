@@ -11,6 +11,7 @@ import { StatCard } from './StatCard';
 import { DataGrid, DataGridColumn } from './DataGrid';
 import { Modal } from '../common/Modal';
 import { useFirebase } from '../../theme/FirebaseContext';
+import './AdminAnalyticsView.css';
 
 export interface AnalyticsLogItem {
   id: string;
@@ -30,7 +31,7 @@ export interface AnalyticsLogItem {
   screen?: string;
   language?: string;
   location?: string;
-  raw?: any;
+  raw?: Record<string, unknown>;
 }
 
 export interface AnalyticsMetaState {
@@ -42,7 +43,7 @@ export interface AnalyticsMetaState {
 
 export interface AdminAnalyticsViewProps {
   /** Firestore database instance (defaults to window.db) */
-  db?: any;
+  db?: unknown;
   /** Collection name storing analytics meta and pages (default: 'visitor_analytics') */
   collectionName?: string;
   /** Domain list for filtering. If omitted, domains are automatically extracted from loaded records */
@@ -60,6 +61,20 @@ function getTodayIsoDate(): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
+/**
+ * Comprehensive visitor telemetry analytics dashboard with bucket pagination and detail modal.
+ *
+ * @param props - AdminAnalyticsViewProps configuration
+ * @returns Visitor analytics management console
+ *
+ * @example
+ * ```tsx
+ * <AdminAnalyticsView
+ *   collectionName="visitor_analytics"
+ *   domains={['All Domains', 'eg1.in', 'mchess.eg1.in']}
+ * />
+ * ```
+ */
 export const AdminAnalyticsView: React.FC<AdminAnalyticsViewProps> = ({
   db: propDb,
   collectionName,
@@ -314,15 +329,9 @@ export const AdminAnalyticsView: React.FC<AdminAnalyticsViewProps> = ({
   ];
 
   return (
-    <div className={`eg-admin-analytics-view ${className}`} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--eg-space-6, 24px)', ...style }}>
+    <div className={`eg-admin-analytics-view ${className}`.trim()} style={style}>
       {/* 3 Top Metric StatCards */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: 'var(--eg-space-4, 16px)',
-        }}
-      >
+      <div className="eg-admin-analytics-view__stats">
         <StatCard
           title="Total Unique Visitors"
           value={meta.totalVisitors}
@@ -380,21 +389,12 @@ export const AdminAnalyticsView: React.FC<AdminAnalyticsViewProps> = ({
         loading={loading}
         exportFileName={`analytics_bucket_${bucketPage}.csv`}
         toolbarSlot={
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <div className="eg-admin-analytics-view__toolbar">
             {/* Domain Filter */}
             <select
               value={selectedDomain}
               onChange={(e) => setSelectedDomain(e.target.value)}
-              style={{
-                background: 'var(--eg-bg-primary, #030712)',
-                border: '1px solid var(--eg-border, rgba(255, 255, 255, 0.12))',
-                borderRadius: 'var(--eg-radius-md, 8px)',
-                color: 'var(--eg-text-primary, #f9fafb)',
-                padding: '7px 12px',
-                fontSize: 'var(--eg-text-xs, 0.8125rem)',
-                cursor: 'pointer',
-                outline: 'none',
-              }}
+              className="eg-admin-analytics-view__filter-select"
             >
               {computedDomains.map((dom) => (
                 <option key={dom} value={dom}>
@@ -404,53 +404,31 @@ export const AdminAnalyticsView: React.FC<AdminAnalyticsViewProps> = ({
             </select>
 
             {/* Bucket Page Stepper */}
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px',
-                background: 'var(--eg-bg-primary, #030712)',
-                padding: '2px 6px',
-                borderRadius: 'var(--eg-radius-md, 8px)',
-                border: '1px solid var(--eg-border, rgba(255, 255, 255, 0.12))',
-              }}
-            >
+            <div className="eg-admin-analytics-view__stepper">
               <button
                 type="button"
                 disabled={bucketPage <= 1 || loading}
                 onClick={() => handleBucketChange(bucketPage - 1)}
+                className="eg-admin-analytics-view__stepper-btn"
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'var(--eg-text-primary, #f9fafb)',
                   cursor: bucketPage <= 1 ? 'not-allowed' : 'pointer',
                   opacity: bucketPage <= 1 ? 0.3 : 1,
-                  padding: '4px 6px',
                 }}
                 title="Newer bucket"
               >
                 ‹
               </button>
-              <span
-                style={{
-                  fontSize: 'var(--eg-text-xs, 0.75rem)',
-                  color: 'var(--eg-text-muted, #9ca3af)',
-                  whiteSpace: 'nowrap',
-                }}
-              >
+              <span className="eg-admin-analytics-view__stepper-label">
                 Bucket {bucketPage} of {totalBuckets}
               </span>
               <button
                 type="button"
                 disabled={bucketPage >= totalBuckets || loading}
                 onClick={() => handleBucketChange(bucketPage + 1)}
+                className="eg-admin-analytics-view__stepper-btn"
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'var(--eg-text-primary, #f9fafb)',
                   cursor: bucketPage >= totalBuckets ? 'not-allowed' : 'pointer',
                   opacity: bucketPage >= totalBuckets ? 0.3 : 1,
-                  padding: '4px 6px',
                 }}
                 title="Older bucket"
               >
@@ -463,18 +441,8 @@ export const AdminAnalyticsView: React.FC<AdminAnalyticsViewProps> = ({
               type="button"
               onClick={() => loadAnalytics()}
               disabled={loading}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px',
-                padding: '7px 12px',
-                background: 'var(--eg-bg-primary, #030712)',
-                border: '1px solid var(--eg-border, rgba(255, 255, 255, 0.12))',
-                borderRadius: 'var(--eg-radius-md, 8px)',
-                color: 'var(--eg-text-primary, #f9fafb)',
-                fontSize: 'var(--eg-text-xs, 0.8125rem)',
-                cursor: loading ? 'not-allowed' : 'pointer',
-              }}
+              className="eg-admin-analytics-view__refresh-btn"
+              style={{ cursor: loading ? 'not-allowed' : 'pointer' }}
             >
               <svg
                 width="14"

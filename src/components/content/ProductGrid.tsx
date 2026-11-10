@@ -3,6 +3,7 @@ import { ProductItem, DataCache } from '../../services/DataCache';
 import { Badge } from '../common/Badge';
 import { ShareModal } from '../common/ShareModal';
 import { sanitizeUrl } from '../../services/sanitizer';
+import './ProductGrid.css';
 
 export interface ProductCardProps {
   product: ProductItem;
@@ -355,16 +356,7 @@ export interface ProductGridProps {
  */
 export const ProductGrid: React.FC<ProductGridProps> = ({ products, onSelect }) => {
   return (
-    <div
-      className="eg-product-grid"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-        gap: '24px',
-        width: '100%',
-        boxSizing: 'border-box',
-      }}
-    >
+    <div className="eg-product-grid">
       {products.map((p) => (
         <ProductCard key={p.id} product={p} onSelect={onSelect} />
       ))}

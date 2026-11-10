@@ -25,4 +25,20 @@ export interface StatCardProps {
     /** Custom class name */
     className?: string;
 }
+/**
+ * KPI metric stat card for administrative dashboards with trend indicator.
+ *
+ * @param props - StatCardProps configuration
+ * @returns Metric stat card element
+ *
+ * @example
+ * ```tsx
+ * <StatCard
+ *   title="Active Users"
+ *   value="1,248"
+ *   subtitle="Past 24 hours"
+ *   trend={{ value: "+12%", direction: "up" }}
+ * />
+ * ```
+ */
 export declare const StatCard: React.FC<StatCardProps>;

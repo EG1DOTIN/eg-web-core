@@ -1,0 +1,82 @@
+/**
+ * AdminMessagesView.css
+ * Customer Inquiries & Contact Messages Console styles
+ */
+
+.eg-admin-messages-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eg-space-6, 24px);
+  width: 100%;
+}
+
+.eg-admin-messages-view__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--eg-space-4, 16px);
+}
+
+.eg-admin-messages-view__refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: var(--eg-bg-primary, #030712);
+  border: 1px solid var(--eg-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--eg-radius-md, 8px);
+  color: var(--eg-text-primary, #f9fafb);
+  font-size: var(--eg-text-xs, 0.8125rem);
+}
+
+.eg-admin-messages-view__delete-btn {
+  padding: 6px 14px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--eg-radius-md, 8px);
+  color: #f87171;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.eg-admin-messages-view__reply-btn {
+  padding: 6px 16px;
+  background: var(--eg-color-primary, #10b981);
+  color: #ffffff;
+  border-radius: var(--eg-radius-md, 8px);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.eg-admin-messages-view__close-btn {
+  padding: 6px 16px;
+  background: var(--eg-bg-tertiary, #1f2937);
+  border: 1px solid var(--eg-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--eg-radius-md, 8px);
+  color: var(--eg-text-primary, #f9fafb);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.eg-admin-messages-view__meta-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  background: var(--eg-bg-primary, #030712);
+  padding: 12px;
+  border-radius: var(--eg-radius-md, 8px);
+  border: 1px solid var(--eg-border, rgba(255, 255, 255, 0.06));
+  font-size: 0.8125rem;
+}
+
+.eg-admin-messages-view__body-card {
+  padding: 16px;
+  background: var(--eg-bg-primary, #030712);
+  border: 1px solid var(--eg-border, rgba(255, 255, 255, 0.06));
+  border-radius: var(--eg-radius-md, 8px);
+}
+

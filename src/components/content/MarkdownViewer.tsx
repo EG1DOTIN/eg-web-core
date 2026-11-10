@@ -4,6 +4,7 @@ import { Badge } from '../common/Badge';
 import { ShareModal } from '../common/ShareModal';
 import { sanitizeHtml } from '../../services/sanitizer';
 import { enhanceMarkdownContainer, parseMarkdownToHtml } from '../../services/markdownEnhancer';
+import './MarkdownViewer.css';
 
 export interface MarkdownMetadata {
   id?: string;

@@ -26,4 +26,21 @@ export interface AdminBlogEditorProps {
     /** Custom class name */
     className?: string;
 }
+/**
+ * Markdown blog article authoring console with live preview and YAML frontmatter export.
+ *
+ * @param props - AdminBlogEditorProps configuration
+ * @returns Blog article editor interface
+ *
+ * @example
+ * ```tsx
+ * <AdminBlogEditor
+ *   defaultAuthor="Editorial Team"
+ *   categories={['Engineering', 'Product']}
+ *   onSave={async (markdown, meta) => {
+ *     console.log('Saved:', meta.title);
+ *   }}
+ * />
+ * ```
+ */
 export declare const AdminBlogEditor: React.FC<AdminBlogEditorProps>;

@@ -12,6 +12,7 @@ import {
 import { FirebaseAppConfig, initFirebase } from '../../services/firebase';
 import { useFirebase } from '../../theme/FirebaseContext';
 import { sanitizeUrl } from '../../services/sanitizer';
+import './ContactForm.css';
 
 export interface ContactChannel {
   id: string;
@@ -44,7 +45,7 @@ export interface ContactFormProps {
   /** Collection storing cross-browser and cross-device rate limit records (defaults to 'visitor_analytics') */
   analyticsCollection?: string;
   /** Direct Firestore database instance (defaults to useFirebase().db or window.db) */
-  db?: any;
+  db?: unknown;
   /** Explicit Firebase app config for direct initialization */
   firebaseConfig?: FirebaseAppConfig;
   /** Application or domain name attached to inquiry payload (defaults to FirebaseContext appName or 'web-app') */
@@ -290,82 +291,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         ...style,
       }}
     >
-      <style>{`
-        .eg-contact-portal-card {
-          background: var(--eg-bg-surface, #ffffff);
-          border: 1px solid var(--eg-border-default, rgba(0, 0, 0, 0.1));
-          border-radius: var(--eg-radius-lg, 14px);
-          padding: clamp(20px, 3.5vw, 36px);
-          box-shadow: var(--eg-shadow-sm, 0 1px 4px rgba(0, 0, 0, 0.06));
-          box-sizing: border-box;
-        }
-        .eg-contact-input-group {
-          position: relative;
-          margin-bottom: 20px;
-        }
-        .eg-contact-input-label {
-          display: block;
-          font-size: 13.5px;
-          font-weight: 600;
-          color: var(--eg-text-primary, #0f172a);
-          margin-bottom: 7px;
-        }
-        .eg-contact-input {
-          width: 100%;
-          box-sizing: border-box;
-          padding: 11px 14px;
-          border-radius: 8px;
-          border: 1px solid var(--eg-border-default, rgba(0, 0, 0, 0.16));
-          background: var(--eg-bg-canvas, #f8fafc);
-          color: var(--eg-text-primary, #0f172a);
-          font-size: 14.5px;
-          font-family: inherit;
-          transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-        .eg-contact-input:focus {
-          outline: none;
-          border-color: var(--eg-color-primary, #b8860b);
-          box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
-          background: var(--eg-bg-surface, #ffffff);
-        }
-        .eg-contact-captcha-box {
-          background: var(--eg-bg-subtle, rgba(0, 0, 0, 0.03));
-          border: 1px dashed var(--eg-border-default, rgba(0, 0, 0, 0.2));
-          border-radius: 10px;
-          padding: 14px 16px;
-          margin-bottom: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 12px;
-        }
-        .eg-contact-channel-item {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          padding: 12px 14px;
-          border-radius: 10px;
-          border: 1px solid var(--eg-border-subtle, rgba(0, 0, 0, 0.08));
-          background: var(--eg-bg-surface, #ffffff);
-          margin-bottom: 12px;
-          text-decoration: none;
-          color: inherit;
-          transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-        .eg-contact-channel-item:hover {
-          transform: translateY(-2px);
-          border-color: var(--eg-color-primary, #b8860b);
-          box-shadow: var(--eg-shadow-sm, 0 4px 12px rgba(0,0,0,0.06));
-        }
-        @media (max-width: 860px) {
-          .eg-contact-portal {
-            grid-template-columns: 1fr !important;
-            gap: 24px !important;
-          }
-        }
-      `}</style>
-
       {/* Main Form Column */}
       <div className="eg-contact-portal-card">
         {title && (

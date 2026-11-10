@@ -42,5 +42,18 @@ export interface UpdatesTimelineProps {
 /**
  * Comprehensive vertical updates timeline component featuring category filter pills,
  * dynamic item counts, keyword search, platform download pills, and context-aware action triggers.
+ *
+ * @param props - UpdatesTimelineProps configuration
+ * @returns Fully styled and interactive timeline component
+ *
+ * @example
+ * ```tsx
+ * <UpdatesTimeline
+ *   updates={updatesData}
+ *   title="Release History"
+ *   subtitle="All product updates, improvements, and fixes"
+ *   onNavigate={(url) => window.location.href = url}
+ * />
+ * ```
  */
 export declare const UpdatesTimeline: React.FC<UpdatesTimelineProps>;

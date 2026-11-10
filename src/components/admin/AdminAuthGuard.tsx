@@ -23,6 +23,21 @@ export interface AdminAuthGuardProps {
   loadingFallback?: React.ReactNode;
 }
 
+/**
+ * Two-tier authentication guard protecting administrative pages and features.
+ *
+ * @param props - AdminAuthGuardProps configuration
+ * @returns Protected child components or AdminLoginForm fallback
+ *
+ * @example
+ * ```tsx
+ * <AdminAuthGuard authConfig={{ allowedEmails: ['admin@example.com'] }}>
+ *   {({ user, logout }) => (
+ *     <AdminDashboard user={user} onLogout={logout} />
+ *   )}
+ * </AdminAuthGuard>
+ * ```
+ */
 export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({
   children,
   authConfig,

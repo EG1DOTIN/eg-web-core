@@ -3,6 +3,7 @@ import { ProductItem, DataCache } from '../../services/DataCache';
 import { Badge } from '../common/Badge';
 import { ShareModal } from '../common/ShareModal';
 import { sanitizeHtml, sanitizeUrl } from '../../services/sanitizer';
+import './ProductDetail.css';
 
 export interface ProductDetailProps {
   product: ProductItem;

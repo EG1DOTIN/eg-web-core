@@ -57,4 +57,22 @@ export interface DataGridProps<T> {
     /** Custom class name */
     className?: string;
 }
+/**
+ * Highly performant, generic administrative DataGrid with search, pagination, sorting, and CSV export.
+ *
+ * @param props - DataGridProps configuration
+ * @returns Fully styled administrative data table component
+ *
+ * @example
+ * ```tsx
+ * <DataGrid
+ *   data={users}
+ *   columns={[
+ *     { key: 'name', label: 'User Name', sortable: true },
+ *     { key: 'email', label: 'Email Address' },
+ *   ]}
+ *   exportFileName="users.csv"
+ * />
+ * ```
+ */
 export declare function DataGrid<T>({ data, columns, keyExtractor, defaultPageSize, pageSizeOptions, searchable, searchPlaceholder, searchKeys, exportable, exportFileName, loading, emptyMessage, toolbarSlot, onRowClick, initialSortKey, initialSortDirection, style, className, }: DataGridProps<T>): React.ReactElement;

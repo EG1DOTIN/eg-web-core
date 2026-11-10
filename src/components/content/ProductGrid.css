@@ -1,0 +1,32 @@
+/**
+ * ProductGrid.css
+ * Product & Applications Catalog Grid & Card styles
+ */
+
+.eg-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.eg-product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--eg-bg-surface, #ffffff);
+  border: 1px solid var(--eg-border-default, rgba(0, 0, 0, 0.08));
+  border-radius: var(--eg-radius-lg, 14px);
+  padding: 22px;
+  box-shadow: var(--eg-shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.04));
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.eg-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--eg-shadow-md, 0 8px 24px rgba(0, 0, 0, 0.08));
+  border-color: var(--eg-border-hover, rgba(0, 0, 0, 0.16));
+}
+

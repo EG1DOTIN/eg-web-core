@@ -9,6 +9,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { AdminAuthConfig, AdminPinConfig, AdminUser } from '../../services/adminAuthService';
 import { useAdminAuth } from '../../hooks/useAdminAuth';
+import './AdminLoginForm.css';
 
 export interface AdminLoginFormProps {
   /** Title for the login card (default: 'Admin Portal') */
@@ -31,6 +32,21 @@ export interface AdminLoginFormProps {
   className?: string;
 }
 
+/**
+ * Two-factor administrative login form with Google OAuth and 16-digit segmented PIN entry.
+ *
+ * @param props - AdminLoginFormProps configuration
+ * @returns Complete 2FA login card interface
+ *
+ * @example
+ * ```tsx
+ * <AdminLoginForm
+ *   title="EG1 Secure Console"
+ *   allowedEmails={['admin@example.com']}
+ *   onSuccess={(user) => console.log('Welcome:', user.displayName)}
+ * />
+ * ```
+ */
 export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({
   title = 'Admin Portal',
   subtitle = 'Sign in with your authorized administrator credentials',
