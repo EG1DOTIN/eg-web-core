@@ -48,8 +48,11 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
   const resolveIconUrl = (raw?: string): string => {
     if (!raw || typeof raw !== 'string' || !raw.trim()) return DEFAULT_APP_ICON;
     let icon = raw.trim();
-    if (icon.startsWith('./img/')) icon = './assets/' + icon.slice(2);
-    else if (icon.startsWith('img/')) icon = 'assets/' + icon;
+    if (icon.startsWith('../../assets/')) icon = '/' + icon.slice(6);
+    else if (icon.startsWith('./assets/')) icon = '/' + icon.slice(2);
+    else if (icon.startsWith('assets/')) icon = '/' + icon;
+    else if (icon.startsWith('./img/')) icon = '/assets/' + icon.slice(2);
+    else if (icon.startsWith('img/')) icon = '/assets/' + icon;
     return icon;
   };
 
@@ -137,11 +140,16 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
     product.short_description ||
     'No detailed description available.';
 
+  // Normalize any relative asset paths (../../assets/, ./assets/) to /assets/ for web rendering
+  const normalizedDescription = rawDescription
+    .replace(/\.\.\/\.\.\/assets\//g, '/assets/')
+    .replace(/\.\/assets\//g, '/assets/');
+
   // Always pass description through sanitizeHtml for defense-in-depth XSS protection
   const sanitizedDescription = sanitizeHtml(
-    rawDescription.includes('<')
-      ? rawDescription
-      : `<p>${rawDescription.replace(/\n\n+/g, '</p><p>')}</p>`
+    normalizedDescription.includes('<')
+      ? normalizedDescription
+      : `<p>${normalizedDescription.replace(/\n\n+/g, '</p><p>')}</p>`
   );
 
   return (
@@ -311,6 +319,17 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
           color: var(--eg-text-secondary, #334155);
           line-height: 1.7;
           margin-bottom: 16px;
+          text-align: justify;
+          text-align-last: left;
+          text-justify: inter-word;
+          word-break: break-word;
+          overflow-wrap: break-word;
+        }
+        .eg-product-detail-body p[align="center"] {
+          text-align: center !important;
+        }
+        .eg-product-detail-body p[align="left"] {
+          text-align: left !important;
         }
         .eg-product-detail-body ul,
         .eg-product-detail-body ol {
@@ -321,6 +340,19 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
         }
         .eg-product-detail-body li {
           margin-bottom: 6px;
+          text-align: justify;
+          text-align-last: left;
+          text-justify: inter-word;
+        }
+        .eg-product-detail-body blockquote {
+          margin: 20px 0;
+          padding: 12px 20px;
+          border-left: 4px solid var(--eg-color-primary, #10b981);
+          background: var(--eg-bg-subtle, rgba(0,0,0,0.03));
+          border-radius: 0 8px 8px 0;
+          text-align: justify;
+          text-align-last: left;
+          text-justify: inter-word;
         }
         .eg-product-detail-body table {
           width: 100%;
