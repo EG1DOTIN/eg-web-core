@@ -293,11 +293,16 @@ export class DataCacheService {
       }
     }
 
+    // Normalize relative asset paths (../../assets/, ./assets/, assets/) to /assets/ for web rendering
+    const normalizedBody = (markdownBody || '')
+      .replace(/\.\.\/\.\.\/assets\//g, '/assets/')
+      .replace(/\.\/assets\//g, '/assets/');
+
     let bodyHtml = '';
     try {
-      bodyHtml = sanitizeHtml(marked.parse(markdownBody) as string);
+      bodyHtml = sanitizeHtml(marked.parse(normalizedBody) as string);
     } catch {
-      bodyHtml = sanitizeHtml('<p>' + markdownBody.replace(/\n\n+/g, '</p><p>') + '</p>');
+      bodyHtml = sanitizeHtml('<p>' + normalizedBody.replace(/\n\n+/g, '</p><p>') + '</p>');
     }
 
     const productName = meta.name || meta.product_name || meta.title || defaultSlug || 'Unknown App';
@@ -384,8 +389,8 @@ export class DataCacheService {
     }
 
     const cacheKey = options.mdDir
-      ? `eg_apps_cache_v5_md_${encodeURIComponent(cleanDir)}_${slugs.join('_')}`
-      : `eg_apps_cache_v5_${encodeURIComponent(productsUrl)}`;
+      ? `eg_apps_cache_v6_md_${encodeURIComponent(cleanDir)}_${slugs.join('_')}`
+      : `eg_apps_cache_v6_${encodeURIComponent(productsUrl)}`;
     const cached = this.getPersistent<ProductItem[]>(cacheKey);
     if (cached && Array.isArray(cached) && cached.length > 0) {
       this.products = cached;

@@ -28,8 +28,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
   const resolveIconUrl = (raw?: string): string => {
     if (!raw || typeof raw !== 'string' || !raw.trim()) return DEFAULT_APP_ICON;
     let icon = raw.trim();
-    if (icon.startsWith('./img/')) icon = './assets/' + icon.slice(2);
-    else if (icon.startsWith('img/')) icon = 'assets/' + icon;
+    if (icon.startsWith('../../assets/')) icon = '/' + icon.slice(6);
+    else if (icon.startsWith('./assets/')) icon = '/' + icon.slice(2);
+    else if (icon.startsWith('assets/')) icon = '/' + icon;
+    else if (icon.startsWith('./img/')) icon = '/assets/' + icon.slice(2);
+    else if (icon.startsWith('img/')) icon = '/assets/' + icon;
     return icon;
   };
 
